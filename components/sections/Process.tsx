@@ -12,8 +12,8 @@ const STEP_DURATION = "5s";
 /*
  * Frise interactive. Tant qu'on n'y touche pas, elle avance toute seule (la ligne se
  * remplit pendant 5 s, puis on passe à l'étape suivante). Elle se met en pause au
- * survol, quand la section sort de l'écran, avec le bouton pause, et s'arrête dès
- * qu'on clique sur une étape. Sans lecture automatique si l'animation est réduite.
+ * survol des étapes, quand la section sort de l'écran, avec le bouton pause, et
+ * s'arrête dès qu'on clique sur une étape (le bouton « lecture » la relance). Sans lecture automatique si l'animation est réduite.
  * L'avance est pilotée par la fin de l'animation CSS : mettre l'animation en pause
  * suffit à mettre la frise en pause.
  */
@@ -45,7 +45,7 @@ export function Process() {
   } as CSSProperties;
 
   return (
-    <section ref={sectionRef} aria-labelledby="process-titre" className="process pt-[72px]">
+    <section ref={sectionRef} aria-labelledby="process-titre" className="pt-[72px]">
       <Container className="flex flex-col gap-7">
         <div className="flex items-center justify-between gap-4">
           <h2 id="process-titre" className="font-mono text-xs tracking-[2px] text-muted uppercase">

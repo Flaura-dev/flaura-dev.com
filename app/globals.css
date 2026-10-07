@@ -298,9 +298,12 @@
       animation-play-state: running;
     }
 
-    /* Pause tant que le visiteur survole les étapes ou y navigue au clavier. */
-    .process:hover .process-track > .process-line,
-    .process:focus-within .process-track > .process-line {
+    /*
+     * Pause tant que le visiteur survole les étapes ou y navigue au clavier. Limité aux
+     * étapes : le bouton « lecture » garde le focus après le clic et ne doit pas bloquer.
+     */
+    .process-track:hover > .process-line,
+    .process-track:focus-within > .process-line {
       animation-play-state: paused;
     }
   }

@@ -55,10 +55,8 @@ export const projects: Project[] = [
   },
 ];
 
-/** Cartes affichées sur l'accueil. */
+/** Cartes affichées sur l'accueil ; les autres sont sur /projets. */
 export const HOME_PROJECTS_COUNT = 3;
-/** Le bouton « voir tous les projets » n'apparaît qu'au-delà de ce nombre de projets. */
-export const SHOW_ALL_PROJECTS_FROM = 7;
 
 export const testimonial = {
   quote: "[Le témoignage de Léa arrivera ici, une fois son nouveau site en ligne.]",

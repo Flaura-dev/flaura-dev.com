@@ -69,9 +69,10 @@ export function useActiveSection(): SectionId | null {
     [pathname],
   );
 
-  return useSyncExternalStore(
+  const current = useSyncExternalStore(
     subscribe,
     () => active,
     () => null,
   );
+  return pathname.startsWith("/projets") ? "projets" : current;
 }

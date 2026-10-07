@@ -3,9 +3,14 @@ export const site = {
   url: "https://flaura-dev.com",
   email: "hello@flaura-dev.com",
   linkedin: "https://www.linkedin.com/in/laura-fontaine-devweb83",
+  github: "https://github.com/Flaura-98",
+  /** Lien de l'événement Calendly (https://calendly.com/…). Tant qu'il est vide, rien n'est chargé. */
+  calendlyUrl: null as string | null,
+  /** Durée de l'appel découverte, en minutes. */
+  callDuration: "[Durée]",
   /** Passe à false pour masquer les mentions « disponible ». */
   available: true,
-} as const;
+};
 
 /** Sections de la page d'accueil : navigation, menu mobile et fil conducteur. */
 export const sections = [

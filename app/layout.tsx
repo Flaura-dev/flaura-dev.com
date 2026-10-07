@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Geist, Geist_Mono } from "next/font/google";
+import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { site } from "@/content/site";
 import { THEME_COLORS, themeInitScript } from "@/lib/theme";
@@ -67,7 +68,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <Header />
         {/* Sur desktop, la colonne de droite (88 px) est réservée au fil conducteur. */}
-        <div className="overflow-x-clip md:pr-[88px]">{children}</div>
+        <div className="overflow-x-clip md:pr-[88px]">
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );

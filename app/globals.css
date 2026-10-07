@@ -17,6 +17,8 @@
   --fg: #f3edf0;
   --muted: #a79faa;
   --faint: #5c5560;
+  /* Texte atténué mais lisible (4,7:1 sur le fond) : étapes non sélectionnées. */
+  --dim: #827a86;
   --pink: #f07fa2;
   --pink-hover: #ffb3c8;
   --avail: #6bd49a;
@@ -30,6 +32,7 @@
   --fg: #1b1720;
   --muted: #625a68;
   --faint: #a0959f;
+  --dim: #736b79;
   --pink: #c2386b;
   --pink-hover: #9e2552;
 }
@@ -44,6 +47,7 @@
   --color-fg: var(--fg);
   --color-muted: var(--muted);
   --color-faint: var(--faint);
+  --color-dim: var(--dim);
   --color-pink: var(--pink);
   --color-pink-hover: var(--pink-hover);
   --color-avail: var(--avail);
@@ -94,6 +98,23 @@
     /* Évite le décalage de la page quand le menu mobile bloque le défilement. */
     scrollbar-gutter: stable;
     scrollbar-color: var(--faint) var(--bg);
+  }
+
+  /*
+   * Desktop : la barre de défilement native est masquée (le défilement reste intact :
+   * molette, pavé tactile, clavier) et remplacée par le fil conducteur, déplaçable.
+   */
+  @media (width >= 56.25rem) {
+    html {
+      scrollbar-width: none;
+      scrollbar-gutter: auto;
+    }
+
+    @supports not (scrollbar-width: none) {
+      html::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 
   html:has(dialog[open]) {
@@ -175,41 +196,96 @@
   }
 
   /*
-   * Fil conducteur. La progression vaut 0 quand le haut du rail passe à 40 % de la
-   * hauteur d'écran, et 1 quand son bas y passe (même règle que la maquette).
-   * Navigateurs récents : animation pilotée par le scroll, sans JavaScript.
-   * Les autres (Firefox) : TracingBeam.tsx met à jour --beam-p.
+   * Menu en pilule : une bulle rose translucide se pose sur la section en cours et suit
+   * le lien survolé (ou focalisé au clavier). Positionnement par ancre CSS ; sans prise
+   * en charge, chaque lien prend simplement un fond au survol.
    */
-  .beam {
-    view-timeline: --beam block;
+  .nav-bubble {
+    position: relative;
+    isolation: isolate;
   }
 
-  .beam-fill {
-    transform-origin: top;
-    transform: scaleY(var(--beam-p, 0));
-    background: linear-gradient(to bottom, transparent, var(--pink) 85%);
+  .nav-bubble::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    position-anchor: --nav-bubble;
+    top: anchor(top);
+    bottom: anchor(bottom);
+    left: anchor(left);
+    right: anchor(right);
+    border-radius: 999px;
+    background-color: color-mix(in oklab, var(--pink) 14%, transparent);
+    box-shadow: 0 0 18px color-mix(in oklab, var(--pink) 22%, transparent);
+    backdrop-filter: blur(6px);
+    opacity: 0;
   }
 
-  .beam-head {
-    transform: translateY(calc((var(--beam-p, 0) - 1) * 100%));
+  .nav-bubble:has(a[aria-current="true"], a:hover, a:focus-visible)::before {
+    opacity: 1;
   }
 
-  @supports (animation-timeline: view()) {
-    .beam-fill {
-      animation: beam-fill linear both;
-      animation-timeline: --beam;
-      animation-range: cover 60vh cover calc(100% - 40vh);
+  .nav-bubble a[aria-current="true"],
+  .nav-bubble a:hover,
+  .nav-bubble a:focus-visible {
+    anchor-name: --nav-bubble;
+  }
+
+  .nav-bubble:has(a:hover, a:focus-visible) a[aria-current="true"]:not(:hover, :focus-visible) {
+    anchor-name: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-bubble::before {
+      transition:
+        top 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+        bottom 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+        left 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+        right 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+        opacity 0.2s;
+    }
+  }
+
+  @supports not (anchor-name: --a) {
+    .nav-bubble::before {
+      display: none;
     }
 
-    .beam-head {
-      animation: beam-head linear both;
-      animation-timeline: --beam;
-      animation-range: cover 60vh cover calc(100% - 40vh);
+    .nav-bubble a:hover,
+    .nav-bubble a[aria-current="true"] {
+      background-color: color-mix(in oklab, var(--pink) 14%, transparent);
+    }
+  }
+
+  /*
+   * Fil conducteur = barre de défilement de la page. --rail-p va de 0 (haut de page)
+   * à 1 (bas de page). Navigateurs récents : animation liée au défilement, sans
+   * JavaScript. Les autres (Firefox) : ScrollRail.tsx met --rail-p à jour.
+   */
+  .rail-fill {
+    transform-origin: top;
+    transform: scaleY(var(--rail-p, 0));
+    background: linear-gradient(to bottom, transparent, var(--pink) 70%);
+  }
+
+  .rail-thumb-track {
+    transform: translateY(calc((var(--rail-p, 0) - 1) * 100%));
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .rail-fill {
+      animation: rail-fill linear both;
+      animation-timeline: scroll(root block);
+    }
+
+    .rail-thumb-track {
+      animation: rail-thumb linear both;
+      animation-timeline: scroll(root block);
     }
   }
 }
 
-@keyframes beam-fill {
+@keyframes rail-fill {
   from {
     transform: scaleY(0);
   }
@@ -218,7 +294,7 @@
   }
 }
 
-@keyframes beam-head {
+@keyframes rail-thumb {
   from {
     transform: translateY(-100%);
   }

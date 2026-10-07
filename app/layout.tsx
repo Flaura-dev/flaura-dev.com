@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { ScrollRail } from "@/components/layout/ScrollRail";
 import { site } from "@/content/site";
 import { THEME_COLORS, themeInitScript } from "@/lib/theme";
 import "./globals.css";
@@ -67,11 +68,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Aller au contenu
         </a>
         <Header />
-        {/* Sur desktop, la colonne de droite (88 px) est réservée au fil conducteur. */}
+        {/* Sur desktop, la colonne de droite (88 px) est réservée au fil conducteur (ScrollRail). */}
         <div className="overflow-x-clip md:pr-[88px]">
           {children}
           <Footer />
         </div>
+        <ScrollRail />
       </body>
     </html>
   );

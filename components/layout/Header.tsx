@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { PhoneIcon } from "@/components/ui/icons";
 import { Brand } from "./Brand";
 import { HeaderShell } from "./HeaderShell";
 import { MobileMenu } from "./MobileMenu";
@@ -20,12 +21,9 @@ export function Header() {
           <ThemeToggle />
           <Link
             href="/#contact"
-            className="group hidden min-h-11 items-center gap-2.5 rounded-full border border-pink px-5 py-[13px] text-sm font-medium text-fg transition-colors hover:bg-pink hover:text-bg sm:inline-flex"
+            className="group hidden min-h-11 items-center gap-2.5 rounded-full border border-pink bg-pink/10 px-5 py-[13px] text-sm font-semibold text-fg transition-colors hover:bg-pink hover:text-bg sm:inline-flex"
           >
-            <span
-              className="size-2 rounded-full bg-pink transition-colors group-hover:bg-bg"
-              aria-hidden="true"
-            />
+            <PhoneIcon className="text-pink transition-colors group-hover:text-bg" />
             Réserver un appel
           </Link>
           <MobileMenu />

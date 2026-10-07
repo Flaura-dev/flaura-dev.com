@@ -3,7 +3,7 @@ import heroPhoto from "@/assets/photos/laura-hero-detouree.webp";
 import { AvailabilityDot } from "@/components/ui/AvailabilityDot";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
-import { ArrowRightIcon } from "@/components/ui/icons";
+import { PhoneIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
 
 /*
@@ -56,8 +56,8 @@ export function Hero() {
                   <span className="text-pink">.</span>
                 </p>
                 <ButtonLink href="/#contact" className="self-start">
+                  <PhoneIcon />
                   Réserver un appel
-                  <ArrowRightIcon />
                 </ButtonLink>
               </div>
 

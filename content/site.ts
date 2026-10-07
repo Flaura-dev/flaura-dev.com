@@ -7,7 +7,7 @@ export const site = {
   /** Lien de l'événement Calendly (https://calendly.com/…). Tant qu'il est vide, rien n'est chargé. */
   calendlyUrl: null as string | null,
   /** Durée de l'appel découverte, en minutes. */
-  callDuration: "[Durée]",
+  callDuration: "30",
   /** Passe à false pour masquer les mentions « disponible ». */
   available: true,
 };

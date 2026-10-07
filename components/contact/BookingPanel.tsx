@@ -35,7 +35,7 @@ export function BookingPanel() {
             </li>
             <li className="flex items-center gap-2.5">
               <VideoIcon className="shrink-0 text-pink" />
-              Visio ou téléphone
+              Visio
             </li>
             <li className="flex items-center gap-2.5">
               <CheckIcon className="shrink-0 text-pink" />

@@ -24,21 +24,22 @@ export function ContactForm() {
     <form
       method="post"
       onSubmit={handleSubmit}
-      className="flex flex-1 flex-col gap-5 rounded-3xl border border-line bg-surface p-8"
+      className="@container flex flex-1 flex-col gap-5 rounded-3xl border border-line bg-surface p-8"
     >
       <p className="text-[17px] font-semibold">Ou écrivez-moi</p>
 
-      <div className="grid gap-3.5 sm:grid-cols-2">
+      {/* Nom et e-mail côte à côte seulement si le formulaire est assez large. */}
+      <div className="grid gap-3.5 @[28rem]:grid-cols-2">
         <div className="flex flex-col gap-2.5">
           <label htmlFor="f-nom" className={labelClass}>
-            Nom
+            Nom et prénom
           </label>
           <input
             id="f-nom"
             name="nom"
             type="text"
             autoComplete="name"
-            placeholder="Votre nom"
+            placeholder="Votre nom et prénom"
             required
             maxLength={100}
             className={fieldClass}

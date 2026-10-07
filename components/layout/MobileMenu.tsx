@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { ArrowRightIcon, CloseIcon, MenuIcon } from "@/components/ui/icons";
+import { CloseIcon, MenuIcon, PhoneIcon } from "@/components/ui/icons";
 import { sections } from "@/content/site";
 import { useActiveSection } from "@/lib/use-active-section";
 
@@ -122,8 +122,8 @@ export function MobileMenu() {
           </nav>
 
           <ButtonLink href="/#contact" onClick={closeMenu} className="mt-6 w-full">
+            <PhoneIcon />
             Réserver un appel
-            <ArrowRightIcon />
           </ButtonLink>
         </div>
       </dialog>

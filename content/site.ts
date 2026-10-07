@@ -10,6 +10,11 @@ export const site = {
   callDuration: "30",
   /** Pétales de sakura qui tombent en arrière-plan. Passe à false pour les retirer du site. */
   petals: true,
+  /**
+   * Indexation par les moteurs de recherche. false tant que le site n'est pas lancé
+   * (placeholders, mentions légales, formulaire) : passe à true le jour du lancement.
+   */
+  indexable: false,
   /** Passe à false pour masquer les mentions « disponible ». */
   available: true,
 };

@@ -36,6 +36,7 @@ export const metadata: Metadata = {
   },
   description:
     "Laura Fontaine, développeuse web freelance dans le Var : création et refonte de sites pour les TPE, indépendants et petites entreprises, partout en France en remote.",
+  robots: site.indexable ? undefined : { index: false, follow: false },
   openGraph: {
     type: "website",
     locale: "fr_FR",

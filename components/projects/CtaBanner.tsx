@@ -5,8 +5,8 @@ import { PhoneIcon } from "@/components/ui/icons";
 export function CtaBanner() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-pink px-7 py-8 text-bg md:col-span-full md:px-10 md:py-9">
-      {/* « Le tien ? » est court : on le fait plus grand pour qu'il garde sa présence (88 px max). */}
-      <p className="font-display text-[clamp(3.5rem,2rem+5vw,5.5rem)] leading-[0.9] font-black uppercase">
+      {/* Plus grand qu'à l'origine pour garder sa présence, mais sous les titres de section (72 px max contre 110). */}
+      <p className="font-display text-[clamp(3rem,2rem+3vw,4.5rem)] leading-[0.9] font-black uppercase">
         Le tien&nbsp;?
       </p>
       <Link

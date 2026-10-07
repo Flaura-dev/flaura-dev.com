@@ -41,6 +41,7 @@ export const projects: Project[] = [
     label: "jeu en ligne · création",
     categories: ["creation"],
     visual: "pendu",
+    url: "https://darkslateblue-bear-545715.hostingersite.com/",
     description:
       "Un jeu du pendu dans l’univers de League of Legends, en solo ou à plusieurs. [Défi technique et résultat à détailler]",
   },

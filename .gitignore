@@ -42,3 +42,6 @@ next-env.d.ts
 
 # exemple de variables d'environnement (sans valeurs)
 !.env.example
+
+# maquette de référence : gardée en local, hors dépôt (contient des coordonnées personnelles)
+/maquette/

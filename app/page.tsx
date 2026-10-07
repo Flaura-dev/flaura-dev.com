@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { TracingBeam } from "@/components/layout/TracingBeam";
+import { Hero } from "@/components/sections/Hero";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -16,11 +17,7 @@ export default function Home() {
   return (
     <div className="relative">
       <main id="contenu">
-        <section id="accueil" className="pt-6 pb-16">
-          <Container>
-            <Placeholder>{"// accueil — étape suivante"}</Placeholder>
-          </Container>
-        </section>
+        <Hero />
 
         <section aria-labelledby="process-titre" className="pt-[72px]">
           <Container>

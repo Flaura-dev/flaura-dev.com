@@ -30,6 +30,7 @@ export function Brand() {
         alt=""
         width={38}
         height={38}
+        loading="eager"
         onAnimationEnd={() => setSpinning(false)}
         className={cx("block size-[38px]", spinning && "motion-safe:animate-sakura-spin")}
       />

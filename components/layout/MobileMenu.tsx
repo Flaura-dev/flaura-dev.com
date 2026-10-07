@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { ArrowRightIcon, CloseIcon, MenuIcon } from "@/components/ui/icons";
 import { sections } from "@/content/site";
 import { useActiveSection } from "@/lib/use-active-section";
@@ -120,14 +121,10 @@ export function MobileMenu() {
             </ul>
           </nav>
 
-          <Link
-            href="/#contact"
-            onClick={closeMenu}
-            className="mt-6 flex min-h-12 items-center justify-center gap-3 rounded-full bg-pink px-6 py-[15px] font-semibold text-bg transition-colors hover:bg-pink-hover"
-          >
+          <ButtonLink href="/#contact" onClick={closeMenu} className="mt-6 w-full">
             Réserver un appel
             <ArrowRightIcon />
-          </Link>
+          </ButtonLink>
         </div>
       </dialog>
     </>

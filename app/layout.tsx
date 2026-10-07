@@ -20,6 +20,9 @@ const bigShoulders = Big_Shoulders({
   subsets: ["latin"],
   axes: ["opsz"],
   variable: "--font-big-shoulders",
+  // Next ne connaît pas ses métriques : pas de secours ajusté, on liste des polices étroites.
+  adjustFontFallback: false,
+  fallback: ["Arial Narrow", "sans-serif-condensed", "Impact", "sans-serif"],
 });
 
 export const metadata: Metadata = {

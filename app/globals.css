@@ -262,6 +262,105 @@
   }
 
   /*
+   * Liste déroulante « Type de projet ». Navigateurs qui le permettent : <select>
+   * personnalisable (appearance: base-select), la liste ouverte prend les couleurs du
+   * site, tout en restant un vrai <select> (clavier, lecteurs d'écran, formulaire).
+   * Les autres : menu fermé stylé, liste ouverte du système.
+   */
+  .select-themed {
+    appearance: none;
+  }
+
+  @supports (appearance: base-select) {
+    .select-themed,
+    .select-themed::picker(select) {
+      appearance: base-select;
+    }
+
+    .select-themed::picker-icon {
+      display: none;
+    }
+
+    .select-themed::picker(select) {
+      width: anchor-size(width);
+      margin-block-start: 8px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background-color: var(--surface);
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      box-shadow:
+        0 18px 40px -12px rgb(0 0 0 / 0.55),
+        0 0 0 1px color-mix(in oklab, var(--pink) 10%, transparent);
+    }
+
+    .select-themed option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: 10px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .select-themed option:hover,
+    .select-themed option:focus-visible {
+      outline: none;
+      background-color: color-mix(in oklab, var(--pink) 12%, transparent);
+      color: var(--fg);
+    }
+
+    /* Option choisie : rose, en gras et cochée (pas seulement la couleur). */
+    .select-themed option:checked {
+      background-color: color-mix(in oklab, var(--pink) 8%, transparent);
+      color: var(--pink);
+      font-weight: 600;
+    }
+
+    .select-themed option::checkmark {
+      order: 1;
+      margin-inline-start: auto;
+      color: var(--pink);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .select-themed::picker(select) {
+        transition:
+          opacity 0.2s ease,
+          translate 0.2s ease,
+          display 0.2s allow-discrete,
+          overlay 0.2s allow-discrete;
+      }
+
+      .select-themed option {
+        transition:
+          background-color 0.15s,
+          color 0.15s;
+      }
+    }
+
+    .select-themed::picker(select) {
+      opacity: 0;
+      translate: 0 -6px;
+    }
+
+    .select-themed:open::picker(select) {
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    @starting-style {
+      .select-themed:open::picker(select) {
+        opacity: 0;
+        translate: 0 -6px;
+      }
+    }
+  }
+
+  /*
    * « Comment on travaille ensemble » : la ligne couvre les étapes jusqu'à l'étape en
    * cours (--to). En lecture automatique, elle se remplit de --from à --to pendant
    * --step-duration ; la fin de l'animation fait passer à l'étape suivante (Process.tsx).

@@ -66,18 +66,19 @@ export function ContactForm() {
         <label htmlFor="f-type" className={labelClass}>
           Type de projet
         </label>
+        {/* Liste aux couleurs du site : voir .select-themed dans globals.css. */}
         <div className="relative">
           <select
             id="f-type"
             name="type"
-            className={`${fieldClass} cursor-pointer appearance-none pr-11 font-semibold`}
+            className={`select-themed peer ${fieldClass} cursor-pointer pr-11 font-semibold transition-colors open:border-pink hover:not-open:border-pink/60`}
           >
-            <option>Site vitrine</option>
-            <option>Refonte</option>
-            <option>Application web</option>
-            <option>Je ne sais pas encore</option>
+            <option value="site-vitrine">Site vitrine</option>
+            <option value="refonte">Refonte</option>
+            <option value="application-web">Application web</option>
+            <option value="je-ne-sais-pas">Je ne sais pas encore</option>
           </select>
-          <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-muted" />
+          <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-muted transition-[rotate,color] duration-200 peer-open:rotate-180 peer-open:text-pink motion-reduce:transition-none" />
         </div>
       </div>
 

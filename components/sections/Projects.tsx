@@ -32,7 +32,7 @@ export function Projects() {
 
         <div className="grid gap-4 md:grid-cols-3">
           {projects.slice(0, HOME_PROJECTS_COUNT).map((project) => (
-            <ProjectCard key={project.slug} project={project} variant="home" />
+            <ProjectCard key={project.slug} project={project} />
           ))}
           <CtaBanner />
         </div>

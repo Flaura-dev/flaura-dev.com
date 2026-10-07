@@ -1,21 +1,21 @@
-import Link from "next/link";
-import { ArrowRightIcon, ArrowUpRightIcon } from "@/components/ui/icons";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
 import type { Project } from "@/content/projects";
 import { ProjectVisual } from "./ProjectVisual";
 
 type ProjectCardProps = {
   project: Project;
-  /** Accueil : la flèche mène à la page /projets. Sur /projets : lien vers le site, s'il existe. */
-  variant: "home" | "page";
+  /** Sur /projets, chaque carte porte une ancre (/projets#slug). */
+  withAnchor?: boolean;
 };
 
-const arrowClass =
-  "mt-auto inline-flex size-11 items-center justify-center self-end rounded-full border border-pink text-pink transition-colors hover:bg-pink hover:text-bg";
-
-export function ProjectCard({ project, variant }: ProjectCardProps) {
+/**
+ * Carte projet. Pas de lien vers /projets (le bouton « voir tous les projets » s'en
+ * charge) ; un lien ↗ vers le site apparaît dès qu'un projet a une adresse en ligne.
+ */
+export function ProjectCard({ project, withAnchor = false }: ProjectCardProps) {
   return (
     <article
-      id={variant === "page" ? project.slug : undefined}
+      id={withAnchor ? project.slug : undefined}
       className="flex scroll-mt-28 flex-col overflow-hidden rounded-3xl border border-line bg-surface"
     >
       <div className="relative h-[230px] overflow-hidden">
@@ -36,22 +36,13 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
           )}
         </p>
 
-        {variant === "home" && (
-          <Link
-            href={`/projets#${project.slug}`}
-            aria-label={`Voir le projet : ${project.title}`}
-            className={arrowClass}
-          >
-            <ArrowRightIcon />
-          </Link>
-        )}
-        {variant === "page" && project.url && (
+        {project.url && (
           <a
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Voir le site en ligne : ${project.title} (nouvel onglet)`}
-            className={arrowClass}
+            className="mt-auto inline-flex size-11 items-center justify-center self-end rounded-full border border-pink text-pink transition-colors hover:bg-pink hover:text-bg"
           >
             <ArrowUpRightIcon size={16} />
           </a>

@@ -11,9 +11,9 @@ const STEP_DURATION = "5s";
 
 /*
  * Frise interactive. Tant qu'on n'y touche pas, elle avance toute seule (la ligne se
- * remplit pendant 5 s, puis on passe à l'étape suivante). Elle se met en pause au
- * survol des étapes, quand la section sort de l'écran, avec le bouton pause, et
- * s'arrête dès qu'on clique sur une étape (le bouton « lecture » la relance). Sans lecture automatique si l'animation est réduite.
+ * remplit pendant 5 s, puis on passe à l'étape suivante). Elle s'arrête avec le
+ * bouton pause ou dès qu'on clique sur une étape (le bouton « lecture » la relance),
+ * et attend quand la section n'est pas à l'écran. Sans lecture automatique si l'animation est réduite.
  * L'avance est pilotée par la fin de l'animation CSS : mettre l'animation en pause
  * suffit à mettre la frise en pause.
  */

@@ -1,71 +1,22 @@
+import Image, { type StaticImageData } from "next/image";
+import leaAfter from "@/assets/projects/lea-apres.webp";
+import leaBefore from "@/assets/projects/lea-avant.webp";
+import pendu from "@/assets/projects/pendu.webp";
 import type { Project } from "@/content/projects";
 import { BeforeAfter } from "./BeforeAfter";
+import { BrowserFrame } from "./BrowserFrame";
 
 /*
- * Visuels provisoires repris de la maquette, en attendant les vraies images
- * (captures avant/après du site de Léa, visuels des projets).
+ * Captures faites en 1440 × 900 (double résolution), toutes au même format pour que
+ * l'avant et l'après se superposent au pixel près. Seul le haut de page est visible.
  */
+const SIZES = "(min-width: 1280px) 380px, (min-width: 900px) 33vw, 100vw";
 
-function LeaBefore() {
-  return (
-    <div className="flex size-full flex-col gap-2 bg-[#DAD8D6] px-5 pt-[70px] pb-5 [filter:grayscale(1)_brightness(0.85)]">
-      <div className="h-[22px] bg-[#7C8A99]" />
-      <div className="flex gap-1.5">
-        <div className="h-[70px] flex-1 bg-[#B7BEC6]" />
-        <div className="flex flex-1 flex-col gap-[5px]">
-          <div className="h-[5px] bg-[#A9AFB5]" />
-          <div className="h-[5px] bg-[#A9AFB5]" />
-          <div className="h-[5px] bg-[#A9AFB5]" />
-          <div className="h-[5px] w-3/5 bg-[#A9AFB5]" />
-        </div>
-      </div>
-      <div className="flex gap-1.5">
-        <div className="h-10 flex-1 bg-[#CDD2D7]" />
-        <div className="h-10 flex-1 bg-[#CDD2D7]" />
-        <div className="h-10 flex-1 bg-[#CDD2D7]" />
-      </div>
-    </div>
-  );
+function Shot({ src, alt }: { src: StaticImageData; alt: string }) {
+  return <Image src={src} alt={alt} fill sizes={SIZES} className="object-cover object-top" />;
 }
 
-function LeaAfter() {
-  return (
-    <div className="flex size-full gap-3.5 bg-[#F4EFE8] px-5 pt-[70px] pb-5">
-      <div className="flex flex-1 flex-col gap-2">
-        <div className="h-3 w-[85%] rounded-[3px] bg-[#3A3542]" />
-        <div className="h-3 w-3/5 rounded-[3px] bg-[#3A3542]" />
-        <div className="mt-1.5 h-[5px] w-[90%] rounded-[3px] bg-[#DDD3C5]" />
-        <div className="mt-2 h-[18px] w-[70px] rounded-full bg-[#8E9F86]" />
-      </div>
-      <div className="w-[90px] rounded-[45px_45px_8px_8px] bg-[#C9D3C0]" />
-    </div>
-  );
-}
-
-function PenduVisual() {
-  return (
-    <div
-      aria-hidden="true"
-      className="flex size-full items-center justify-center gap-6 bg-[#1D1924]"
-    >
-      <svg
-        width="80"
-        height="110"
-        viewBox="0 0 90 120"
-        fill="none"
-        stroke="#F3EDF0"
-        strokeWidth="4"
-        strokeLinecap="round"
-      >
-        <path d="M10 115h50M25 115V10h45v18" />
-        <circle cx="70" cy="40" r="10" />
-        <path d="M70 50v30M70 60l-12 10M70 60l12 10" />
-      </svg>
-      <span className="font-mono text-[26px] tracking-[6px] text-pink">_A__E</span>
-    </div>
-  );
-}
-
+/** Illustration provisoire (maquette), en attendant une capture du projet. */
 function AilleursVisual() {
   return (
     <div aria-hidden="true" className="flex size-full items-center justify-center bg-[#161A26]">
@@ -86,14 +37,20 @@ export function ProjectVisual({ project }: { project: Project }) {
   switch (project.visual) {
     case "lea":
       return (
-        <BeforeAfter
-          before={<LeaBefore />}
-          after={<LeaAfter />}
-          label="Comparer l’ancien et le nouveau site"
-        />
+        <BrowserFrame>
+          <BeforeAfter
+            before={<Shot src={leaBefore} alt="" />}
+            after={<Shot src={leaAfter} alt="" />}
+            label="Comparer l’ancien et le nouveau site de Léa Grondin"
+          />
+        </BrowserFrame>
       );
     case "pendu":
-      return <PenduVisual />;
+      return (
+        <BrowserFrame>
+          <Shot src={pendu} alt="Page d’accueil du jeu Le Pendu de la Faille" />
+        </BrowserFrame>
+      );
     case "ailleurs":
       return <AilleursVisual />;
   }

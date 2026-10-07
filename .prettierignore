@@ -1,0 +1,5 @@
+maquette/
+assets/
+.next/
+node_modules/
+package-lock.json

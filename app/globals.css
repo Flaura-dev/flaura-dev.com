@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+/* La maquette n'est qu'une référence : on ne veut pas que Tailwind y cherche des classes. */
+@source not "../maquette";
+
+/*
+ * Palettes de la charte. Le sombre est le thème par défaut :
+ * le serveur rend <html data-theme="dark"> et le script inline de app/layout.tsx
+ * bascule en clair avant l'affichage si le visiteur l'a choisi.
+ */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e0c11;
+  --surface: #17141b;
+  --line: #2a2530;
+  --fg: #f3edf0;
+  --muted: #a79faa;
+  --faint: #5c5560;
+  --pink: #f07fa2;
+  --pink-hover: #ffb3c8;
+  --avail: #6bd49a;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f2ee;
+  --surface: #ffffff;
+  --line: #e7ddd9;
+  --fg: #1b1720;
+  --muted: #625a68;
+  --faint: #a0959f;
+  --pink: #c2386b;
+  --pink-hover: #9e2552;
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-pink: var(--pink);
+  --color-pink-hover: var(--pink-hover);
+  --color-avail: var(--avail);
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  /* Big Shoulders est désormais une seule police variable : opsz 72 = l'ancienne « Display ». */
+  --font-display: var(--font-big-shoulders), "Arial Narrow", sans-serif;
+  --font-display--font-variation-settings: "opsz" 72;
+}
+
+@theme {
+  /* Rupture mobile de la maquette. */
+  --breakpoint-md: 56.25rem;
+  /* À partir d'ici, le menu en pilule tient dans le header (mesuré, cf. Header.tsx). */
+  --breakpoint-nav: 78rem;
+
+  /* Titres de section : 110 px sur desktop ; « PARLONS-EN. » (4,84 em de large) doit tenir à 320 px. */
+  --text-section: clamp(3rem, 1.8rem + 6vw, 6.875rem);
+  --text-section--line-height: 0.9;
+
+  --animate-sakura-spin: sakura-spin 0.9s cubic-bezier(0.5, 0, 0.3, 1) 1;
+  --animate-dispo-pulse: dispo-pulse 2.4s ease-in-out infinite;
+
+  @keyframes sakura-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  @keyframes dispo-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      box-shadow: 0 0 0 0 rgb(107 212 154 / 0.55);
+    }
+    50% {
+      opacity: 0.45;
+      box-shadow: 0 0 0 6px rgb(107 212 154 / 0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    /* Laisse la place au header collant quand on saute à une ancre. */
+    scroll-padding-top: 6rem;
+    /* Évite le décalage de la page quand le menu mobile bloque le défilement. */
+    scrollbar-gutter: stable;
+    scrollbar-color: var(--faint) var(--bg);
+  }
+
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      transition:
+        background-color 0.3s,
+        color 0.3s;
+    }
+  }
+
+  ::selection {
+    background-color: var(--pink);
+    color: var(--bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--pink);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Menu mobile : panneau qui descend du haut (progressif, sans effet si non supporté). */
+  .menu-dialog {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+
+  .menu-dialog[open] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .menu-dialog::backdrop {
+    background-color: rgb(14 12 17 / 0);
+  }
+
+  .menu-dialog[open]::backdrop {
+    background-color: rgb(14 12 17 / 0.6);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .menu-dialog,
+    .menu-dialog::backdrop {
+      transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        overlay 0.25s allow-discrete,
+        display 0.25s allow-discrete;
+    }
+
+    @starting-style {
+      .menu-dialog[open] {
+        opacity: 0;
+        transform: translateY(-1.5rem);
+      }
+
+      .menu-dialog[open]::backdrop {
+        background-color: rgb(14 12 17 / 0);
+      }
+    }
+  }
+
+  /*
+   * Fil conducteur. La progression vaut 0 quand le haut du rail passe à 40 % de la
+   * hauteur d'écran, et 1 quand son bas y passe (même règle que la maquette).
+   * Navigateurs récents : animation pilotée par le scroll, sans JavaScript.
+   * Les autres (Firefox) : TracingBeam.tsx met à jour --beam-p.
+   */
+  .beam {
+    view-timeline: --beam block;
+  }
+
+  .beam-fill {
+    transform-origin: top;
+    transform: scaleY(var(--beam-p, 0));
+    background: linear-gradient(to bottom, transparent, var(--pink) 85%);
+  }
+
+  .beam-head {
+    transform: translateY(calc((var(--beam-p, 0) - 1) * 100%));
+  }
+
+  @supports (animation-timeline: view()) {
+    .beam-fill {
+      animation: beam-fill linear both;
+      animation-timeline: --beam;
+      animation-range: cover 60vh cover calc(100% - 40vh);
+    }
+
+    .beam-head {
+      animation: beam-head linear both;
+      animation-timeline: --beam;
+      animation-range: cover 60vh cover calc(100% - 40vh);
+    }
+  }
+}
+
+@keyframes beam-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes beam-head {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

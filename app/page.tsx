@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { TracingBeam } from "@/components/layout/TracingBeam";
+import { About } from "@/components/sections/About";
 import { Hero } from "@/components/sections/Hero";
+import { Process } from "@/components/sections/Process";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -18,27 +20,8 @@ export default function Home() {
     <div className="relative">
       <main id="contenu">
         <Hero />
-
-        <section aria-labelledby="process-titre" className="pt-[72px]">
-          <Container>
-            <h2
-              id="process-titre"
-              className="font-mono text-xs tracking-[2px] text-muted uppercase"
-            >
-              {"// comment on travaille ensemble"}
-            </h2>
-            <Placeholder>{"// 4 étapes"}</Placeholder>
-          </Container>
-        </section>
-
-        <section id="apropos" aria-labelledby="apropos-titre" className="pt-[120px] pb-24">
-          <Container className="flex flex-col gap-8">
-            <SectionHeading num="01" id="apropos-titre">
-              Hello World<span className="text-pink">.</span>
-            </SectionHeading>
-            <Placeholder>{"// bento"}</Placeholder>
-          </Container>
-        </section>
+        <Process />
+        <About />
 
         <section id="projets" aria-labelledby="projets-titre" className="py-24">
           <Container className="flex flex-col gap-8">

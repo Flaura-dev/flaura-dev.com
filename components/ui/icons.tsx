@@ -55,6 +55,15 @@ export function CloseIcon(props: IconProps) {
   );
 }
 
+export function MapPinIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z" />
+      <circle cx="12" cy="10" r="2.5" />
+    </Svg>
+  );
+}
+
 export function ArrowRightIcon(props: IconProps) {
   return (
     <Svg size={16} {...props}>

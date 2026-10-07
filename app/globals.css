@@ -21,6 +21,7 @@
   --dim: #827a86;
   --pink: #f07fa2;
   --pink-hover: #ffb3c8;
+  --petal: #f9b4c9;
   --avail: #6bd49a;
 }
 
@@ -35,10 +36,13 @@
   --dim: #736b79;
   --pink: #c2386b;
   --pink-hover: #9e2552;
+  --petal: #d65c8a;
 }
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+/* Pétales désactivés par le visiteur (interrupteur du footer, mémorisé). */
+@custom-variant petals-off (&:where([data-petals="off"], [data-petals="off"] *));
 
 @theme inline {
   --color-bg: var(--bg);
@@ -258,6 +262,107 @@
   }
 
   /*
+   * « Comment on travaille ensemble » : la ligne couvre les étapes jusqu'à l'étape en
+   * cours (--to). En lecture automatique, elle se remplit de --from à --to pendant
+   * --step-duration ; la fin de l'animation fait passer à l'étape suivante (Process.tsx).
+   */
+  .process-line {
+    transform-origin: top;
+    transform: scaleY(var(--to));
+  }
+
+  @media (width >= 56.25rem) {
+    .process-line {
+      transform-origin: left;
+      transform: scaleX(var(--to));
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .process-line {
+      transition: transform 0.5s ease-out;
+    }
+
+    .process-track[data-autoplay="true"] > .process-line {
+      transition: none;
+      animation: process-fill-y var(--step-duration) linear both paused;
+    }
+
+    @media (width >= 56.25rem) {
+      .process-track[data-autoplay="true"] > .process-line {
+        animation-name: process-fill-x;
+      }
+    }
+
+    .process-track[data-running="true"] > .process-line {
+      animation-play-state: running;
+    }
+
+    /* Pause tant que le visiteur survole les étapes ou y navigue au clavier. */
+    .process:hover .process-track > .process-line,
+    .process:focus-within .process-track > .process-line {
+      animation-play-state: paused;
+    }
+  }
+
+  /*
+   * Pétales de sakura en arrière-plan : couche fixe sous le contenu, animations CSS
+   * (transform uniquement). Absents si l'animation est réduite ou si le visiteur les
+   * a coupés (footer). Moitié moins de pétales sur mobile.
+   */
+  .petals {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .petal {
+    position: absolute;
+    top: 0;
+    left: var(--left);
+    width: var(--size);
+    opacity: var(--opacity);
+    animation: petal-fall var(--fall) linear var(--delay) infinite;
+  }
+
+  .petal > span {
+    display: block;
+    animation: petal-sway var(--sway) ease-in-out var(--delay) infinite alternate;
+  }
+
+  .petal svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    fill: var(--petal);
+    animation: petal-flutter var(--flutter) ease-in-out infinite alternate;
+  }
+
+  @media (width < 56.25rem) {
+    .petal:nth-child(n + 8) {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .petals {
+      display: none;
+    }
+  }
+
+  [data-petals="off"] .petals {
+    display: none;
+  }
+
+  @media print {
+    .petals {
+      display: none;
+    }
+  }
+
+  /*
    * Fil conducteur = barre de défilement de la page. --rail-p va de 0 (haut de page)
    * à 1 (bas de page). Navigateurs récents : animation liée au défilement, sans
    * JavaScript. Les autres (Firefox) : ScrollRail.tsx met --rail-p à jour.
@@ -282,6 +387,51 @@
       animation: rail-thumb linear both;
       animation-timeline: scroll(root block);
     }
+  }
+}
+
+@keyframes process-fill-x {
+  from {
+    transform: scaleX(var(--from));
+  }
+  to {
+    transform: scaleX(var(--to));
+  }
+}
+
+@keyframes process-fill-y {
+  from {
+    transform: scaleY(var(--from));
+  }
+  to {
+    transform: scaleY(var(--to));
+  }
+}
+
+@keyframes petal-fall {
+  from {
+    transform: translateY(-10vh);
+  }
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+@keyframes petal-sway {
+  from {
+    transform: translateX(calc(var(--sway-x) * -1)) rotate(-25deg);
+  }
+  to {
+    transform: translateX(var(--sway-x)) rotate(35deg);
+  }
+}
+
+@keyframes petal-flutter {
+  from {
+    transform: rotate3d(1, 0.4, 0, 0deg);
+  }
+  to {
+    transform: rotate3d(1, 0.4, 0, 70deg);
   }
 }
 

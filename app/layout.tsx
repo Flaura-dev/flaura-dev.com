@@ -2,9 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { SakuraPetals } from "@/components/layout/SakuraPetals";
 import { ScrollRail } from "@/components/layout/ScrollRail";
 import { site } from "@/content/site";
-import { THEME_COLORS, themeInitScript } from "@/lib/theme";
+import { preferencesInitScript, THEME_COLORS } from "@/lib/theme";
 import "./globals.css";
 
 const geist = Geist({
@@ -58,9 +59,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geist.variable} ${geistMono.variable} ${bigShoulders.variable}`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: preferencesInitScript }} />
       </head>
       <body className="min-h-dvh">
+        {site.petals && <SakuraPetals />}
         <a
           href="#contenu"
           className="sr-only rounded-full bg-pink px-5 py-3 font-semibold text-bg focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50"

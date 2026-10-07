@@ -55,6 +55,22 @@ export function CloseIcon(props: IconProps) {
   );
 }
 
+export function PauseIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M8 5v14M16 5v14" />
+    </Svg>
+  );
+}
+
+export function PlayIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M7 4.5v15l12-7.5z" />
+    </Svg>
+  );
+}
+
 export function PhoneIcon(props: IconProps) {
   return (
     <Svg size={16} {...props}>

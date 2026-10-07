@@ -6,6 +6,7 @@ import { AvailabilityDot } from "@/components/ui/AvailabilityDot";
 import { Container } from "@/components/ui/Container";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
+import { PetalsToggle } from "./PetalsToggle";
 
 const columnTitle = "mb-1 font-mono text-xs text-pink";
 const linkClass = "text-fg transition-colors hover:text-pink";
@@ -96,6 +97,7 @@ export function Footer() {
             <Link href="/confidentialite" className="underline underline-offset-2 hover:text-pink">
               confidentialité
             </Link>
+            {site.petals && <PetalsToggle />}
             <a href="#contenu" className="text-pink hover:text-pink-hover">
               retour en haut ↑
             </a>

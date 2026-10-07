@@ -8,6 +8,8 @@ export const site = {
   calendlyUrl: null as string | null,
   /** Durée de l'appel découverte, en minutes. */
   callDuration: "30",
+  /** Pétales de sakura qui tombent en arrière-plan. Passe à false pour les retirer du site. */
+  petals: true,
   /** Passe à false pour masquer les mentions « disponible ». */
   available: true,
 };

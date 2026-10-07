@@ -1,31 +1,79 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Container } from "@/components/ui/Container";
+import { PauseIcon, PlayIcon } from "@/components/ui/icons";
 import { processSteps } from "@/content/process";
 import { cx } from "@/lib/cx";
 
+/** Durée d'affichage de chaque étape en lecture automatique. */
+const STEP_DURATION = "5s";
+
 /*
- * Frise interactive : on clique sur une étape pour la mettre en avant, les autres
- * passent en retrait (toujours lisibles), et la ligne se remplit jusqu'à l'étape choisie.
- * Desktop : étapes côte à côte. Mobile : la même frise à la verticale.
+ * Frise interactive. Tant qu'on n'y touche pas, elle avance toute seule (la ligne se
+ * remplit pendant 5 s, puis on passe à l'étape suivante). Elle se met en pause au
+ * survol, quand la section sort de l'écran, avec le bouton pause, et s'arrête dès
+ * qu'on clique sur une étape. Sans lecture automatique si l'animation est réduite.
+ * L'avance est pilotée par la fin de l'animation CSS : mettre l'animation en pause
+ * suffit à mettre la frise en pause.
  */
 export function Process() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
-  const progress = (active + 1) / processSteps.length;
+  const [playing, setPlaying] = useState(true);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
+      threshold: 0.35,
+    });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  function select(index: number) {
+    setPlaying(false);
+    setActive(index);
+  }
+
+  const lineStyle = {
+    "--from": active / processSteps.length,
+    "--to": (active + 1) / processSteps.length,
+    "--step-duration": STEP_DURATION,
+  } as CSSProperties;
 
   return (
-    <section aria-labelledby="process-titre" className="pt-[72px]">
+    <section ref={sectionRef} aria-labelledby="process-titre" className="process pt-[72px]">
       <Container className="flex flex-col gap-7">
-        <h2 id="process-titre" className="font-mono text-xs tracking-[2px] text-muted uppercase">
-          {"// comment on travaille ensemble"}
-        </h2>
+        <div className="flex items-center justify-between gap-4">
+          <h2 id="process-titre" className="font-mono text-xs tracking-[2px] text-muted uppercase">
+            {"// comment on travaille ensemble"}
+          </h2>
+          <button
+            type="button"
+            onClick={() => setPlaying((value) => !value)}
+            className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-4 font-mono text-[11px] tracking-[1.5px] text-muted uppercase transition-colors hover:border-pink hover:text-pink motion-reduce:hidden"
+          >
+            {playing ? <PauseIcon size={12} /> : <PlayIcon size={12} />}
+            {playing ? "pause" : "lecture"}
+            <span className="sr-only"> du défilement automatique des étapes</span>
+          </button>
+        </div>
 
-        <div style={{ "--progress": progress } as CSSProperties} className="relative">
+        <div
+          style={lineStyle}
+          data-autoplay={playing}
+          data-running={playing && inView}
+          className="process-track relative"
+        >
           {/* Ligne de progression : verticale sur mobile, horizontale sur desktop. */}
           <span
+            key={playing ? `auto-${active}` : "manual"}
             aria-hidden="true"
-            className="absolute top-0 -left-px h-full w-0.5 origin-top [transform:scaleY(var(--progress))] bg-pink motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out md:-top-px md:left-0 md:h-0.5 md:w-full md:origin-left md:[transform:scaleX(var(--progress))]"
+            onAnimationEnd={() => setActive((index) => (index + 1) % processSteps.length)}
+            className="process-line absolute top-0 -left-px h-full w-0.5 bg-pink md:-top-px md:left-0 md:h-0.5 md:w-full"
           />
           <ol className="grid border-l border-line md:grid-cols-4 md:border-t md:border-l-0">
             {processSteps.map((step, index) => {
@@ -56,7 +104,7 @@ export function Process() {
                     {/* Le bouton couvre toute l'étape (pseudo-élément) : clic n'importe où. */}
                     <button
                       type="button"
-                      onClick={() => setActive(index)}
+                      onClick={() => select(index)}
                       aria-current={current ? "step" : undefined}
                       className={cx(
                         "cursor-pointer text-left uppercase after:absolute after:inset-0 focus-visible:outline-none motion-safe:transition-colors",

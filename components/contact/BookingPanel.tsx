@@ -43,8 +43,8 @@ export function BookingPanel() {
             </li>
           </ul>
           <p className="text-sm leading-[1.6] text-muted">
-            On parle de votre projet et de vos objectifs, et je vous dis franchement si je suis la
-            bonne personne pour vous aider.
+            On parle de ton projet et de tes objectifs, et je te dis franchement si je suis la bonne
+            personne pour t’aider.
           </p>
         </div>
         <div className="p-7">

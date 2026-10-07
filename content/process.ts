@@ -3,7 +3,7 @@ export const processSteps = [
   {
     num: "01",
     title: "On en parle",
-    text: "Un appel pour comprendre votre activité et ce que votre site doit faire pour vous.",
+    text: "Un appel pour comprendre ton activité et ce que ton site doit faire pour toi.",
   },
   {
     num: "02",

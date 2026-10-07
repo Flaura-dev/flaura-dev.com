@@ -26,7 +26,7 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="@container flex flex-1 flex-col gap-5 rounded-3xl border border-line bg-surface p-8"
     >
-      <p className="text-[17px] font-semibold">Ou écrivez-moi</p>
+      <p className="text-[17px] font-semibold">Ou écris-moi</p>
 
       {/* Nom et e-mail côte à côte seulement si le formulaire est assez large. */}
       <div className="grid gap-3.5 @[28rem]:grid-cols-2">
@@ -39,7 +39,7 @@ export function ContactForm() {
             name="nom"
             type="text"
             autoComplete="name"
-            placeholder="Votre nom et prénom"
+            placeholder="Ton nom et prénom"
             required
             maxLength={100}
             className={fieldClass}
@@ -54,7 +54,7 @@ export function ContactForm() {
             name="email"
             type="email"
             autoComplete="email"
-            placeholder="vous@exemple.com"
+            placeholder="toi@exemple.com"
             required
             maxLength={254}
             className={fieldClass}
@@ -90,7 +90,7 @@ export function ContactForm() {
           id="f-msg"
           name="message"
           rows={5}
-          placeholder="Parlez-moi de votre projet…"
+          placeholder="Parle-moi de ton projet…"
           required
           maxLength={5000}
           className={`${fieldClass} flex-1 resize-y`}
@@ -110,7 +110,7 @@ export function ContactForm() {
       </p>
 
       <p className="text-xs leading-[1.6] text-muted">
-        Vos informations servent uniquement à vous répondre.{" "}
+        Tes informations servent uniquement à te répondre.{" "}
         <Link href="/confidentialite" className="underline underline-offset-2 hover:text-pink">
           En savoir plus
         </Link>

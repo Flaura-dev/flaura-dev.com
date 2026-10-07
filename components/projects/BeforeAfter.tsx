@@ -49,7 +49,7 @@ export function BeforeAfter({ before, after, label }: BeforeAfterProps) {
       </span>
       <span className="pointer-events-none absolute top-4 right-3.5 flex items-center gap-1.5 rounded-full bg-bg px-2.5 py-1 font-mono text-[11px] text-fg">
         <ArrowLeftIcon size={11} />
-        glissez
+        glisse
         <ArrowRightIcon size={11} />
       </span>
 

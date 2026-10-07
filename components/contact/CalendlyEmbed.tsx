@@ -52,7 +52,7 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
 
   return (
     <div className="flex h-full flex-col gap-[18px]">
-      <p className="text-[17px] font-semibold">Choisissez un créneau</p>
+      <p className="text-[17px] font-semibold">Choisis un créneau</p>
       <div className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line p-8 text-center">
         <CalendarIcon size={32} className="text-pink" />
         <p className="max-w-[320px] text-sm leading-[1.6] text-muted">
@@ -73,7 +73,7 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
       </div>
       <p className="font-mono text-[11px] text-muted">
         Créneaux synchronisés via Calendly · fuseau Europe/Paris. Le calendrier se charge uniquement
-        si vous cliquez.
+        si tu cliques.
       </p>
     </div>
   );

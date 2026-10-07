@@ -3,10 +3,10 @@ export const faq = [
   {
     question: "Combien de temps prend un projet ?",
     answer:
-      "Ça dépend de ce qu’on construit. On en parle pendant l’appel, et vous recevez un planning précis avec le devis.",
+      "Ça dépend de ce qu’on construit. On en parle pendant l’appel, et tu reçois un planning précis avec le devis.",
   },
   { question: "Combien coûte un site ?", answer: "[Réponse à rédiger]" },
   { question: "Pourrai-je modifier mon site moi-même ?", answer: "[Réponse à rédiger]" },
-  { question: "Vous occupez-vous de l’hébergement ?", answer: "[Réponse à rédiger]" },
-  { question: "Travaillez-vous à distance ?", answer: "[Réponse à rédiger]" },
+  { question: "Tu t’occupes de l’hébergement ?", answer: "[Réponse à rédiger]" },
+  { question: "Tu travailles à distance ?", answer: "[Réponse à rédiger]" },
 ] as const;

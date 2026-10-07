@@ -19,7 +19,7 @@ export function Contact() {
           </span>
         </SectionHeading>
         <p className="max-w-[620px] text-[19px] leading-[1.6] text-muted">
-          Le plus simple&nbsp;: choisissez un créneau pour un appel découverte. Vous préférez
+          Le plus simple&nbsp;: choisis un créneau pour un appel découverte. Tu préfères
           écrire&nbsp;? Le formulaire est juste à côté.
         </p>
 

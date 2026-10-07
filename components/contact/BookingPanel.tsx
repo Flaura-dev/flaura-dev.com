@@ -22,9 +22,9 @@ export function BookingPanel() {
             alt="Laura"
             width={56}
             height={56}
-            className="size-14 rounded-full border-2 border-pink object-cover"
+            className="size-14 self-center rounded-full border-2 border-pink object-cover"
           />
-          <p className="font-mono text-xs text-muted">Laura · Flaura.dev</p>
+          <p className="text-center font-mono text-xs text-muted">Laura · Flaura.dev</p>
           <h3 className="font-display text-[34px] leading-none font-black uppercase">
             Appel découverte
           </h3>

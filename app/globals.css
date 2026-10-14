@@ -528,8 +528,12 @@
     animation: petal-flutter var(--flutter) ease-in-out infinite alternate;
   }
 
+  /*
+   * Les pétales sont rangés de gauche à droite (SakuraPetals.tsx) : on en retire un sur
+   * deux, pas la seconde moitié, pour qu'ils couvrent toujours toute la largeur.
+   */
   @media (width < 56.25rem) {
-    .petal:nth-child(n + 8) {
+    .petal:nth-child(even) {
       display: none;
     }
   }

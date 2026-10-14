@@ -5,8 +5,8 @@ export const site = {
   linkedin: "https://www.linkedin.com/in/laura-fontaine-devweb83",
   github: "https://github.com/Flaura-98",
   /** Lien de l'événement Calendly (https://calendly.com/…). Tant qu'il est vide, rien n'est chargé. */
-  calendlyUrl: null as string | null,
-  /** Durée de l'appel découverte, en minutes. */
+  calendlyUrl: "https://calendly.com/flaura-devweb/cafe" as string | null,
+  /** Durée du café virtuel (l'appel découverte), en minutes. */
   callDuration: "30",
   /** Pétales de sakura qui tombent en arrière-plan. Passe à false pour les retirer du site. */
   petals: true,

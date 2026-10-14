@@ -1,13 +1,13 @@
 import { BookingPanel } from "@/components/contact/BookingPanel";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/ui/Container";
-import { ArrowUpRightIcon, LinkedInIcon } from "@/components/ui/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { site } from "@/content/site";
 
 /*
  * Réservation (7/11) et formulaire (4/11) côte à côte sur grand écran ; en dessous,
  * l'un au-dessus de l'autre pour que le formulaire garde une largeur confortable.
+ * Le lien LinkedIn est dans la présentation du bloc de réservation : les deux colonnes
+ * gardent ainsi à peu près la même hauteur que le calendrier (pas de grand vide).
  */
 export function Contact() {
   return (
@@ -19,28 +19,13 @@ export function Contact() {
           </span>
         </SectionHeading>
         <p className="max-w-[620px] text-[1.1875rem] leading-[1.6] text-muted">
-          Le plus simple&nbsp;: choisis un créneau pour un appel découverte. Tu préfères
-          écrire&nbsp;? Le formulaire est juste à côté.
+          Le plus simple&nbsp;: choisis un créneau pour un café virtuel. Tu préfères écrire&nbsp;?
+          Le formulaire est juste à côté.
         </p>
 
         <div className="grid items-stretch gap-5 xl:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
           <BookingPanel />
-          <div className="flex flex-col gap-4">
-            <ContactForm />
-            <a
-              href={site.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex press items-center justify-between gap-3 rounded-[20px] border border-line bg-surface px-6 py-5 text-fg [--press-scale:0.985] hover:border-pink"
-            >
-              <span className="flex items-center gap-3 font-semibold">
-                <LinkedInIcon className="text-pink" />
-                Me suivre sur LinkedIn
-                <span className="sr-only">(nouvel onglet)</span>
-              </span>
-              <ArrowUpRightIcon size={16} className="text-pink" />
-            </a>
-          </div>
+          <ContactForm />
         </div>
       </Container>
     </section>

@@ -52,8 +52,13 @@ export function Hero() {
                   {"// Développeuse web freelance"}
                 </p>
                 <p className="font-display text-[2.75rem] leading-none font-bold uppercase">
-                  Tes clients doivent pouvoir te trouver, ton site doit leur donner envie de te
-                  choisir<span className="text-pink">.</span>
+                  {/* Les deux bénéfices en rose, chacun gardé d'un bloc sur sa ligne. */}
+                  Tes clients doivent pouvoir{" "}
+                  <span className="whitespace-nowrap text-pink">te trouver</span>, ton site doit
+                  leur donner envie de{" "}
+                  <span className="whitespace-nowrap">
+                    <span className="text-pink">te choisir</span>.
+                  </span>
                 </p>
                 <ButtonLink href="/#contact" className="self-start">
                   <PhoneIcon />

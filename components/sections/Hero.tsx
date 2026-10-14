@@ -47,13 +47,13 @@ export function Hero() {
             </div>
 
             <div className="relative mt-6 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between xl:static xl:mt-0">
-              <div className="flex max-w-[360px] flex-col gap-[18px] xl:absolute xl:bottom-0 xl:left-0">
-                <p className="font-mono text-xs tracking-[2px] text-pink uppercase">
+              <div className="flex max-w-[22.5rem] flex-col gap-[18px] xl:absolute xl:bottom-0 xl:left-0">
+                <p className="font-mono text-xs tracking-[0.17em] text-pink uppercase">
                   {"// Développeuse web freelance"}
                 </p>
-                <p className="font-display text-[44px] leading-none font-bold uppercase">
-                  Créative dans le design. Rigoureuse dans le code
-                  <span className="text-pink">.</span>
+                <p className="font-display text-[2.75rem] leading-none font-bold uppercase">
+                  Tes clients doivent pouvoir te trouver, ton site doit leur donner envie de te
+                  choisir<span className="text-pink">.</span>
                 </p>
                 <ButtonLink href="/#contact" className="self-start">
                   <PhoneIcon />

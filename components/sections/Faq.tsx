@@ -4,7 +4,8 @@ import { faq } from "@/content/faq";
 import { cx } from "@/lib/cx";
 
 /*
- * Accordéon en <details> natifs : fonctionne au clavier et sans JavaScript.
+ * Accordéon en <details> natifs : fonctionne au clavier et sans JavaScript. La réponse
+ * se déplie en douceur (.faq-item, globals.css).
  * La première question occupe toute la largeur et s'ouvre par défaut (maquette) ;
  * les autres sont sur deux colonnes, alignées en haut pour qu'une question ouverte
  * n'étire pas sa voisine.
@@ -23,11 +24,11 @@ export function Faq() {
               key={item.question}
               open={index === 0}
               className={cx(
-                "group rounded-[20px] border border-line bg-surface px-7 py-[26px] open:border-pink",
+                "faq-item group rounded-[20px] border border-line bg-surface px-7 py-[26px] open:border-pink motion-safe:transition-colors motion-safe:duration-300",
                 index === 0 && "md:col-span-2",
               )}
             >
-              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-[19px] font-semibold [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-[1.1875rem] font-semibold press-text [&::-webkit-details-marker]:hidden">
                 {item.question}
                 <span aria-hidden="true" className="shrink-0 font-mono text-pink">
                   <span className="group-open:hidden">[+]</span>

@@ -18,7 +18,7 @@ export function Contact() {
             Parlons<span className="text-fg">‑en.</span>
           </span>
         </SectionHeading>
-        <p className="max-w-[620px] text-[19px] leading-[1.6] text-muted">
+        <p className="max-w-[620px] text-[1.1875rem] leading-[1.6] text-muted">
           Le plus simple&nbsp;: choisis un créneau pour un appel découverte. Tu préfères
           écrire&nbsp;? Le formulaire est juste à côté.
         </p>
@@ -31,7 +31,7 @@ export function Contact() {
               href={site.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between gap-3 rounded-[20px] border border-line bg-surface px-6 py-5 text-fg transition-colors hover:border-pink"
+              className="flex press items-center justify-between gap-3 rounded-[20px] border border-line bg-surface px-6 py-5 text-fg [--press-scale:0.985] hover:border-pink"
             >
               <span className="flex items-center gap-3 font-semibold">
                 <LinkedInIcon className="text-pink" />

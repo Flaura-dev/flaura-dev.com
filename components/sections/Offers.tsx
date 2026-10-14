@@ -18,17 +18,17 @@ export function Offers() {
             >
               <span
                 aria-hidden="true"
-                className="flex-[0_0_90px] font-display text-[56px] leading-none font-black text-pink"
+                className="flex-[0_0_90px] font-display text-[3.5rem] leading-none font-black text-pink"
               >
                 {offer.num}
               </span>
               <div className="flex flex-[1_1_320px] flex-col gap-2">
-                <h3 className="font-display text-[40px] leading-none font-black uppercase">
+                <h3 className="font-display text-[2.5rem] leading-none font-black uppercase">
                   {offer.title}
                 </h3>
                 <p className="text-muted">{offer.text}</p>
               </div>
-              <ul className="flex-[1_1_260px] font-mono text-[13px] leading-[1.9] text-muted">
+              <ul className="flex-[1_1_260px] font-mono text-[0.8125rem] leading-[1.9] text-muted">
                 {offer.features.map((feature) => (
                   <li key={feature}>+ {feature}</li>
                 ))}

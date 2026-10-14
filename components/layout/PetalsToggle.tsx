@@ -41,7 +41,7 @@ export function PetalsToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="cursor-pointer underline underline-offset-2 hover:text-pink motion-reduce:hidden"
+      className="inline-flex cursor-pointer items-center underline underline-offset-2 press-text hover:text-pink motion-reduce:hidden pointer-coarse:min-h-11"
     >
       <span className="petals-off:hidden">couper les pétales</span>
       <span className="hidden petals-off:inline">remettre les pétales</span>

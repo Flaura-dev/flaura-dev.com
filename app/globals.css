@@ -4,9 +4,9 @@
 @source not "../maquette";
 
 /*
- * Palettes de la charte. Le sombre est le thème par défaut :
+ * Palettes de la charte. Le thème suit le système du visiteur :
  * le serveur rend <html data-theme="dark"> et le script inline de app/layout.tsx
- * bascule en clair avant l'affichage si le visiteur l'a choisi.
+ * bascule en clair avant l’affichage si c’est son réglage ou son choix (lib/theme.ts).
  */
 :root,
 [data-theme="dark"] {
@@ -23,6 +23,11 @@
   --pink-hover: #ffb3c8;
   --petal: #f9b4c9;
   --avail: #6bd49a;
+  /* Contour des champs de formulaire : 3:1 au moins avec la carte et avec le champ. */
+  --field-line: #6e6672;
+  /* Ombres et voile : francs sur fond sombre, légers et teintés sur fond clair. */
+  --shadow: rgb(0 0 0 / 0.6);
+  --scrim: rgb(14 12 17 / 0.6);
 }
 
 [data-theme="light"] {
@@ -37,17 +42,81 @@
   --pink: #c2386b;
   --pink-hover: #9e2552;
   --petal: #d65c8a;
+  --field-line: #8a808c;
+  --shadow: rgb(74 32 54 / 0.18);
+  --scrim: rgb(27 23 32 / 0.35);
+}
+
+/*
+ * Contraste élevé demandé par le système : bordures à 3:1 au moins (limites des cartes
+ * et des champs), textes secondaires et discrets nettement plus lisibles.
+ */
+@media (prefers-contrast: more) {
+  [data-theme="dark"] {
+    --line: #6e6672;
+    --faint: #9a929d;
+    --dim: #b3abb6;
+    --muted: #cdc6d0;
+  }
+
+  [data-theme="light"] {
+    --line: #8a808c;
+    --faint: #6a626f;
+    --dim: #524a58;
+    --muted: #40394a;
+  }
 }
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 /* Pétales désactivés par le visiteur (interrupteur du footer, mémorisé). */
 @custom-variant petals-off (&:where([data-petals="off"], [data-petals="off"] *));
+/* Surfaces translucides rendues opaques (transparence réduite ou contraste élevé). */
+@custom-variant opaque {
+  @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+    @slot;
+  }
+}
+
+/*
+ * Retour immédiat à l'appui, au doigt comme à la souris : le bouton s'enfonce
+ * légèrement (60 ms), puis revient en douceur. Remplace transition-colors.
+ * Mouvement réduit : il s'assombrit au lieu de rétrécir.
+ */
+@utility press {
+  transition-property: color, background-color, border-color, opacity, scale;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+
+  &:active:not(:disabled) {
+    scale: var(--press-scale, 0.97);
+    transition-duration: 60ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:active:not(:disabled) {
+      scale: none;
+      opacity: 0.75;
+    }
+  }
+}
+
+/* Liens texte : ils pâlissent à l'appui, comme les boutons texte du système. */
+@utility press-text {
+  transition-property: color, opacity;
+  transition-duration: 150ms;
+
+  &:active {
+    opacity: 0.6;
+    transition-duration: 0s;
+  }
+}
 
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-line: var(--line);
+  --color-field-line: var(--field-line);
   --color-fg: var(--fg);
   --color-muted: var(--muted);
   --color-faint: var(--faint);
@@ -75,6 +144,7 @@
 
   --animate-sakura-spin: sakura-spin 0.9s cubic-bezier(0.5, 0, 0.3, 1) 1;
   --animate-dispo-pulse: dispo-pulse 2.4s ease-in-out infinite;
+  --animate-dispo-ring: dispo-ring 2.4s ease-out infinite;
 
   @keyframes sakura-spin {
     to {
@@ -82,15 +152,26 @@
     }
   }
 
+  /* Point « disponible » : opacité et échelle seulement (rien à repeindre à chaque image). */
   @keyframes dispo-pulse {
     0%,
     100% {
       opacity: 1;
-      box-shadow: 0 0 0 0 rgb(107 212 154 / 0.55);
     }
     50% {
       opacity: 0.45;
-      box-shadow: 0 0 0 6px rgb(107 212 154 / 0);
+    }
+  }
+
+  @keyframes dispo-ring {
+    0% {
+      scale: 1;
+      opacity: 0.55;
+    }
+    50%,
+    100% {
+      scale: 2.5;
+      opacity: 0;
     }
   }
 }
@@ -137,12 +218,23 @@
     html {
       scroll-behavior: smooth;
     }
+  }
 
-    body {
-      transition:
-        background-color 0.3s,
-        color 0.3s;
-    }
+  /*
+   * Changement de thème (ThemeToggle.tsx) : toute la page change d'un bloc, en fondu
+   * enchaîné (View Transitions). Les transitions de couleur des éléments sont coupées
+   * pendant ce temps, sinon chacun ferait son propre fondu, à son propre rythme.
+   */
+  [data-theme-switching] *,
+  [data-theme-switching] *::before,
+  [data-theme-switching] *::after {
+    transition: none !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.35s;
+    animation-timing-function: ease;
   }
 
   ::selection {
@@ -173,7 +265,7 @@
   }
 
   .menu-dialog[open]::backdrop {
-    background-color: rgb(14 12 17 / 0.6);
+    background-color: var(--scrim, rgb(14 12 17 / 0.6));
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -221,7 +313,6 @@
     border-radius: 999px;
     background-color: color-mix(in oklab, var(--pink) 14%, transparent);
     box-shadow: 0 0 18px color-mix(in oklab, var(--pink) 22%, transparent);
-    backdrop-filter: blur(6px);
     opacity: 0;
   }
 
@@ -285,14 +376,14 @@
       width: anchor-size(width);
       margin-block-start: 8px;
       padding: 6px;
-      border: 1px solid var(--line);
+      border: 1px solid var(--field-line);
       border-radius: 16px;
       background-color: var(--surface);
       color: var(--fg);
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 0.875rem;
       box-shadow:
-        0 18px 40px -12px rgb(0 0 0 / 0.55),
+        0 18px 40px -12px var(--shadow),
         0 0 0 1px color-mix(in oklab, var(--pink) 10%, transparent);
     }
 
@@ -361,40 +452,44 @@
   }
 
   /*
-   * « Comment on travaille ensemble » : la ligne couvre les étapes jusqu'à l'étape en
-   * cours (--to). En lecture automatique, elle se remplit de --from à --to pendant
-   * --step-duration ; la fin de l'animation fait passer à l'étape suivante (Process.tsx).
+   * « Comment on travaille ensemble » : --line-p (de 0 à 1) est la part de la frise
+   * couverte par la ligne. Process.tsx l'anime en partant toujours de la valeur
+   * affichée : un clic ou une reprise en cours de route ne fait jamais sauter la ligne.
    */
   .process-line {
     transform-origin: top;
-    transform: scaleY(var(--to));
+    transform: scaleY(var(--line-p));
   }
 
   @media (width >= 56.25rem) {
     .process-line {
       transform-origin: left;
-      transform: scaleX(var(--to));
+      transform: scaleX(var(--line-p));
     }
   }
 
+  /*
+   * FAQ : la réponse se déplie et se replie au lieu d'apparaître d'un coup (Chrome et
+   * Edge ; ailleurs, elle s'ouvre instantanément comme avant).
+   */
   @media (prefers-reduced-motion: no-preference) {
-    .process-line {
-      transition: transform 0.5s ease-out;
+    .faq-item {
+      interpolate-size: allow-keywords;
     }
 
-    .process-track[data-autoplay="true"] > .process-line {
-      transition: none;
-      animation: process-fill-y var(--step-duration) linear both paused;
+    .faq-item::details-content {
+      block-size: 0;
+      overflow-y: clip;
+      opacity: 0;
+      transition:
+        block-size 0.35s cubic-bezier(0.2, 0, 0, 1),
+        opacity 0.25s ease,
+        content-visibility 0.35s allow-discrete;
     }
 
-    @media (width >= 56.25rem) {
-      .process-track[data-autoplay="true"] > .process-line {
-        animation-name: process-fill-x;
-      }
-    }
-
-    .process-track[data-running="true"] > .process-line {
-      animation-play-state: running;
+    .faq-item[open]::details-content {
+      block-size: auto;
+      opacity: 1;
     }
   }
 
@@ -483,22 +578,11 @@
   }
 }
 
-@keyframes process-fill-x {
-  from {
-    transform: scaleX(var(--from));
-  }
-  to {
-    transform: scaleX(var(--to));
-  }
-}
-
-@keyframes process-fill-y {
-  from {
-    transform: scaleY(var(--from));
-  }
-  to {
-    transform: scaleY(var(--to));
-  }
+/* Enregistrée pour que --line-p s'anime en continu (et non par saut). */
+@property --line-p {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
 }
 
 @keyframes petal-fall {

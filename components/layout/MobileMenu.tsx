@@ -67,7 +67,7 @@ export function MobileMenu() {
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls="menu-mobile"
-        className="inline-flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-line bg-surface text-fg transition-colors hover:border-pink hover:text-pink nav:hidden"
+        className="inline-flex size-11 shrink-0 press cursor-pointer items-center justify-center rounded-full border border-line bg-surface text-fg hover:border-pink hover:text-pink nav:hidden"
       >
         <MenuIcon />
         <span className="sr-only">Ouvrir le menu</span>
@@ -85,14 +85,14 @@ export function MobileMenu() {
           <div className="flex items-center justify-between gap-4">
             <p
               id="menu-mobile-titre"
-              className="font-mono text-xs tracking-[2px] text-muted uppercase"
+              className="font-mono text-xs tracking-[0.17em] text-muted uppercase"
             >
               {"// menu"}
             </p>
             <button
               type="button"
               onClick={closeMenu}
-              className="inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-line text-fg transition-colors hover:border-pink hover:text-pink"
+              className="inline-flex size-11 press cursor-pointer items-center justify-center rounded-full border border-line text-fg hover:border-pink hover:text-pink"
             >
               <CloseIcon />
               <span className="sr-only">Fermer le menu</span>
@@ -107,12 +107,12 @@ export function MobileMenu() {
                     href={`/#${section.id}`}
                     onClick={closeMenu}
                     aria-current={active === section.id ? "true" : undefined}
-                    className="flex min-h-14 items-baseline gap-4 py-2 text-fg transition-colors hover:text-pink aria-[current=true]:text-pink"
+                    className="flex min-h-14 items-baseline gap-4 py-2 text-fg press-text hover:text-pink aria-[current=true]:text-pink"
                   >
                     <span className="font-mono text-xs text-pink" aria-hidden="true">
                       {section.num}
                     </span>
-                    <span className="font-display text-[40px] leading-none font-black uppercase">
+                    <span className="font-display text-[2.5rem] leading-none font-black uppercase">
                       {section.label}
                     </span>
                   </Link>

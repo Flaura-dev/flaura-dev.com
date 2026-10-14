@@ -6,6 +6,10 @@ import { cx } from "@/lib/cx";
 import { useActiveSection } from "@/lib/use-active-section";
 
 type Mark = { id: string; num: string; label: string; position: number };
+type Drag = { offset: number; startY: number; tracking: boolean };
+
+/** Déplacement (px) à partir duquel un appui sur la piste devient un glisser. */
+const DRAG_THRESHOLD = 4;
 
 /** Hauteur de défilement disponible (0 si la page tient dans l'écran). */
 function maxScroll() {
@@ -23,7 +27,7 @@ export function ScrollRail() {
   const railRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
-  const dragOffset = useRef<number | null>(null);
+  const drag = useRef<Drag | null>(null);
   const active = useActiveSection();
   const [marks, setMarks] = useState<Mark[]>([]);
 
@@ -96,31 +100,47 @@ export function ScrollRail() {
     return ratio * maxScroll();
   }
 
+  /** Le pointeur est capturé par la piste : le glisser continue même hors du rail. */
+  function startDrag(event: ReactPointerEvent<HTMLElement>, offset: number, tracking: boolean) {
+    drag.current = { offset, startY: event.clientY, tracking };
+    trackRef.current!.setPointerCapture(event.pointerId);
+    if (tracking) railRef.current!.dataset.dragging = "true";
+  }
+
+  // Appui sur la piste : saut fluide à cet endroit ; si l'on glisse dans la foulée,
+  // le point suit le pointeur, sans avoir à relâcher pour l'attraper.
   function onTrackPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (event.button !== 0) return;
     window.scrollTo({ top: scrollTopAt(event.clientY) });
+    startDrag(event, 0, false);
   }
 
+  // Appui sur le point : il reste sous le pointeur à l'endroit où on l'a saisi.
   function onThumbPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (event.button !== 0) return;
     event.preventDefault();
     event.stopPropagation();
-    const thumb = thumbRef.current!;
-    const rect = thumb.getBoundingClientRect();
-    dragOffset.current = event.clientY - (rect.top + rect.height / 2);
-    thumb.setPointerCapture(event.pointerId);
-    railRef.current!.dataset.dragging = "true";
+    const rect = thumbRef.current!.getBoundingClientRect();
+    startDrag(event, event.clientY - (rect.top + rect.height / 2), true);
   }
 
-  function onThumbPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    if (dragOffset.current === null) return;
-    window.scrollTo({ top: scrollTopAt(event.clientY - dragOffset.current), behavior: "instant" });
+  function onPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    const state = drag.current;
+    if (!state) return;
+    if (!state.tracking) {
+      // Petit seuil : un simple clic garde son saut fluide.
+      if (Math.abs(event.clientY - state.startY) < DRAG_THRESHOLD) return;
+      state.tracking = true;
+      railRef.current!.dataset.dragging = "true";
+    }
+    window.scrollTo({ top: scrollTopAt(event.clientY - state.offset), behavior: "instant" });
   }
 
   function endDrag(event: ReactPointerEvent<HTMLDivElement>) {
-    if (dragOffset.current === null) return;
-    dragOffset.current = null;
-    thumbRef.current!.releasePointerCapture(event.pointerId);
+    if (!drag.current) return;
+    drag.current = null;
+    const track = trackRef.current!;
+    if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
     railRef.current!.dataset.dragging = "false";
   }
 
@@ -137,7 +157,10 @@ export function ScrollRail() {
       <div
         ref={trackRef}
         onPointerDown={onTrackPointerDown}
-        className="absolute inset-x-0 top-8 bottom-8 cursor-pointer"
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        className="absolute inset-x-0 top-8 bottom-8 cursor-pointer touch-none"
       >
         <div className="absolute inset-y-0 left-[43px] w-0.5 rounded-full bg-line" />
         <div className="rail-fill absolute inset-y-0 left-[43px] w-0.5 rounded-full" />
@@ -154,12 +177,12 @@ export function ScrollRail() {
             >
               <span
                 className={cx(
-                  "absolute right-[54px] font-mono text-[10px] transition-colors motion-reduce:transition-none",
+                  "absolute right-[54px] font-mono text-[0.6875rem] transition-colors motion-reduce:transition-none",
                   index === activeIndex
                     ? "text-pink"
                     : passed
                       ? "text-muted"
-                      : "text-faint group-hover/mark:text-muted",
+                      : "text-dim group-hover/mark:text-muted",
                 )}
               >
                 {mark.num}
@@ -170,7 +193,7 @@ export function ScrollRail() {
                   passed ? "bg-pink" : "bg-faint group-hover/mark:bg-muted",
                 )}
               />
-              <span className="pointer-events-none absolute right-[76px] rounded-full border border-line bg-surface/90 px-2.5 py-1 font-mono text-[10px] tracking-[1.5px] whitespace-nowrap text-fg uppercase opacity-0 backdrop-blur-md transition-opacity group-hover/mark:opacity-100 motion-reduce:transition-none">
+              <span className="pointer-events-none absolute right-[76px] rounded-full border border-line bg-surface/90 px-2.5 py-1 font-mono text-[0.6875rem] tracking-[0.14em] whitespace-nowrap text-fg uppercase opacity-0 backdrop-blur-md transition-opacity group-hover/mark:opacity-100 motion-reduce:transition-none opaque:bg-surface opaque:backdrop-blur-none">
                 {mark.label}
               </span>
             </div>
@@ -181,14 +204,11 @@ export function ScrollRail() {
           <div
             ref={thumbRef}
             onPointerDown={onThumbPointerDown}
-            onPointerMove={onThumbPointerMove}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
             className="pointer-events-auto absolute bottom-0 left-[44px] flex size-11 -translate-x-1/2 translate-y-1/2 cursor-grab touch-none items-center justify-center group-data-[dragging=true]/rail:cursor-grabbing"
           >
             <span className="size-4 rounded-full bg-pink shadow-[0_0_0_4px_var(--bg),0_0_20px_var(--pink)] transition-transform group-hover/rail:scale-125 group-data-[dragging=true]/rail:scale-150 motion-reduce:transition-none" />
             {current && (
-              <span className="pointer-events-none absolute right-full mr-1 translate-x-1 rounded-full border border-line bg-bg/85 px-3 py-1.5 font-mono text-[11px] tracking-[2px] whitespace-nowrap text-pink uppercase opacity-0 backdrop-blur-md transition-[opacity,translate] group-hover/rail:translate-x-0 group-hover/rail:opacity-100 group-data-[dragging=true]/rail:translate-x-0 group-data-[dragging=true]/rail:opacity-100 group-data-[scrolling=true]/rail:translate-x-0 group-data-[scrolling=true]/rail:opacity-100 motion-reduce:transition-none">
+              <span className="pointer-events-none absolute right-full mr-1 translate-x-1 rounded-full border border-line bg-bg/85 px-3 py-1.5 font-mono text-[0.6875rem] tracking-[0.18em] whitespace-nowrap text-pink uppercase opacity-0 backdrop-blur-md transition-[opacity,translate] group-hover/rail:translate-x-0 group-hover/rail:opacity-100 group-data-[dragging=true]/rail:translate-x-0 group-data-[dragging=true]/rail:opacity-100 group-data-[scrolling=true]/rail:translate-x-0 group-data-[scrolling=true]/rail:opacity-100 motion-reduce:transition-none opaque:bg-bg opaque:backdrop-blur-none">
                 {current.num} — {current.label}
               </span>
             )}

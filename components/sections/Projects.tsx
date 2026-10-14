@@ -19,7 +19,7 @@ export function Projects() {
             {/* Petit bouton vers /projets : 34 px de haut à l'œil, 44 px de zone cliquable. */}
             <Link
               href="/projets"
-              className="relative mb-2 inline-flex h-[34px] items-center gap-2 rounded-full border border-pink/60 px-3.5 font-mono text-xs text-fg transition-colors after:absolute after:inset-x-0 after:-inset-y-1.5 hover:border-pink hover:bg-pink hover:text-bg"
+              className="relative mb-2 inline-flex h-[34px] press items-center gap-2 rounded-full border border-pink/60 px-3.5 font-mono text-xs text-fg after:absolute after:inset-x-0 after:-inset-y-1.5 hover:border-pink hover:bg-pink hover:text-bg"
             >
               voir tous les projets
               <ArrowRightIcon size={14} />

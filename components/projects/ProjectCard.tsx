@@ -23,7 +23,7 @@ export function ProjectCard({ project, withAnchor = false }: ProjectCardProps) {
       </div>
       <div className="flex flex-1 flex-col gap-3 p-6">
         <p className="font-mono text-xs text-pink">{project.label}</p>
-        <h3 className="font-display text-[34px] leading-none font-black uppercase">
+        <h3 className="font-display text-[2.125rem] leading-none font-black uppercase">
           {project.title}
         </h3>
         <p className="text-sm leading-[1.6] text-muted">
@@ -42,7 +42,7 @@ export function ProjectCard({ project, withAnchor = false }: ProjectCardProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Voir le site en ligne : ${project.title} (nouvel onglet)`}
-            className="mt-auto inline-flex size-11 items-center justify-center self-end rounded-full border border-pink text-pink transition-colors hover:bg-pink hover:text-bg"
+            className="mt-auto inline-flex size-11 press items-center justify-center self-end rounded-full border border-pink text-pink hover:bg-pink hover:text-bg"
           >
             <ArrowUpRightIcon size={16} />
           </a>

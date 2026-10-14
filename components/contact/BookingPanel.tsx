@@ -25,10 +25,10 @@ export function BookingPanel() {
             className="size-14 self-center rounded-full border-2 border-pink object-cover"
           />
           <p className="text-center font-mono text-xs text-muted">Laura · Flaura.dev</p>
-          <h3 className="font-display text-[34px] leading-none font-black uppercase">
+          <h3 className="font-display text-[2.125rem] leading-none font-black uppercase">
             Appel découverte
           </h3>
-          <ul className="flex flex-col gap-2.5 text-[15px]">
+          <ul className="flex flex-col gap-2.5 text-[0.9375rem]">
             <li className="flex items-center gap-2.5">
               <ClockIcon className="shrink-0 text-pink" />
               {site.callDuration}&nbsp;min

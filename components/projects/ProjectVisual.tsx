@@ -37,7 +37,7 @@ export function ProjectVisual({ project }: { project: Project }) {
   switch (project.visual) {
     case "lea":
       return (
-        <BrowserFrame>
+        <BrowserFrame interactive="drag">
           <BeforeAfter
             before={<Shot src={leaBefore} alt="" />}
             after={<Shot src={leaAfter} alt="" />}
@@ -45,12 +45,23 @@ export function ProjectVisual({ project }: { project: Project }) {
           />
         </BrowserFrame>
       );
-    case "pendu":
+    case "pendu": {
+      const shot = <Shot src={pendu} alt="Page d’accueil du jeu Le Pendu de la Faille" />;
+      if (!project.url) return <BrowserFrame>{shot}</BrowserFrame>;
+      // La capture mène au site, comme on s'y attend. Hors de l'ordre de tabulation :
+      // au clavier, c'est le bouton ↗ de la carte qui fait ce lien.
       return (
-        <BrowserFrame>
-          <Shot src={pendu} alt="Page d’accueil du jeu Le Pendu de la Faille" />
-        </BrowserFrame>
+        <a
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          tabIndex={-1}
+          className="block size-full"
+        >
+          <BrowserFrame interactive="link">{shot}</BrowserFrame>
+        </a>
       );
+    }
     case "ailleurs":
       return <AilleursVisual />;
   }

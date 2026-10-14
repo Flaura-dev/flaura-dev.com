@@ -5,8 +5,8 @@ import Link from "next/link";
 import { ArrowRightIcon, ChevronDownIcon } from "@/components/ui/icons";
 
 const fieldClass =
-  "w-full rounded-xl border border-line bg-bg px-4 py-3.5 font-mono text-sm text-fg placeholder:text-muted";
-const labelClass = "font-mono text-xs font-medium tracking-[1.5px] text-muted uppercase";
+  "w-full rounded-xl border border-field-line bg-bg px-4 py-3.5 font-mono text-sm text-fg placeholder:text-muted";
+const labelClass = "font-mono text-xs font-medium tracking-[0.125em] text-muted uppercase";
 
 /**
  * Interface du formulaire. L'envoi (validation serveur, anti-spam, limitation de débit,
@@ -26,7 +26,7 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="@container flex flex-1 flex-col gap-5 rounded-3xl border border-line bg-surface p-8"
     >
-      <p className="text-[17px] font-semibold">Ou écris-moi</p>
+      <p className="text-[1.0625rem] font-semibold">Ou écris-moi</p>
 
       {/* Nom et e-mail côte à côte seulement si le formulaire est assez large. */}
       <div className="grid gap-3.5 @[28rem]:grid-cols-2">
@@ -99,7 +99,7 @@ export function ContactForm() {
 
       <button
         type="submit"
-        className="flex min-h-[52px] w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-pink px-6 py-[17px] font-mono text-sm font-semibold tracking-[2.5px] text-bg uppercase transition-colors hover:bg-pink-hover"
+        className="flex min-h-[52px] w-full press cursor-pointer items-center justify-center gap-3 rounded-xl bg-pink px-6 py-[17px] font-mono text-sm font-semibold tracking-[0.18em] text-bg uppercase hover:bg-pink-hover"
       >
         Envoyer le message
         <ArrowRightIcon />
@@ -111,7 +111,11 @@ export function ContactForm() {
 
       <p className="text-xs leading-[1.6] text-muted">
         Tes informations servent uniquement à te répondre.{" "}
-        <Link href="/confidentialite" className="underline underline-offset-2 hover:text-pink">
+        {/* Marges verticales invisibles : 44 px de zone tactile sans décaler le texte. */}
+        <Link
+          href="/confidentialite"
+          className="py-3.5 underline underline-offset-2 press-text hover:text-pink"
+        >
           En savoir plus
         </Link>
       </p>

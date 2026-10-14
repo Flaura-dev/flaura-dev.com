@@ -21,7 +21,7 @@ export function Header() {
           <ThemeToggle />
           <Link
             href="/#contact"
-            className="group hidden min-h-11 items-center gap-2.5 rounded-full border border-pink bg-pink/10 px-5 py-[13px] text-sm font-semibold text-fg transition-colors hover:bg-pink hover:text-bg sm:inline-flex"
+            className="group hidden min-h-11 press items-center gap-2.5 rounded-full border border-pink bg-pink/10 px-5 py-[13px] text-sm font-semibold text-fg hover:bg-pink hover:text-bg sm:inline-flex"
           >
             <PhoneIcon className="text-pink transition-colors group-hover:text-bg" />
             Réserver un appel

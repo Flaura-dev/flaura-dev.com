@@ -19,7 +19,7 @@ export default function ProjectsPage() {
       <Container className="flex flex-col gap-8">
         <Link
           href="/#projets"
-          className="inline-flex min-h-11 items-center gap-2 self-start font-mono text-xs text-muted transition-colors hover:text-pink"
+          className="inline-flex min-h-11 items-center gap-2 self-start font-mono text-xs text-muted press-text hover:text-pink"
         >
           <ArrowLeftIcon size={14} />
           retour à l’accueil

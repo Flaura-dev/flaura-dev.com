@@ -32,11 +32,17 @@ export function Brand() {
         height={38}
         loading="eager"
         onAnimationEnd={() => setSpinning(false)}
-        className={cx("block size-[38px]", spinning && "motion-safe:animate-sakura-spin")}
+        className={cx(
+          // En clair, un fin liseré rose redonne du relief à la fleur, très pâle sur le crème.
+          "block size-[38px] light:[filter:drop-shadow(0_0_0.75px_rgb(194_56_107/0.75))_saturate(1.3)]",
+          spinning && "motion-safe:animate-sakura-spin",
+        )}
       />
       <span className="whitespace-nowrap">
-        <span className="font-display text-[34px] leading-none font-black uppercase">Flaura</span>
-        <span className="font-mono text-[15px] text-pink">.dev_</span>
+        <span className="font-display text-[2.125rem] leading-none font-black uppercase">
+          Flaura
+        </span>
+        <span className="font-mono text-[0.9375rem] text-pink">.dev_</span>
       </span>
     </Link>
   );

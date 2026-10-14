@@ -1,8 +1,8 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { CopyIcon } from "@/components/ui/icons";
+import { CheckIcon, CopyIcon } from "@/components/ui/icons";
 import { projectFilters, projects, type ProjectFilter } from "@/content/projects";
 import { cx } from "@/lib/cx";
 import { ProjectCard } from "./ProjectCard";
@@ -12,18 +12,27 @@ type ProjectsViewProps = {
   onSelect?: (filter: ProjectFilter | null) => void;
 };
 
+/** Durée d'affichage de la confirmation « lien copié ». */
+const COPY_FEEDBACK_MS = 2000;
+
 function ProjectsView({ active, onSelect }: ProjectsViewProps) {
-  const [copied, setCopied] = useState(false);
+  const [copy, setCopy] = useState<"idle" | "copied" | "failed">("idle");
+  const resetTimer = useRef(0);
   const visible = active ? projects.filter((p) => p.categories.includes(active)) : projects;
   const options = [{ slug: null, label: "tous" }, ...projectFilters];
 
+  useEffect(() => () => window.clearTimeout(resetTimer.current), []);
+
+  // Confirmation brève (icône ✓ et message), puis retour à l'état initial.
   async function copyLink() {
+    window.clearTimeout(resetTimer.current);
     try {
       await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
+      setCopy("copied");
     } catch {
-      setCopied(false);
+      setCopy("failed");
     }
+    resetTimer.current = window.setTimeout(() => setCopy("idle"), COPY_FEEDBACK_MS);
   }
 
   return (
@@ -32,7 +41,7 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
         <div
           role="group"
           aria-label="Filtrer les projets"
-          className="flex flex-wrap gap-2 font-mono text-[13px]"
+          className="flex flex-wrap gap-2 font-mono text-[0.8125rem]"
         >
           {options.map((option) => {
             const pressed = active === option.slug;
@@ -41,12 +50,9 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
                 key={option.label}
                 type="button"
                 aria-pressed={pressed}
-                onClick={() => {
-                  setCopied(false);
-                  onSelect?.(option.slug);
-                }}
+                onClick={() => onSelect?.(option.slug)}
                 className={cx(
-                  "min-h-11 cursor-pointer rounded-full border px-4 py-2.5 transition-colors",
+                  "min-h-11 press cursor-pointer rounded-full border px-4 py-2.5",
                   pressed
                     ? "border-pink bg-pink text-bg"
                     : "border-line text-fg hover:border-pink hover:text-pink",
@@ -70,12 +76,16 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
             type="button"
             onClick={copyLink}
             aria-label="Copier le lien de cette sélection"
-            className="inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-line text-fg transition-colors hover:border-pink hover:text-pink"
+            className={cx(
+              "inline-flex size-11 press cursor-pointer items-center justify-center rounded-full border hover:border-pink hover:text-pink",
+              copy === "copied" ? "border-pink text-pink" : "border-line text-fg",
+            )}
           >
-            <CopyIcon />
+            {copy === "copied" ? <CheckIcon /> : <CopyIcon />}
           </button>
           <span role="status" className="text-pink">
-            {copied ? "lien copié" : ""}
+            {copy === "copied" && "lien copié"}
+            {copy === "failed" && "copie impossible : copie l’adresse à la main"}
           </span>
         </div>
       </div>

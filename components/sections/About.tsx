@@ -19,7 +19,11 @@ export function About() {
         </SectionHeading>
 
         <div className="grid auto-rows-[minmax(180px,auto)] gap-4 md:grid-cols-4">
-          {/* Photo en bichromie rose / nuit : noir et blanc contrasté, puis deux calques de fusion. */}
+          {/*
+            Photo en bichromie rose / nuit : noir et blanc contrasté, puis deux calques de
+            fusion. Rose de la marque dans les deux thèmes (le rose plus foncé du thème
+            clair sert au contraste du texte, il assombrirait la photo).
+          */}
           <div className="relative min-h-[380px] overflow-hidden rounded-3xl md:row-span-2">
             <Image
               src={photo}
@@ -28,7 +32,7 @@ export function About() {
               sizes="(min-width: 900px) 300px, 100vw"
               className="object-cover object-[60%_30%] [filter:grayscale(1)_contrast(1.25)_brightness(1.1)]"
             />
-            <div aria-hidden="true" className="absolute inset-0 bg-pink mix-blend-multiply" />
+            <div aria-hidden="true" className="absolute inset-0 bg-[#F07FA2] mix-blend-multiply" />
             <div aria-hidden="true" className="absolute inset-0 bg-[#2B1030] mix-blend-screen" />
             <div
               aria-hidden="true"
@@ -37,10 +41,10 @@ export function About() {
           </div>
 
           <div className="flex flex-col justify-between gap-[18px] rounded-3xl border border-line bg-surface p-8 md:col-span-2">
-            <p className="text-[30px] leading-[1.2] font-medium tracking-[-0.5px]">
+            <p className="text-[1.875rem] leading-[1.2] font-medium tracking-[-0.017em]">
               Moi c’est Laura. Sur le web, c’est{" "}
               <span className="whitespace-nowrap">
-                <span className="font-display text-[46px] leading-none font-black uppercase">
+                <span className="font-display text-[2.875rem] leading-none font-black uppercase">
                   Flaura
                 </span>
                 <span className="font-mono text-lg text-pink">.dev_</span>
@@ -54,7 +58,7 @@ export function About() {
 
           <div className="flex flex-col justify-between gap-6 rounded-3xl bg-pink p-7 text-bg">
             <MapPinIcon size={28} />
-            <p className="font-display text-[40px] leading-[0.95] font-black uppercase">
+            <p className="font-display text-[2.5rem] leading-[0.95] font-black uppercase">
               Var,
               <br />
               France
@@ -64,7 +68,7 @@ export function About() {
 
           <div className="flex flex-col gap-4 rounded-3xl border border-line bg-surface p-7 md:col-span-3">
             <p className="font-mono text-xs text-pink">{"// avant le code"}</p>
-            <ol className="flex flex-wrap items-center gap-2.5 text-[15px]">
+            <ol className="flex flex-wrap items-center gap-2.5 text-[0.9375rem]">
               {career.map((job, index) => {
                 const current = index === career.length - 1;
                 return (
@@ -77,7 +81,7 @@ export function About() {
                     >
                       {job}
                     </span>
-                    {!current && <ArrowRightIcon size={14} className="text-faint" />}
+                    {!current && <ArrowRightIcon size={14} className="text-dim" />}
                   </li>
                 );
               })}

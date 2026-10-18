@@ -580,6 +580,26 @@
       animation-timeline: scroll(root block);
     }
   }
+
+  /*
+   * Capture qui défile (ScrollingShot.tsx) sur écran tactile : sans survol possible,
+   * elle descend au rythme de la page pendant que la carte traverse l'écran. Effet
+   * décoratif : les navigateurs sans animation liée au défilement (Firefox) gardent
+   * le haut de page.
+   */
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @media (hover: none) and (prefers-reduced-motion: no-preference) {
+      .scroll-shot {
+        view-timeline: --shot;
+      }
+
+      .scroll-shot img {
+        animation: scroll-shot linear both;
+        animation-timeline: --shot;
+        animation-range: contain 10% contain 70%;
+      }
+    }
+  }
 }
 
 /* Enregistrée pour que --line-p s'anime en continu (et non par saut). */
@@ -631,5 +651,11 @@
   }
   to {
     transform: translateY(0);
+  }
+}
+
+@keyframes scroll-shot {
+  to {
+    translate: 0 calc(-100% + 100cqh);
   }
 }

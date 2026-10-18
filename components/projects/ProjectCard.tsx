@@ -16,9 +16,9 @@ export function ProjectCard({ project, withAnchor = false }: ProjectCardProps) {
   return (
     <article
       id={withAnchor ? project.slug : undefined}
-      className="group flex scroll-mt-28 flex-col overflow-hidden rounded-3xl border border-line bg-surface"
+      className="group flex scroll-mt-28 flex-col overflow-clip rounded-3xl border border-line bg-surface"
     >
-      <div className="relative h-[230px] overflow-hidden">
+      <div className="relative h-[230px] overflow-clip">
         <ProjectVisual project={project} />
       </div>
       <div className="flex flex-1 flex-col gap-3 p-6">

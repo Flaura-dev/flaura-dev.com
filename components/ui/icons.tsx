@@ -104,6 +104,14 @@ export function ArrowLeftIcon(props: IconProps) {
   );
 }
 
+export function ArrowDownIcon(props: IconProps) {
+  return (
+    <Svg size={16} {...props}>
+      <path d="M12 5v14M6 13l6 6 6-6" />
+    </Svg>
+  );
+}
+
 export function ArrowUpRightIcon(props: IconProps) {
   return (
     <Svg size={14} {...props}>

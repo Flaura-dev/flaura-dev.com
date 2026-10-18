@@ -56,7 +56,7 @@ function buildEmbedSrc(url: string) {
   src.searchParams.set("hide_event_type_details", "1");
   src.searchParams.set("embed_domain", window.location.hostname);
   src.searchParams.set("embed_type", "Inline");
-  src.searchParams.set("background_color", light ? "ffffff" : "17141b");
+  src.searchParams.set("background_color", light ? "ffffff" : "160f21");
   src.searchParams.set("text_color", light ? "1b1720" : "f3edf0");
   src.searchParams.set("primary_color", light ? "c2386b" : "f07fa2");
   return src.toString();

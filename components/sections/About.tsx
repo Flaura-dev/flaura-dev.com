@@ -36,7 +36,7 @@ export function About() {
             <div aria-hidden="true" className="absolute inset-0 bg-[#2B1030] mix-blend-screen" />
             <div
               aria-hidden="true"
-              className="absolute inset-0 rounded-3xl bg-linear-to-b from-transparent from-50% to-[rgb(14_12_17/0.85)] shadow-[inset_0_0_0_1px_rgb(240_127_162/0.5)]"
+              className="absolute inset-0 rounded-3xl bg-linear-to-b from-transparent from-50% to-[rgb(13_8_23/0.85)] shadow-[inset_0_0_0_1px_rgb(240_127_162/0.5)]"
             />
           </div>
 

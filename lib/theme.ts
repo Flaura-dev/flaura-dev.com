@@ -8,7 +8,7 @@ export const SYSTEM_LIGHT_QUERY = "(prefers-color-scheme: light)";
 
 /** Couleur de la barre du navigateur mobile, alignée sur le fond de chaque thème. */
 export const THEME_COLORS: Record<Theme, string> = {
-  dark: "#0E0C11",
+  dark: "#0D0817",
   light: "#F7F2EE",
 };
 

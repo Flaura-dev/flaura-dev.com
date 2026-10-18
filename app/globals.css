@@ -11,23 +11,24 @@
 :root,
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0e0c11;
-  --surface: #17141b;
-  --line: #2a2530;
+  /* Violet abysse (choix du 18 octobre 2026) : aussi profond que l’ancien noir, mais violet. */
+  --bg: #0d0817;
+  --surface: #160f21;
+  --line: #282036;
   --fg: #f3edf0;
-  --muted: #a79faa;
-  --faint: #5c5560;
-  /* Texte atténué mais lisible (4,7:1 sur le fond) : étapes non sélectionnées. */
-  --dim: #827a86;
+  --muted: #ada8b9;
+  --faint: #5f586f;
+  /* Texte atténué mais lisible (5,3:1 sur le fond) : étapes non sélectionnées. */
+  --dim: #878194;
   --pink: #f07fa2;
   --pink-hover: #ffb3c8;
   --petal: #f9b4c9;
   --avail: #6bd49a;
   /* Contour des champs de formulaire : 3:1 au moins avec la carte et avec le champ. */
-  --field-line: #6e6672;
+  --field-line: #746d83;
   /* Ombres et voile : francs sur fond sombre, légers et teintés sur fond clair. */
   --shadow: rgb(0 0 0 / 0.6);
-  --scrim: rgb(14 12 17 / 0.6);
+  --scrim: rgb(13 8 23 / 0.6);
 }
 
 [data-theme="light"] {
@@ -261,11 +262,11 @@
   }
 
   .menu-dialog::backdrop {
-    background-color: rgb(14 12 17 / 0);
+    background-color: rgb(13 8 23 / 0);
   }
 
   .menu-dialog[open]::backdrop {
-    background-color: var(--scrim, rgb(14 12 17 / 0.6));
+    background-color: var(--scrim, rgb(13 8 23 / 0.6));
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -286,7 +287,7 @@
       }
 
       .menu-dialog[open]::backdrop {
-        background-color: rgb(14 12 17 / 0);
+        background-color: rgb(13 8 23 / 0);
       }
     }
   }

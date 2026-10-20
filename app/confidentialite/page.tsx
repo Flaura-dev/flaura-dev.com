@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/layout/LegalPage";
+import { pageUrls } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Confidentialité",
+  description:
+    "Données collectées par Flaura.dev via le formulaire de contact et la prise de rendez-vous : finalités, conservation, cookies et droits.",
+  ...pageUrls("/confidentialite"),
   // Page provisoire : à indexer une fois rédigée.
   robots: { index: false },
 };

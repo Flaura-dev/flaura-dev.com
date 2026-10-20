@@ -4,12 +4,13 @@ import { CtaBanner } from "@/components/projects/CtaBanner";
 import { ProjectsBrowser } from "@/components/projects/ProjectsBrowser";
 import { Container } from "@/components/ui/Container";
 import { ArrowLeftIcon } from "@/components/ui/icons";
+import { pageUrls } from "@/lib/metadata";
 
 export const metadata: Metadata = {
-  title: "Projets",
+  title: "Projets : sites vitrines et applications web",
   description:
     "Les projets de Flaura.dev : sites vitrines, refontes et applications web, avec pour chacun le problème de départ, la solution apportée et le résultat.",
-  alternates: { canonical: "/projets" },
+  ...pageUrls("/projets"),
 };
 
 /** Tous les projets, avec filtres. Page hors menu : on y arrive par les cartes de l'accueil. */

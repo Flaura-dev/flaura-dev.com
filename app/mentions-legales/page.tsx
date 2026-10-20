@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/layout/LegalPage";
+import { pageUrls } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Mentions légales",
+  description:
+    "Mentions légales du site Flaura.dev : éditrice, directrice de la publication, hébergeur et propriété intellectuelle.",
+  ...pageUrls("/mentions-legales"),
   // Page provisoire : à indexer une fois rédigée.
   robots: { index: false },
 };

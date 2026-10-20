@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { SakuraPetals } from "@/components/layout/SakuraPetals";
 import { ScrollRail } from "@/components/layout/ScrollRail";
 import { site } from "@/content/site";
+import { openGraphBase } from "@/lib/metadata";
 import { preferencesInitScript, THEME_COLORS } from "@/lib/theme";
 import "./globals.css";
 
@@ -35,14 +36,9 @@ export const metadata: Metadata = {
     template: "%s · Flaura.dev",
   },
   description:
-    "Laura Fontaine, développeuse web freelance dans le Var : création et refonte de sites pour les TPE, indépendants et petites entreprises, partout en France en remote.",
+    "Laura Fontaine, développeuse web freelance dans le Var : création et refonte de sites internet pour TPE et indépendants, dans le Var et à distance.",
   robots: site.indexable ? undefined : { index: false, follow: false },
-  openGraph: {
-    type: "website",
-    locale: "fr_FR",
-    siteName: site.name,
-    url: "/",
-  },
+  openGraph: openGraphBase,
 };
 
 export const viewport: Viewport = {

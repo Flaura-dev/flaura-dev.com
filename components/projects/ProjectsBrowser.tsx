@@ -4,6 +4,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckIcon, CopyIcon } from "@/components/ui/icons";
 import { projectFilters, projects, type ProjectFilter } from "@/content/projects";
+import { site } from "@/content/site";
 import { cx } from "@/lib/cx";
 import { ProjectCard } from "./ProjectCard";
 
@@ -14,6 +15,8 @@ type ProjectsViewProps = {
 
 /** Durée d'affichage de la confirmation « lien copié ». */
 const COPY_FEEDBACK_MS = 2000;
+/** Adresse de la page, affichée sans protocole à côté du bouton de copie. */
+const DISPLAY_URL = `${new URL(site.url).host}/projets`;
 
 function ProjectsView({ active, onSelect }: ProjectsViewProps) {
   const [copy, setCopy] = useState<"idle" | "copied" | "failed">("idle");
@@ -65,7 +68,7 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
         </div>
         <div className="flex items-center gap-2 font-mono text-xs text-muted">
           <span>
-            flaura-dev.com/projets
+            {DISPLAY_URL}
             {active && (
               <>
                 ?type=<span className="text-pink">{active}</span>

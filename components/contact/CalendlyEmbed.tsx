@@ -5,19 +5,9 @@ import { CalendarIcon } from "@/components/ui/icons";
 import { cx } from "@/lib/cx";
 
 type CalendlyEmbedProps = {
-  /** Lien de l'événement Calendly. Seuls les liens https://calendly.com/ sont acceptés. */
-  url: string | null;
+  /** Lien de l'événement Calendly (https://calendly.com/…). */
+  url: string;
 };
-
-function isCalendlyUrl(url: string | null): url is string {
-  if (!url) return false;
-  try {
-    const parsed = new URL(url);
-    return parsed.protocol === "https:" && parsed.hostname === "calendly.com";
-  } catch {
-    return false;
-  }
-}
 
 /** Hauteur du cadre avant que Calendly n'annonce celle de son contenu (px). */
 const DEFAULT_HEIGHT = 700;
@@ -64,8 +54,7 @@ function buildEmbedSrc(url: string) {
 
 /**
  * Calendly n'est chargé qu'au clic du visiteur : aucune requête ni cookie tiers avant
- * qu'il le demande, donc pas besoin de bandeau cookies. Tant que le lien n'est pas
- * configuré (content/site.ts), on affiche un emplacement d'attente.
+ * qu'il le demande, donc pas besoin de bandeau cookies.
  */
 export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
   const [src, setSrc] = useState<string | null>(null);
@@ -73,7 +62,9 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
   const [height, setHeight] = useState(DEFAULT_HEIGHT);
   const frameRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const configured = isCalendlyUrl(url);
+  const revealTimer = useRef(0);
+
+  useEffect(() => () => window.clearTimeout(revealTimer.current), []);
 
   // Le bouton disparaît au clic : le focus passe au calendrier au lieu de se perdre.
   useEffect(() => {
@@ -124,7 +115,11 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
           ref={iframeRef}
           src={src}
           title="Calendly : choisir un créneau pour le café virtuel"
-          onLoad={() => window.setTimeout(() => setReady(true), REVEAL_FALLBACK_MS)}
+          // Chaque étape de Calendly peut recharger le cadre : un seul minuteur à la fois.
+          onLoad={() => {
+            window.clearTimeout(revealTimer.current);
+            revealTimer.current = window.setTimeout(() => setReady(true), REVEAL_FALLBACK_MS);
+          }}
           // Même color-scheme que la page Calendly : sinon le navigateur peint le cadre
           // en blanc opaque autour de la carte (grandes marges blanches en thème sombre).
           style={{ height, colorScheme: "light" }}
@@ -143,17 +138,12 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
       <div className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line p-8 text-center">
         <CalendarIcon size={32} className="text-pink" />
         <p className="max-w-[320px] text-sm leading-[1.6] text-muted">
-          {configured
-            ? "Les créneaux disponibles s’affichent ici, synchronisés avec mon agenda."
-            : "[Calendrier Calendly : lien à fournir]"}
+          Les créneaux disponibles s’affichent ici, synchronisés avec mon agenda.
         </p>
         <button
           type="button"
-          disabled={!configured}
-          onClick={() => {
-            if (configured) setSrc(buildEmbedSrc(url));
-          }}
-          className="min-h-12 press cursor-pointer rounded-full bg-pink px-[26px] py-[15px] font-semibold text-bg hover:bg-pink-hover disabled:cursor-not-allowed disabled:opacity-50"
+          onClick={() => setSrc(buildEmbedSrc(url))}
+          className="min-h-12 press cursor-pointer rounded-full bg-pink px-[26px] py-[15px] font-semibold text-bg hover:bg-pink-hover"
         >
           Voir les créneaux disponibles
         </button>

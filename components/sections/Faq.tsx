@@ -51,10 +51,9 @@ export function Faq() {
         </div>
 
         <div className="flex flex-col gap-4">
-          {faq.map(({ q, a, list, after }, index) => (
+          {faq.map(({ q, a, list, after }) => (
             <details
               key={q}
-              open={index === 0}
               className="faq-item group rounded-[20px] border border-line bg-surface px-7 py-[26px] open:border-pink motion-safe:transition-colors motion-safe:duration-300"
             >
               <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-[1.1875rem] font-semibold press-text [&::-webkit-details-marker]:hidden">

@@ -1,6 +1,6 @@
 // Source unique de la FAQ : le texte affiché et les données structurées FAQPage
 // (components/sections/Faq.tsx) en sont tirés, pour qu'ils restent toujours identiques.
-// La première question est ouverte par défaut (maquette).
+// Toutes les questions sont fermées au chargement (choix du 21 octobre 2026 : la section reste courte).
 // Les prix viennent de content/offers.ts : ils changent ici en même temps que sur les cartes.
 
 import { currentPrice, launch, maintenancePlans, plans, redesign } from "@/content/offers";

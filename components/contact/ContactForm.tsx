@@ -76,6 +76,7 @@ export function ContactForm() {
             <option value="site-vitrine">Site vitrine</option>
             <option value="refonte">Refonte</option>
             <option value="application-web">Application web</option>
+            <option value="renfort-agence">Renfort pour mon agence</option>
             <option value="je-ne-sais-pas">Je ne sais pas encore</option>
           </select>
           <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-muted transition-[rotate,color] duration-200 peer-open:rotate-180 peer-open:text-pink motion-reduce:transition-none" />

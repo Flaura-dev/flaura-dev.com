@@ -1,45 +1,102 @@
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
+import { ArrowUpRightIcon, CoffeeIcon } from "@/components/ui/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { faq } from "@/content/faq";
-import { cx } from "@/lib/cx";
+import { site } from "@/content/site";
 
 /*
- * Accordéon en <details> natifs : fonctionne au clavier et sans JavaScript. La réponse
- * se déplie en douceur (.faq-item, globals.css).
- * La première question occupe toute la largeur et s'ouvre par défaut (maquette) ;
- * les autres sont sur deux colonnes, alignées en haut pour qu'une question ouverte
- * n'étire pas sa voisine.
+ * FAQ : contenu visible + données structurées FAQPage générés depuis la même source
+ * (content/faq.ts), pour que le balisage corresponde toujours exactement au texte affiché
+ * (exigence Google). Composant serveur : tout le texte est dans le HTML initial, donc
+ * lisible par Google et les IA.
+ *
+ * Le grand « FAQ » est décoratif (même titre géant que les autres sections) ; le h2, plus
+ * descriptif, est juste en dessous. Accordéon en <details> natifs : fonctionne au clavier
+ * et sans JavaScript, et le texte replié reste dans le HTML, donc indexé. La réponse se
+ * déplie en douceur (.faq-item, globals.css), sauf si l'animation est réduite. Une seule
+ * colonne : les réponses sont longues.
  */
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map(({ q, a, list, after }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      // Balises <p>, <ul>, <li> autorisées par schema.org dans le texte d'une réponse.
+      text: list
+        ? `<p>${a}</p><ul>${list.map((item) => `<li>${item}</li>`).join("")}</ul>${after ? `<p>${after}</p>` : ""}`
+        : a,
+    },
+  })),
+};
+
 export function Faq() {
   return (
     <section id="faq" aria-labelledby="faq-titre" className="py-24">
       <Container className="flex flex-col gap-8">
-        <SectionHeading num="04" id="faq-titre">
-          FAQ
-        </SectionHeading>
+        <div aria-hidden="true">
+          <SectionHeading num="04" as="p">
+            FAQ
+          </SectionHeading>
+        </div>
+        <h2 id="faq-titre" className="max-w-[620px] text-[1.1875rem] leading-[1.6] text-muted">
+          Questions fréquentes sur la création de site internet dans le Var
+        </h2>
 
-        <div className="grid items-start gap-4 md:grid-cols-2">
-          {faq.map((item, index) => (
+        <div className="flex flex-col gap-4">
+          {faq.map(({ q, a, list, after }, index) => (
             <details
-              key={item.question}
+              key={q}
               open={index === 0}
-              className={cx(
-                "faq-item group rounded-[20px] border border-line bg-surface px-7 py-[26px] open:border-pink motion-safe:transition-colors motion-safe:duration-300",
-                index === 0 && "md:col-span-2",
-              )}
+              className="faq-item group rounded-[20px] border border-line bg-surface px-7 py-[26px] open:border-pink motion-safe:transition-colors motion-safe:duration-300"
             >
               <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-[1.1875rem] font-semibold press-text [&::-webkit-details-marker]:hidden">
-                {item.question}
+                {/* Lignes équilibrées : pas de « ? » isolé en fin de question sur mobile. */}
+                <h3 className="text-balance">{q}</h3>
                 <span aria-hidden="true" className="shrink-0 font-mono text-pink">
                   <span className="group-open:hidden">[+]</span>
                   <span className="hidden group-open:inline">[−]</span>
                 </span>
               </summary>
-              <p className="mt-3 leading-[1.65] text-muted">{item.answer}</p>
+              <div className="mt-3 flex max-w-[75ch] flex-col gap-3 leading-[1.65] text-muted">
+                <p>{a}</p>
+                {list && (
+                  <ul className="flex list-disc flex-col gap-1.5 pl-5 marker:text-pink">
+                    {list.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                )}
+                {after && <p>{after}</p>}
+              </div>
             </details>
           ))}
         </div>
+
+        <ButtonLink
+          href={site.calendlyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="self-start"
+        >
+          <CoffeeIcon />
+          Réserver mon café virtuel
+          <span className="sr-only">(nouvel onglet)</span>
+          <ArrowUpRightIcon />
+        </ButtonLink>
       </Container>
+
+      <script
+        type="application/ld+json"
+        // Échappement de "<" pour empêcher toute injection via la balise script.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+        }}
+      />
     </section>
   );
 }

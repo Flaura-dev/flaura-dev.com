@@ -85,15 +85,14 @@ export function Offers() {
             name={redesign.name}
             pitch={redesign.pitch}
             price={
-              <div className="flex flex-col gap-1">
-                {/* Pastille neutre, à la place de celle du lancement : les grands prix restent alignés. */}
-                <p className={cx(pillClass, "mb-2 border border-line text-muted")}>Module</p>
-                <PriceTag
-                  price={redesign.price}
-                  prefix={"+ "}
-                  note="En plus de la formule choisie"
-                />
-              </div>
+              <PriceTag
+                price={redesign.price}
+                prefix={"+ "}
+                note="En plus de la formule choisie"
+                // Place de la pastille de lancement des formules (26 px, + 8 px de marge et 4 px
+                // d'écart) : les grands prix restent alignés quand les cartes sont côte à côte.
+                className={cx(launch.active && "xl:pt-[calc(2.25rem+2px)]")}
+              />
             }
             rows={redesign.rows}
             cta="Ajouter la refonte"
@@ -264,7 +263,8 @@ function CardTitle({
     <h3
       id={id}
       className={cx(
-        "font-display text-[2.25rem] leading-[0.95] font-black text-balance uppercase",
+        // Interligne de 1,1 : sur deux lignes, les « // » ne touchent pas la ligne du dessous.
+        "font-display text-[2.25rem] leading-[1.1] font-black text-balance uppercase",
         className,
       )}
     >
@@ -308,7 +308,7 @@ function PriceTag({
         <span className="font-mono text-sm whitespace-nowrap">HT{unit}</span>
       </p>
       {vat && (
-        <p className="font-mono text-xs leading-5 text-muted">
+        <p className="font-mono text-xs leading-5 text-muted italic">
           soit {euros(withVat(price.amount))}&nbsp;TTC{unit}
         </p>
       )}
@@ -317,7 +317,7 @@ function PriceTag({
   );
 }
 
-/** Prix d'une formule : tarif de lancement, TTC, puis le prix normal en italique. */
+/** Prix d'une formule : tarif de lancement, TTC (en italique), puis le prix normal. */
 function PlanPrice({ price, highlighted }: { price: number; highlighted?: boolean }) {
   const now = currentPrice(price);
   const small = cx("font-mono text-xs leading-5", !highlighted && "text-muted");
@@ -328,7 +328,9 @@ function PlanPrice({ price, highlighted }: { price: number; highlighted?: boolea
           className={cx(
             pillClass,
             "mb-2",
-            highlighted ? "bg-bg text-pink" : "border border-pink text-pink",
+            // Bordure dans les deux cas : même hauteur pour toutes les pastilles.
+            "border",
+            highlighted ? "border-bg bg-bg text-pink" : "border-pink text-pink",
           )}
         >
           Lancement −{launch.discount}&nbsp;%
@@ -338,10 +340,8 @@ function PlanPrice({ price, highlighted }: { price: number; highlighted?: boolea
         <span className={bigPriceClass}>{euros(now)}</span>
         <span className="font-mono text-sm">HT</span>
       </p>
-      <p className={small}>soit {euros(withVat(now))}&nbsp;TTC</p>
-      {launch.active && (
-        <p className={cx(small, "italic")}>{euros(price)}&nbsp;HT après le lancement</p>
-      )}
+      <p className={cx(small, "italic")}>soit {euros(withVat(now))}&nbsp;TTC</p>
+      {launch.active && <p className={small}>{euros(price)}&nbsp;HT après le lancement</p>}
     </div>
   );
 }

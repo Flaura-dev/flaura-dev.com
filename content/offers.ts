@@ -49,7 +49,8 @@ export const plans: Plan[] = [
   {
     id: "essentiel",
     name: "Essentiel",
-    pitch: "Pour présenter ton activité sur une page claire, qui donne envie de te contacter.",
+    pitch:
+      "Un site vitrine d’une page pour présenter ton activité clairement et donner envie de te contacter.",
     price: 900,
     rows: {
       pages: "1 page",
@@ -64,7 +65,7 @@ export const plans: Plan[] = [
     id: "visibilite",
     name: "Visibilité",
     pitch:
-      "Assez de pages pour que Google comprenne ce que tu fais, et que tes clients aient envie de te choisir.",
+      "Un site vitrine avec assez de pages pour que Google comprenne ce que tu fais, et que tes clients aient envie de te choisir.",
     price: 1500,
     recommended: true,
     rows: {
@@ -142,10 +143,9 @@ export const maintenancePlans = [
 ];
 
 export const extras: { label: string; price: Price }[] = [
-  { label: "Page supplémentaire", price: { amount: 150 } },
+  { label: "Page supplémentaire", price: { amount: 150, unit: "page" } },
   { label: "Fonctionnalité sur mesure", price: { amount: 300, upTo: 800 } },
-  { label: "Rédaction SEO / GEO", price: { amount: 150, unit: "page" } },
-  { label: "Optimisation de l’existant", price: { amount: 80, unit: "page" } },
+  { label: "Optimisation SEO / GEO", price: { amount: 150, unit: "page" } },
   { label: "Mini kit graphique", price: { amount: 450 } },
 ];
 

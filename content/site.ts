@@ -3,7 +3,7 @@ export const site = {
   url: "https://flaura-dev.com",
   email: "hello@flaura-dev.com",
   linkedin: "https://www.linkedin.com/in/laura-fontaine-devweb83",
-  github: "https://github.com/Flaura-98",
+  github: "https://github.com/Flaura-dev",
   /** Lien de l'événement Calendly du café virtuel. */
   calendlyUrl: "https://calendly.com/flaura-devweb/cafe",
   /** Durée du café virtuel (l'appel découverte), en minutes. */

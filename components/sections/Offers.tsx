@@ -76,6 +76,7 @@ export function Offers() {
               <PriceTag price={redesign.price} prefix={"+ "} note="En plus de la formule choisie" />
             }
             rows={redesign.rows}
+            alignRows={false}
             cta="Ajouter la refonte"
           />
         </ul>
@@ -308,6 +309,7 @@ function OfferCard({
   price,
   rows,
   giftLabel,
+  alignRows = true,
   cta,
 }: {
   id: string;
@@ -318,6 +320,11 @@ function OfferCard({
   rows: CardRow[];
   /** Ligne mise en valeur (en rose et en gras) quand elle contient quelque chose. */
   giftLabel?: string;
+  /**
+   * false : lignes empilées librement (Refonte). Ses lignes ne sont pas les mêmes que celles
+   * des formules, et ses textes plus longs agrandiraient les leurs.
+   */
+  alignRows?: boolean;
   cta: string;
 }) {
   const pink = highlighted;
@@ -347,7 +354,7 @@ function OfferCard({
 
       <div className="pb-6">{price}</div>
 
-      <dl className="xl:row-span-6 xl:grid xl:grid-rows-subgrid">
+      <dl className={cx("xl:row-span-6", alignRows && "xl:grid xl:grid-rows-subgrid")}>
         {rows.map(({ label, value }) => {
           const gift = value && label === giftLabel;
           return (

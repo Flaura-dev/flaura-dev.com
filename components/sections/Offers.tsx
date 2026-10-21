@@ -9,7 +9,6 @@ import {
   currentPrice,
   customProject,
   extras,
-  extrasNote,
   includedEverywhere,
   launch,
   maintenancePlans,
@@ -173,10 +172,15 @@ export function Offers() {
                 </tr>
               </thead>
               <tbody>
-                {extras.map(({ label, price }) => (
-                  <tr key={label} className="border-t border-line">
+                {extras.map(({ label, price, note }) => (
+                  <tr key={label} className="border-t border-line align-top">
                     <th scope="row" className="py-3.5 pr-4 font-normal">
                       {label}
+                      {note && (
+                        <span className="mt-1 block text-[0.8125rem] leading-normal text-muted italic">
+                          {note}
+                        </span>
+                      )}
                     </th>
                     <td className="py-3.5 text-right font-semibold whitespace-nowrap text-pink">
                       {formatPrice(price)}
@@ -185,7 +189,6 @@ export function Offers() {
                 ))}
               </tbody>
             </table>
-            <p className="mt-auto text-[0.9375rem] leading-normal text-muted">{extrasNote}</p>
           </article>
         </div>
 
@@ -564,12 +567,12 @@ const schema = {
           price: customProject.price,
           serviceType: "Création de site internet sur mesure",
         }),
-        ...extras.map(({ label, price }, index) =>
+        ...extras.map(({ label, price, note }, index) =>
           offer({
             id: `option-${index + 1}`,
             anchor: "options",
             name: label,
-            description: `Option à la carte : ${label}.`,
+            description: `Option à la carte : ${label}.${note ? ` ${note}` : ""}`,
             price,
             serviceType: label,
           }),

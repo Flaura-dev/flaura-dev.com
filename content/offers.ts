@@ -142,15 +142,17 @@ export const maintenancePlans = [
   },
 ];
 
-export const extras: { label: string; price: Price }[] = [
+/** note : précision affichée sous l'option, en petit. */
+export const extras: { label: string; price: Price; note?: string }[] = [
   { label: "Page supplémentaire", price: { amount: 150, unit: "page" } },
   { label: "Fonctionnalité sur mesure", price: { amount: 300, upTo: 800 } },
   { label: "Optimisation SEO / GEO", price: { amount: 150, unit: "page" } },
-  { label: "Mini kit graphique", price: { amount: 450 } },
+  {
+    label: "Mini kit graphique",
+    price: { amount: 450 },
+    note: "Palette, typographies et déclinaisons simples. Le logo est à fournir de ton côté.",
+  },
 ];
-
-export const extrasNote =
-  "Mini kit graphique : palette, typographies et déclinaisons simples. Le logo est à fournir de ton côté.";
 
 /** Renfort freelance pour les agences de communication et studios (sous-traitance). */
 export const agencies = {

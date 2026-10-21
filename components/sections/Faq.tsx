@@ -12,7 +12,7 @@ import { site } from "@/content/site";
  * lisible par Google et les IA.
  *
  * Le grand « FAQ » est décoratif (même titre géant que les autres sections) ; le h2, plus
- * descriptif, est juste en dessous. Accordéon en <details> natifs : fonctionne au clavier
+ * descriptif, est à sa droite, posé sur la même ligne de base. Accordéon en <details> natifs : fonctionne au clavier
  * et sans JavaScript, et le texte replié reste dans le HTML, donc indexé. La réponse se
  * déplie en douceur (.faq-item, globals.css), sauf si l'animation est réduite. Une seule
  * colonne : les réponses sont longues.
@@ -38,14 +38,17 @@ export function Faq() {
   return (
     <section id="faq" aria-labelledby="faq-titre" className="py-24">
       <Container className="flex flex-col gap-8">
-        <div aria-hidden="true">
-          <SectionHeading num="04" as="p">
-            FAQ
-          </SectionHeading>
+        {/* Le h2 passe sous le titre dès qu'il ne tient plus sur une ligne à sa droite. */}
+        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-4">
+          <div aria-hidden="true">
+            <SectionHeading num="04" as="p" className="whitespace-nowrap">
+              FAQ
+            </SectionHeading>
+          </div>
+          <h2 id="faq-titre" className="text-[1.1875rem] leading-[1.6] text-muted">
+            Questions fréquentes sur la création de site internet
+          </h2>
         </div>
-        <h2 id="faq-titre" className="max-w-[620px] text-[1.1875rem] leading-[1.6] text-muted">
-          Questions fréquentes sur la création de site internet dans le Var
-        </h2>
 
         <div className="flex flex-col gap-4">
           {faq.map(({ q, a, list, after }, index) => (

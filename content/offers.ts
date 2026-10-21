@@ -4,30 +4,13 @@ import type { Price } from "@/lib/price";
 // Tous les montants sont en euros hors taxes ; le TTC est calculé à l'affichage (lib/price.ts).
 // Les espaces insécables ( ) évitent qu'un « ? » ou un « € » se retrouve seul en début de ligne.
 
-/**
- * Tarif de lancement sur les trois formules. active: false remet les prix normaux partout
- * (cartes, FAQ, données structurées).
- */
-export const launch = {
-  active: true,
-  /** Remise en %. */
-  discount: 20,
-  /** Fin de l'offre, au format AAAA-MM-JJ : à fournir. Tant qu'elle manque, un [crochet] s'affiche. */
-  endsOn: null as string | null,
-};
-
-/** Prix affiché aujourd'hui : le prix de lancement tant que l'offre court. */
-export function currentPrice(amount: number) {
-  return launch.active ? Math.round(amount * (100 - launch.discount)) / 100 : amount;
-}
-
 /** Lignes comparées d'une formule à l'autre, dans l'ordre d'affichage. */
 export const planRows = [
   { key: "pages", label: "Pages" },
   { key: "content", label: "Contenu" },
   { key: "design", label: "Maquette" },
+  { key: "corrections", label: "Correction" },
   { key: "blog", label: "Blog" },
-  { key: "custom", label: "Sur mesure" },
   { key: "gift", label: "Cadeau" },
 ] as const;
 
@@ -38,8 +21,8 @@ type Plan = {
   id: string;
   name: string;
   pitch: string;
-  /** Prix normal HT (hors lancement). */
-  price: number;
+  /** Prix HT « à partir de ». */
+  price: Price;
   recommended?: boolean;
   /** null : non inclus dans cette formule. */
   rows: Record<(typeof planRows)[number]["key"], string | null>;
@@ -51,13 +34,13 @@ export const plans: Plan[] = [
     name: "Essentiel",
     pitch:
       "Un site vitrine d’une page pour présenter ton activité clairement et donner envie de te contacter.",
-    price: 900,
+    price: { amount: 750, from: true },
     rows: {
       pages: "1 page",
       content: "Accueil, prestations, contact",
-      design: "1 piste graphique",
+      design: "1 maquette",
+      corrections: "1 aller-retour",
       blog: null,
-      custom: null,
       gift: null,
     },
   },
@@ -66,14 +49,14 @@ export const plans: Plan[] = [
     name: "Visibilité",
     pitch:
       "Un site vitrine avec assez de pages pour que Google comprenne ce que tu fais, et que tes clients aient envie de te choisir.",
-    price: 1500,
+    price: { amount: 1200, from: true },
     recommended: true,
     rows: {
       pages: "Jusqu’à 5 pages",
       content: "Ex. : accueil, prestations, équipe, réalisations, contact",
-      design: "1 piste graphique + moodboard",
+      design: "2 maquettes",
+      corrections: "2 allers-retours",
       blog: null,
-      custom: null,
       gift: "1 mois de maintenance Sérénité",
     },
   },
@@ -82,13 +65,13 @@ export const plans: Plan[] = [
     name: "Pro",
     pitch:
       "Une page par prestation pour être trouvé sur chacune, et un blog pour publier toi-même.",
-    price: 2800,
+    price: { amount: 2500, from: true },
     rows: {
       pages: "Jusqu’à 10 pages",
       content: "Une page par prestation",
-      design: "2 pistes graphiques",
+      design: "2 maquettes",
+      corrections: "2 allers-retours",
       blog: "Blog que tu gères toi-même",
-      custom: "1 fonctionnalité",
       gift: "3 mois de maintenance Sérénité",
     },
   },
@@ -103,7 +86,7 @@ export const includedEverywhere = [
   "Site à ton nom",
 ];
 
-/** Module refonte : 4e carte, à droite des formules. Hors tarif de lancement. */
+/** Module refonte : 4e carte, à droite des formules. */
 export const redesign = {
   id: "refonte",
   name: "Refonte",
@@ -117,14 +100,7 @@ export const redesign = {
       value: "Tes anciennes adresses, pour que Google ne perde pas ta trace",
     },
   ] satisfies CardRow[],
-  price: { amount: 400 } satisfies Price,
-};
-
-export const customProject = {
-  id: "sur-mesure",
-  name: "Sur mesure",
-  text: "Plus de 10 pages, plusieurs fonctionnalités, des besoins bien à toi : quand ton projet sort du cadre des trois formules, on le cadre ensemble et tu reçois un devis détaillé.",
-  price: { amount: 3500, from: true } satisfies Price,
+  price: { amount: 450, from: true } satisfies Price,
 };
 
 export const maintenancePlans = [
@@ -142,14 +118,22 @@ export const maintenancePlans = [
   },
 ];
 
-/** note : précision affichée sous l'option, en petit. */
-export const extras: { label: string; price: Price; note?: string }[] = [
-  { label: "Page supplémentaire", price: { amount: 150, unit: "page" } },
-  { label: "Fonctionnalité sur mesure", price: { amount: 300, upTo: 800 } },
-  { label: "Optimisation SEO / GEO", price: { amount: 150, unit: "page" } },
+/** note : précision affichée sous l'option, en petit et en italique. */
+export const extras: { id: string; label: string; price: Price; note?: string }[] = [
   {
+    id: "page-supplementaire",
+    label: "Page supplémentaire",
+    price: { amount: 150, from: true, unit: "page" },
+  },
+  {
+    id: "kit-ecriture",
+    label: "Kit écriture texte",
+    price: { amount: 150, from: true, unit: "page" },
+  },
+  {
+    id: "kit-graphique",
     label: "Mini kit graphique",
-    price: { amount: 450 },
+    price: { amount: 450, from: true },
     note: "Palette, typographies et déclinaisons simples. Le logo est à fournir de ton côté.",
   },
 ];

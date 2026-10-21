@@ -1,9 +1,6 @@
-import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
-import { ArrowUpRightIcon, CoffeeIcon } from "@/components/ui/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { faq } from "@/content/faq";
-import { site } from "@/content/site";
 
 /*
  * FAQ : contenu visible + données structurées FAQPage générés depuis la même source
@@ -78,18 +75,6 @@ export function Faq() {
             </details>
           ))}
         </div>
-
-        <ButtonLink
-          href={site.calendlyUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="self-start"
-        >
-          <CoffeeIcon />
-          Réserver mon café virtuel
-          <span className="sr-only">(nouvel onglet)</span>
-          <ArrowUpRightIcon />
-        </ButtonLink>
       </Container>
 
       <script

@@ -2,7 +2,7 @@
 export const VAT_RATE = 20;
 
 /**
- * Prix HT. amount seul : prix fixe. from : « dès ». upTo : fourchette (amount à upTo).
+ * Prix HT. amount seul : prix fixe. from : « à partir de ». upTo : fourchette (amount à upTo).
  * unit : prix par page, par mois ou par jour.
  */
 export type Price = {
@@ -29,10 +29,4 @@ export function euros(amount: number) {
 /** Montant TTC d'un prix HT, arrondi au centime (calcul en centimes : pas d'erreur d'arrondi). */
 export function withVat(amount: number) {
   return Math.round(amount * (100 + VAT_RATE)) / 100;
-}
-
-/** « dès 3 500 € HT », « 300 à 800 € HT », « 150 € HT / page ». */
-export function formatPrice({ amount, from, upTo, unit }: Price) {
-  const value = upTo ? `${euros(amount).replace(`${NBSP}€`, "")} à ${euros(upTo)}` : euros(amount);
-  return `${from ? `dès${NBSP}` : ""}${value}${NBSP}HT${unit ? `${NBSP}/ ${unit}` : ""}`;
 }

@@ -6,11 +6,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
   agencies,
   type CardRow,
-  currentPrice,
-  customProject,
   extras,
   includedEverywhere,
-  launch,
   maintenancePlans,
   planRows,
   plans,
@@ -18,13 +15,13 @@ import {
 } from "@/content/offers";
 import { site } from "@/content/site";
 import { cx } from "@/lib/cx";
-import { euros, formatPrice, type Price, VAT_RATE, withVat } from "@/lib/price";
+import { euros, type Price, VAT_RATE, withVat } from "@/lib/price";
 
 /*
  * Offres : quatre cartes (Essentiel, Visibilité mise en avant, Pro, puis le module Refonte),
- * la maintenance en longueur, sur mesure et options, et le renfort pour les agences.
- * Composant serveur : tous les prix sont du texte dans le HTML initial, lisibles par Google
- * et les IA, et les données structurées (OfferCatalog) viennent de la même source
+ * puis deux cartes en longueur (maintenance, options à la carte) et le renfort pour les
+ * agences. Composant serveur : tous les prix sont du texte dans le HTML initial, lisibles par
+ * Google et les IA, et les données structurées (OfferCatalog) viennent de la même source
  * (content/offers.ts).
  *
  * Grand écran : les lignes des quatre cartes s'alignent d'une carte à l'autre (subgrid), comme
@@ -32,19 +29,11 @@ import { euros, formatPrice, type Price, VAT_RATE, withVat } from "@/lib/price";
  * En dessous : deux cartes par ligne, puis une seule.
  */
 
-const launchEnd = launch.endsOn
-  ? new Date(launch.endsOn).toLocaleDateString("fr-FR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-      timeZone: "UTC",
-    })
-  : "[DATE DE FIN]";
-
 const cardClass = "rounded-3xl border border-line bg-surface p-7";
 const pillClass =
   "self-start rounded-full px-3 py-1 font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase";
-const bigPriceClass = "font-display text-[3.25rem] leading-none font-black whitespace-nowrap";
+const labelClass = "font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase";
+const bigPriceClass = "font-display leading-none font-black whitespace-nowrap";
 const buttonClass =
   "inline-flex min-h-12 w-full press items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.9375rem] font-semibold";
 const outlineButtonClass = cx(buttonClass, "border border-line hover:border-pink hover:text-pink");
@@ -73,7 +62,7 @@ export function Offers() {
               name={plan.name}
               pitch={plan.pitch}
               highlighted={plan.recommended}
-              price={<PlanPrice price={plan.price} highlighted={plan.recommended} />}
+              price={<PriceTag price={plan.price} inverted={plan.recommended} />}
               rows={planRows.map(({ key, label }) => ({ label, value: plan.rows[key] }))}
               giftLabel="Cadeau"
               cta={`Choisir ${plan.name}`}
@@ -84,14 +73,7 @@ export function Offers() {
             name={redesign.name}
             pitch={redesign.pitch}
             price={
-              <PriceTag
-                price={redesign.price}
-                prefix={"+ "}
-                note="En plus de la formule choisie"
-                // Place de la pastille de lancement des formules (26 px, + 8 px de marge et 4 px
-                // d'écart) : les grands prix restent alignés quand les cartes sont côte à côte.
-                className={cx(launch.active && "xl:pt-[calc(2.25rem+2px)]")}
-              />
+              <PriceTag price={redesign.price} prefix={"+ "} note="En plus de la formule choisie" />
             }
             rows={redesign.rows}
             cta="Ajouter la refonte"
@@ -110,87 +92,27 @@ export function Offers() {
           </ul>
           <p className="font-mono text-xs leading-5 text-muted">
             Prix hors taxes, TVA {VAT_RATE}&nbsp;% en sus.
-            {launch.active &&
-              ` Tarifs de lancement (−${launch.discount} %) valables jusqu’au ${launchEnd}.`}
           </p>
         </div>
 
-        <article
+        <TilesCard
           id="maintenance"
-          aria-labelledby="maintenance-titre"
-          className={cx(
-            cardClass,
-            "grid gap-6 md:p-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center lg:gap-10",
-          )}
-        >
-          <div className="flex flex-col gap-4">
-            <CardTitle id="maintenance-titre">Maintenance</CardTitle>
-            <p className="leading-[1.65] text-muted">
+          title="Maintenance"
+          text={
+            <>
               Ton site reste à jour, sauvegardé et en ligne, sans que tu aies à y penser.
               L’hébergement reste à ton nom&nbsp;: je m’en occupe avec l’accès que tu me donnes.
-            </p>
-          </div>
-          <ul className="grid gap-3 sm:grid-cols-2">
-            {maintenancePlans.map((formula) => (
-              <li
-                key={formula.id}
-                className="flex flex-col gap-3 rounded-2xl border border-line p-5"
-              >
-                <h4 className="text-lg font-semibold">{formula.name}</h4>
-                <p className="text-[0.9375rem] leading-normal text-muted">{formula.text}</p>
-                <PriceTag price={formula.price} size="small" className="mt-auto" />
-              </li>
-            ))}
-          </ul>
-        </article>
+            </>
+          }
+          tiles={maintenancePlans.map(({ id, name, text, price }) => ({ id, name, text, price }))}
+        />
 
-        <div className="grid gap-4 lg:grid-cols-2">
-          <article
-            id={customProject.id}
-            aria-labelledby="sur-mesure-titre"
-            className={cx(cardClass, "flex flex-col gap-6")}
-          >
-            <CardTitle id="sur-mesure-titre">{customProject.name}</CardTitle>
-            <p className="leading-[1.65] text-muted">{customProject.text}</p>
-            <PriceTag price={customProject.price} note="Devis après cadrage" />
-            <Link href="/#contact" className={cx(outlineButtonClass, "mt-auto")}>
-              Parlons de ton projet
-            </Link>
-          </article>
-
-          <article
-            id="options"
-            aria-labelledby="options-titre"
-            className={cx(cardClass, "flex flex-col gap-6")}
-          >
-            <CardTitle id="options-titre">Options à la carte</CardTitle>
-            <table className="w-full text-left">
-              <thead className="sr-only">
-                <tr>
-                  <th scope="col">Option</th>
-                  <th scope="col">Prix</th>
-                </tr>
-              </thead>
-              <tbody>
-                {extras.map(({ label, price, note }) => (
-                  <tr key={label} className="border-t border-line align-top">
-                    <th scope="row" className="py-3.5 pr-4 font-normal">
-                      {label}
-                      {note && (
-                        <span className="mt-1 block text-[0.8125rem] leading-normal text-muted italic">
-                          {note}
-                        </span>
-                      )}
-                    </th>
-                    <td className="py-3.5 text-right font-semibold whitespace-nowrap text-pink">
-                      {formatPrice(price)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </article>
-        </div>
+        <TilesCard
+          id="options"
+          title="Options à la carte"
+          text="À ajouter à ta formule, selon ce dont tu as besoin."
+          tiles={extras.map(({ id, label, note, price }) => ({ id, name: label, note, price }))}
+        />
 
         <article
           id={agencies.id}
@@ -213,10 +135,12 @@ export function Offers() {
           </div>
           <div className="flex flex-col justify-end gap-6">
             <p className="leading-[1.65] text-muted">{agencies.background}</p>
-            <div className="flex flex-col gap-1">
-              <p className="font-mono text-xs leading-5 text-muted">Taux journalier</p>
-              <PriceTag price={agencies.price} vat={false} note="ou au forfait, sur devis" />
-            </div>
+            <PriceTag
+              price={agencies.price}
+              label="Taux journalier, à partir de"
+              vat={false}
+              note="ou au forfait, sur devis"
+            />
             <div className="flex flex-col gap-3">
               <Link
                 href="/#contact"
@@ -279,31 +203,41 @@ function CardTitle({
   );
 }
 
-/** Prix HT en grand, TTC en dessous (sauf vat=false, pour les agences qui récupèrent la TVA). */
+/**
+ * Prix HT en grand. Au-dessus : « à partir de » (ou label). Dessous : TTC en italique (sauf
+ * vat=false, pour les agences qui récupèrent la TVA) puis la note. inverted : carte rose.
+ */
 function PriceTag({
   price,
   prefix,
+  label,
   note,
   size = "large",
   vat = true,
+  inverted,
   className,
 }: {
   price: Price;
   prefix?: string;
+  label?: string;
   note?: string;
   size?: "large" | "small";
   vat?: boolean;
+  inverted?: boolean;
   className?: string;
 }) {
   const unit = price.unit ? ` / ${price.unit}` : "";
+  const caption = label ?? (price.from ? "à partir de" : undefined);
+  const small = cx("font-mono text-xs leading-5", !inverted && "text-muted");
   return (
     <div className={cx("flex flex-col gap-1", className)}>
+      {caption && <p className={cx(labelClass, !inverted && "text-muted")}>{caption}</p>}
       <p className="flex flex-wrap items-baseline gap-x-2">
-        {price.from && <span className="font-mono text-sm">dès</span>}
         <span
-          className={
-            size === "large" ? bigPriceClass : cx(bigPriceClass, "text-[2.25rem] text-pink")
-          }
+          className={cx(
+            bigPriceClass,
+            size === "large" ? "text-[3.25rem]" : "text-[2.25rem] text-pink",
+          )}
         >
           {prefix}
           {euros(price.amount)}
@@ -311,41 +245,58 @@ function PriceTag({
         <span className="font-mono text-sm whitespace-nowrap">HT{unit}</span>
       </p>
       {vat && (
-        <p className="font-mono text-xs leading-5 text-muted italic">
+        <p className={cx(small, "italic")}>
           soit {euros(withVat(price.amount))}&nbsp;TTC{unit}
         </p>
       )}
-      {note && <p className="font-mono text-xs leading-5 text-muted">{note}</p>}
+      {note && <p className={small}>{note}</p>}
     </div>
   );
 }
 
-/** Prix d'une formule : tarif de lancement, TTC (en italique), puis le prix normal. */
-function PlanPrice({ price, highlighted }: { price: number; highlighted?: boolean }) {
-  const now = currentPrice(price);
-  const small = cx("font-mono text-xs leading-5", !highlighted && "text-muted");
+type Tile = { id: string; name: string; text?: string; note?: string; price: Price };
+
+/**
+ * Carte en longueur : titre et présentation à gauche, formules en vignettes à droite (à partir
+ * de 1280 px ; au-dessus des vignettes en dessous, pour que trois vignettes gardent leur largeur).
+ */
+function TilesCard({
+  id,
+  title,
+  text,
+  tiles,
+}: {
+  id: string;
+  title: string;
+  text: ReactNode;
+  tiles: Tile[];
+}) {
   return (
-    <div className="flex flex-col gap-1">
-      {launch.active && (
-        <p
-          className={cx(
-            pillClass,
-            "mb-2",
-            // Bordure dans les deux cas : même hauteur pour toutes les pastilles.
-            "border",
-            highlighted ? "border-bg bg-bg text-pink" : "border-pink text-pink",
-          )}
-        >
-          Lancement −{launch.discount}&nbsp;%
-        </p>
+    <article
+      id={id}
+      aria-labelledby={`${id}-titre`}
+      className={cx(
+        cardClass,
+        "grid gap-6 md:p-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] xl:items-center xl:gap-10",
       )}
-      <p className="flex items-baseline gap-2">
-        <span className={bigPriceClass}>{euros(now)}</span>
-        <span className="font-mono text-sm">HT</span>
-      </p>
-      <p className={cx(small, "italic")}>soit {euros(withVat(now))}&nbsp;TTC</p>
-      {launch.active && <p className={small}>{euros(price)}&nbsp;HT après le lancement</p>}
-    </div>
+    >
+      <div className="flex flex-col gap-4">
+        <CardTitle id={`${id}-titre`}>{title}</CardTitle>
+        <p className="leading-[1.65] text-muted">{text}</p>
+      </div>
+      <ul className={cx("grid gap-3", tiles.length > 2 ? "sm:grid-cols-3" : "sm:grid-cols-2")}>
+        {tiles.map((tile) => (
+          <li key={tile.id} className="flex flex-col gap-3 rounded-2xl border border-line p-5">
+            <h4 className="text-lg leading-snug font-semibold">{tile.name}</h4>
+            {tile.text && <p className="text-[0.9375rem] leading-normal text-muted">{tile.text}</p>}
+            {tile.note && (
+              <p className="text-[0.8125rem] leading-normal text-muted italic">{tile.note}</p>
+            )}
+            <PriceTag price={tile.price} size="small" className="mt-auto" />
+          </li>
+        ))}
+      </ul>
+    </article>
   );
 }
 
@@ -407,14 +358,7 @@ function OfferCard({
                 pink ? "border-bg/25" : "border-line",
               )}
             >
-              <dt
-                className={cx(
-                  "font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase",
-                  !pink && "text-muted",
-                )}
-              >
-                {label}
-              </dt>
+              <dt className={cx(labelClass, !pink && "text-muted")}>{label}</dt>
               <dd
                 className={cx(
                   gift && "font-semibold",
@@ -531,18 +475,17 @@ const schema = {
       name: "Offres et tarifs Flaura.dev",
       url: `${site.url}/#offres`,
       itemListElement: [
-        ...plans.map((plan) => ({
-          ...offer({
+        ...plans.map((plan) =>
+          offer({
             id: `offre-${plan.id}`,
             name: plan.name,
             description: `${plan.pitch} ${describeRows(
               planRows.map(({ key, label }) => ({ label, value: plan.rows[key] })),
             )}`,
-            price: { amount: currentPrice(plan.price) },
+            price: plan.price,
             serviceType: "Création de site internet",
           }),
-          ...(launch.active && launch.endsOn && { priceValidUntil: launch.endsOn }),
-        })),
+        ),
         offer({
           id: redesign.id,
           name: redesign.name,
@@ -560,16 +503,9 @@ const schema = {
             serviceType: "Maintenance de site internet",
           }),
         ),
-        offer({
-          id: customProject.id,
-          name: customProject.name,
-          description: customProject.text,
-          price: customProject.price,
-          serviceType: "Création de site internet sur mesure",
-        }),
-        ...extras.map(({ label, price, note }, index) =>
+        ...extras.map(({ id, label, price, note }) =>
           offer({
-            id: `option-${index + 1}`,
+            id: `option-${id}`,
             anchor: "options",
             name: label,
             description: `Option à la carte : ${label}.${note ? ` ${note}` : ""}`,

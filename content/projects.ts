@@ -3,7 +3,6 @@ export const projectFilters = [
   { slug: "creation", label: "création" },
   { slug: "refonte", label: "refonte" },
   { slug: "site-vitrine", label: "site vitrine" },
-  { slug: "application-web", label: "application web" },
 ] as const;
 export type ProjectFilter = (typeof projectFilters)[number]["slug"];
 
@@ -14,7 +13,7 @@ export type Project = {
   label: string;
   categories: ProjectFilter[];
   /** Visuel provisoire dessiné dans la maquette, en attendant les vraies images. */
-  visual: "lea" | "pendu" | "ailleurs";
+  visual: "lea" | "pendu";
   /** Soit une description libre, soit le trio problème / solution / résultat. */
   description?: string;
   problem?: string;
@@ -44,15 +43,6 @@ export const projects: Project[] = [
     url: "https://darkslateblue-bear-545715.hostingersite.com/",
     description:
       "Un jeu du pendu dans l’univers de League of Legends, en solo ou à plusieurs. [Défi technique et résultat à détailler]",
-  },
-  {
-    slug: "ailleurs",
-    title: "Ailleurs",
-    label: "application web · création",
-    categories: ["application-web", "creation"],
-    visual: "ailleurs",
-    description:
-      "Mon carnet de voyage perso, construit autour d’un globe 3D. [Défi technique et résultat à détailler]",
   },
 ];
 

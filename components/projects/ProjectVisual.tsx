@@ -5,6 +5,7 @@ import pendu from "@/assets/projects/pendu-pleine-page.webp";
 import type { Project } from "@/content/projects";
 import { BeforeAfter } from "./BeforeAfter";
 import { BrowserFrame } from "./BrowserFrame";
+import { PROJECT_SHOT_SIZES as SIZES } from "./grid";
 import { ScrollingShot } from "./ScrollingShot";
 
 /*
@@ -12,27 +13,9 @@ import { ScrollingShot } from "./ScrollingShot";
  * l'avant et l'après se superposent au pixel près. Seul le haut de page est visible.
  * Sans comparateur, la capture couvre toute la page et défile (ScrollingShot).
  */
-const SIZES = "(min-width: 1280px) 380px, (min-width: 900px) 33vw, 100vw";
 
 function Shot({ src, alt }: { src: StaticImageData; alt: string }) {
   return <Image src={src} alt={alt} fill sizes={SIZES} className="object-cover object-top" />;
-}
-
-/** Illustration provisoire (maquette), en attendant une capture du projet. */
-function AilleursVisual() {
-  return (
-    <div aria-hidden="true" className="flex size-full items-center justify-center bg-[#161A26]">
-      <div className="relative size-[150px] overflow-hidden rounded-full border-[1.5px] border-[#8C93B0] shadow-[0_0_60px_#3B3F66]">
-        <div className="absolute inset-x-10 inset-y-0 rounded-full border-[1.5px] border-[#4E5576]" />
-        <div className="absolute inset-x-3 inset-y-0 rounded-full border-[1.5px] border-[#4E5576]" />
-        <div className="absolute inset-x-0 top-1/2 h-[1.5px] bg-[#4E5576]" />
-        <div className="absolute inset-x-0 top-[28%] h-[1.5px] bg-[#3A3F5A]" />
-        <div className="absolute inset-x-0 top-[72%] h-[1.5px] bg-[#3A3F5A]" />
-        <div className="absolute top-[38px] left-11 size-2.5 rounded-full bg-pink" />
-        <div className="absolute top-[84px] left-[94px] size-2.5 rounded-full bg-pink" />
-      </div>
-    </div>
-  );
 }
 
 export function ProjectVisual({ project }: { project: Project }) {
@@ -70,7 +53,5 @@ export function ProjectVisual({ project }: { project: Project }) {
         </a>
       );
     }
-    case "ailleurs":
-      return <AilleursVisual />;
   }
 }

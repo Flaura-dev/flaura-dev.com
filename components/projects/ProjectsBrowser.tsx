@@ -6,6 +6,7 @@ import { CheckIcon, CopyIcon } from "@/components/ui/icons";
 import { projectFilters, projects, type ProjectFilter } from "@/content/projects";
 import { site } from "@/content/site";
 import { cx } from "@/lib/cx";
+import { PROJECT_GRID } from "./grid";
 import { ProjectCard } from "./ProjectCard";
 
 type ProjectsViewProps = {
@@ -94,7 +95,7 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
       </div>
 
       {visible.length > 0 ? (
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className={cx("grid gap-4", PROJECT_GRID)}>
           {visible.map((project) => (
             <ProjectCard key={project.slug} project={project} withAnchor />
           ))}

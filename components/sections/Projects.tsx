@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { CtaBanner } from "@/components/projects/CtaBanner";
+import { PROJECT_GRID } from "@/components/projects/grid";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { Testimonial } from "@/components/projects/Testimonial";
 import { Container } from "@/components/ui/Container";
 import { ArrowRightIcon } from "@/components/ui/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { HOME_PROJECTS_COUNT, projects } from "@/content/projects";
+import { cx } from "@/lib/cx";
 
 export function Projects() {
   return (
@@ -30,7 +32,7 @@ export function Projects() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className={cx("grid gap-4", PROJECT_GRID)}>
           {projects.slice(0, HOME_PROJECTS_COUNT).map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}

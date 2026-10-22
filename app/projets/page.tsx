@@ -7,9 +7,9 @@ import { ArrowLeftIcon } from "@/components/ui/icons";
 import { pageUrls } from "@/lib/metadata";
 
 export const metadata: Metadata = {
-  title: "Projets : sites vitrines et applications web",
+  title: "Projets : sites vitrines et créations web",
   description:
-    "Les projets de Flaura.dev : sites vitrines, refontes et applications web, avec pour chacun le problème de départ, la solution apportée et le résultat.",
+    "Les projets de Flaura.dev : sites vitrines, refontes et créations web, avec pour chacun le problème de départ, la solution apportée et le résultat.",
   ...pageUrls("/projets"),
 };
 

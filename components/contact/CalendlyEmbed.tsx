@@ -28,11 +28,13 @@ const BOTTOM_CLIP = 2;
 const CALENDAR_STEP_REPORTED = 602;
 const CALENDAR_STEP_VISIBLE = 536;
 /**
- * La page Calendly reste blanche quelques instants après son chargement, le temps de
- * dessiner le calendrier : on attend qu'elle annonce son contenu. Secours si ce
- * message n'arrive jamais (ms après le chargement de la page).
+ * La page Calendly reste vide un moment après son chargement, le temps de dessiner le
+ * calendrier (environ 3 s mesurées le 22 octobre 2026, bien plus sur une connexion lente) :
+ * « Chargement des créneaux… » reste affiché jusqu'à ce qu'elle annonce la hauteur de son
+ * contenu. Secours si ce message n'arrive jamais (Calendly qui changerait ses messages) : le
+ * cadre s'affiche quand même au bout de ce délai (ms après le chargement de la page).
  */
-const REVEAL_FALLBACK_MS = 5000;
+const REVEAL_FALLBACK_MS = 30_000;
 
 /**
  * Ajoute au lien Calendly les réglages d'intégration et les couleurs du thème en cours.

@@ -144,9 +144,13 @@ export function ContactForm() {
         )}
       >
         {notice}
-        {/* Pastille rose après la confirmation : elle attire l'œil sur le message envoyé. */}
+        {/*
+          Coche verte après la confirmation : elle attire l'œil sur le message envoyé. Vert
+          « disponible » de la charte (identique dans les deux thèmes), coche foncée pour rester
+          lisible en clair comme en sombre.
+        */}
         {state.status === "sent" && (
-          <span className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-pink text-bg">
+          <span className="inline-flex size-6 shrink-0 items-center justify-center rounded-md bg-avail text-[#0D0817]">
             <CheckIcon size={14} strokeWidth={3} />
           </span>
         )}

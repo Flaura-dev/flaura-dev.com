@@ -1,13 +1,5 @@
 import { faq } from "@/content/faq";
-import {
-  agencies,
-  type CardRow,
-  extras,
-  maintenancePlans,
-  planCardRows,
-  plans,
-  redesign,
-} from "@/content/offers";
+import { type CardRow, maintenancePlans, planCardRows, plans, redesign } from "@/content/offers";
 import { site } from "@/content/site";
 import type { Price } from "@/lib/price";
 
@@ -38,7 +30,7 @@ const business = {
   hasOfferCatalog: { "@id": `${site.url}/#offres` },
 };
 
-const unitCodes = { mois: "MON", jour: "DAY" } as const;
+const unitCodes = { mois: "MON" } as const;
 
 function priceSpecification({ amount, from, unit }: Price) {
   return {
@@ -47,7 +39,7 @@ function priceSpecification({ amount, from, unit }: Price) {
     priceCurrency: "EUR",
     valueAddedTaxIncluded: false,
     ...(unit && { unitText: unit }),
-    ...(unit && unit !== "page" && { unitCode: unitCodes[unit] }),
+    ...(unit && { unitCode: unitCodes[unit] }),
   };
 }
 
@@ -121,23 +113,6 @@ const offerCatalog = {
         serviceType: "Maintenance de site internet",
       }),
     ),
-    ...extras.map(({ id, name, price, note }) =>
-      offer({
-        id: `option-${id}`,
-        anchor: "options",
-        name,
-        description: `Option à la carte : ${name}.${note ? ` ${note}` : ""}`,
-        price,
-        serviceType: name,
-      }),
-    ),
-    offer({
-      id: agencies.id,
-      name: agencies.title,
-      description: `${agencies.text} ${agencies.skills.join(", ")}.`,
-      price: agencies.price,
-      serviceType: "Développement web en sous-traitance pour agences",
-    }),
   ],
 };
 

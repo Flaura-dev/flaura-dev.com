@@ -2,16 +2,15 @@
 export const VAT_RATE = 20;
 
 /**
- * Prix HT. amount seul : prix fixe. from : « à partir de ».
- * unit : prix par page, par mois ou par jour.
+ * Prix HT. amount seul : prix fixe. from : « à partir de ». unit : prix par mois.
  */
 export type Price = {
   amount: number;
   from?: boolean;
-  unit?: "page" | "mois" | "jour";
+  unit?: "mois";
 };
 
-// Espace insécable : « € », « HT » et « / mois » restent collés au montant.
+// Espace insécable : « € » reste collé au montant.
 const NBSP = "\u00a0";
 
 /** « 1 200 € », « 58,80 € » : centimes seulement s'il y en a. */

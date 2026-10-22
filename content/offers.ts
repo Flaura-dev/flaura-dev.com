@@ -122,39 +122,3 @@ export const maintenancePlans = [
     price: { amount: 99, unit: "mois" } satisfies Price,
   },
 ];
-
-/** note : précision affichée sous l'option, en petit et en italique. */
-export const extras: { id: string; name: string; price: Price; note?: string }[] = [
-  {
-    id: "page-supplementaire",
-    name: "Page supplémentaire",
-    price: { amount: 150, from: true, unit: "page" },
-  },
-  {
-    id: "kit-ecriture",
-    name: "Kit écriture texte",
-    price: { amount: 150, from: true, unit: "page" },
-  },
-  {
-    id: "kit-graphique",
-    name: "Mini kit graphique",
-    price: { amount: 450, from: true },
-    note: "Palette, typographies et déclinaisons simples. Le logo est à fournir de ton côté.",
-  },
-];
-
-/** Renfort freelance pour les agences de communication et studios (sous-traitance). */
-export const agencies = {
-  id: "agences",
-  title: "Renfort freelance pour les agences de communication",
-  text: "Un pic de charge, un projet web à sous-traiter ? Je rejoins ton équipe le temps d’une mission.",
-  skills: [
-    "Intégration de tes maquettes",
-    "Sites vitrines et applications web",
-    "Animations et interactions",
-    "Performance, SEO technique et mise en ligne",
-  ],
-  background:
-    "Ancienne cheffe de projets en bureau d’études : brief, planning et points d’étape, je m’adapte à ton organisation.",
-  price: { amount: 350, from: true, unit: "jour" } satisfies Price,
-};

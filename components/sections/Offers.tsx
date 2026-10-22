@@ -1,12 +1,10 @@
 import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { ArrowUpRightIcon, CheckIcon } from "@/components/ui/icons";
+import { CheckIcon } from "@/components/ui/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
-  agencies,
   type CardRow,
-  extras,
   includedEverywhere,
   maintenancePlans,
   planCardRows,
@@ -14,14 +12,12 @@ import {
   plans,
   redesign,
 } from "@/content/offers";
-import { site } from "@/content/site";
 import { cx } from "@/lib/cx";
 import { euros, type Price, VAT_RATE, withVat } from "@/lib/price";
 
 /*
  * Offres : quatre cartes (Essentiel, Visibilité mise en avant, Pro, puis le module Refonte),
- * puis deux cartes en longueur (maintenance, options à la carte) et le renfort pour les
- * agences. Composant serveur : tous les prix sont du texte dans le HTML initial, lisibles par
+ * puis la maintenance en longueur. Composant serveur : tous les prix sont du texte dans le HTML initial, lisibles par
  * Google et les IA. Les données structurées (OfferCatalog, lib/structured-data.ts) viennent de
  * la même source (content/offers.ts).
  *
@@ -114,61 +110,6 @@ export function Offers() {
           }
           tiles={maintenancePlans}
         />
-
-        <TilesCard
-          id="options"
-          title="Options à la carte"
-          text="À ajouter à ta formule, selon ce dont tu as besoin."
-          tiles={extras}
-        />
-
-        <article
-          id={agencies.id}
-          aria-labelledby="agences-titre"
-          className="grid gap-8 rounded-3xl border border-pink bg-surface p-7 md:p-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]"
-        >
-          <div className="flex flex-col gap-5">
-            <CardTitle id="agences-titre" className="text-[clamp(2.25rem,1.6rem+2vw,3rem)]">
-              {agencies.title}
-            </CardTitle>
-            <p className="max-w-[60ch] leading-[1.65] text-muted">{agencies.text}</p>
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {agencies.skills.map((skill) => (
-                <li key={skill} className="flex items-center gap-2">
-                  <CheckIcon className="shrink-0 text-pink" />
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-col justify-end gap-6">
-            <p className="leading-[1.65] text-muted">{agencies.background}</p>
-            <PriceTag
-              price={agencies.price}
-              label="Taux journalier, à partir de"
-              vat={false}
-              note="ou au forfait, sur devis"
-            />
-            <div className="flex flex-col gap-3">
-              <Link
-                href="/#contact"
-                className={cx(buttonClass, "bg-pink text-bg hover:bg-pink-hover")}
-              >
-                Parlons de ta mission
-              </Link>
-              <a
-                href={site.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={outlineButtonClass}
-              >
-                Mon profil LinkedIn
-                <span className="sr-only">(nouvel onglet)</span>
-                <ArrowUpRightIcon />
-              </a>
-            </div>
-          </div>
-        </article>
       </Container>
     </section>
   );
@@ -204,34 +145,29 @@ function CardTitle({
 }
 
 /**
- * Prix HT en grand. Au-dessus : « à partir de » (ou label). Dessous : TTC en italique (sauf
- * vat=false, pour les agences qui récupèrent la TVA) puis la note. inverted : carte rose.
+ * Prix HT en grand. Au-dessus : « à partir de ». Dessous : TTC en italique puis la note.
+ * inverted : carte rose.
  */
 function PriceTag({
   price,
   prefix,
-  label,
   note,
   size = "large",
-  vat = true,
   inverted,
   className,
 }: {
   price: Price;
   prefix?: string;
-  label?: string;
   note?: string;
   size?: "large" | "small";
-  vat?: boolean;
   inverted?: boolean;
   className?: string;
 }) {
   const unit = price.unit ? ` / ${price.unit}` : "";
-  const caption = label ?? (price.from ? "à partir de" : undefined);
   const small = cx("font-mono text-xs leading-5", !inverted && "text-muted");
   return (
     <div className={cx("flex flex-col gap-1", className)}>
-      {caption && <p className={cx(labelClass, !inverted && "text-muted")}>{caption}</p>}
+      {price.from && <p className={cx(labelClass, !inverted && "text-muted")}>à partir de</p>}
       <p className="flex flex-wrap items-baseline gap-x-2">
         <span
           className={cx(
@@ -244,21 +180,19 @@ function PriceTag({
         </span>
         <span className="font-mono text-sm whitespace-nowrap">HT{unit}</span>
       </p>
-      {vat && (
-        <p className={cx(small, "italic")}>
-          soit {euros(withVat(price.amount))}&nbsp;TTC{unit}
-        </p>
-      )}
+      <p className={cx(small, "italic")}>
+        soit {euros(withVat(price.amount))}&nbsp;TTC{unit}
+      </p>
       {note && <p className={small}>{note}</p>}
     </div>
   );
 }
 
-type Tile = { id: string; name: string; text?: string; note?: string; price: Price };
+type Tile = { id: string; name: string; text: string; price: Price };
 
 /**
  * Carte en longueur : titre et présentation à gauche, formules en vignettes à droite (à partir
- * de 1280 px ; au-dessus des vignettes en dessous, pour que trois vignettes gardent leur largeur).
+ * de 1280 px ; au-dessus des vignettes en dessous).
  */
 function TilesCard({
   id,
@@ -284,14 +218,11 @@ function TilesCard({
         <CardTitle id={`${id}-titre`}>{title}</CardTitle>
         <p className="leading-[1.65] text-muted">{text}</p>
       </div>
-      <ul className={cx("grid gap-3", tiles.length > 2 ? "sm:grid-cols-3" : "sm:grid-cols-2")}>
+      <ul className="grid gap-3 sm:grid-cols-2">
         {tiles.map((tile) => (
           <li key={tile.id} className="flex flex-col gap-3 rounded-2xl border border-line p-5">
             <h4 className="text-lg leading-snug font-semibold">{tile.name}</h4>
-            {tile.text && <p className="text-[0.9375rem] leading-normal text-muted">{tile.text}</p>}
-            {tile.note && (
-              <p className="text-[0.8125rem] leading-normal text-muted italic">{tile.note}</p>
-            )}
+            <p className="text-[0.9375rem] leading-normal text-muted">{tile.text}</p>
             <PriceTag price={tile.price} size="small" className="mt-auto" />
           </li>
         ))}

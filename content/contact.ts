@@ -7,7 +7,6 @@ export const projectTypes = [
   { value: "site-vitrine", label: "Site vitrine" },
   { value: "refonte", label: "Refonte" },
   { value: "application-web", label: "Application web" },
-  { value: "renfort-agence", label: "Renfort pour mon agence" },
   { value: "je-ne-sais-pas", label: "Je ne sais pas encore" },
 ] as const;
 

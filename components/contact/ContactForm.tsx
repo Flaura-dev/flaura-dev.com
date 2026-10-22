@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { sendContact, type ContactField, type ContactState } from "@/app/actions/contact";
-import { ArrowRightIcon, ChevronDownIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, CheckIcon, ChevronDownIcon } from "@/components/ui/icons";
 import { contactMessages, honeypotField, projectTypes } from "@/content/contact";
 import { cx } from "@/lib/cx";
 
@@ -140,10 +140,16 @@ export function ContactForm() {
         role="status"
         className={cx(
           "text-sm leading-[1.6] empty:hidden",
-          state.status === "sent" ? "font-semibold text-fg" : "text-pink",
+          state.status === "sent" ? "flex items-center gap-2.5 font-semibold text-fg" : "text-pink",
         )}
       >
         {notice}
+        {/* Pastille rose après la confirmation : elle attire l'œil sur le message envoyé. */}
+        {state.status === "sent" && (
+          <span className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-pink text-bg">
+            <CheckIcon size={14} strokeWidth={3} />
+          </span>
+        )}
       </p>
 
       <p className="text-xs leading-[1.6] text-muted">

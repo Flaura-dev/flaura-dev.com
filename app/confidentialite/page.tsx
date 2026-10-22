@@ -28,11 +28,18 @@ export default function ConfidentialitePage() {
       </section>
       <section className="flex flex-col gap-2">
         <h2>Destinataires et sous-traitants</h2>
-        <p>[Hébergeur, service d’envoi d’e-mails, Calendly si tu réserves un appel]</p>
+        <p>
+          [Hostinger (hébergeur du site et de la boîte hello@), Brevo (envoi des messages du
+          formulaire, serveurs dans l’Union européenne), Google (boîte de réception), Calendly si tu
+          réserves un appel]
+        </p>
       </section>
       <section className="flex flex-col gap-2">
         <h2>Durée de conservation</h2>
-        <p>[À définir]</p>
+        <p>
+          [3 ans après notre dernier échange ; le site lui-même ne garde aucun message. Durée de
+          conservation des journaux d’envoi de Brevo à préciser]
+        </p>
       </section>
       <section className="flex flex-col gap-2">
         <h2>Tes droits</h2>

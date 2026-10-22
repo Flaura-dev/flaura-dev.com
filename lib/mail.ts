@@ -13,6 +13,26 @@ type ContactMessage = {
 /** Expéditeur déclaré et authentifié dans Brevo (alias de hello@ chez Hostinger). */
 const SENDER = { name: "Formulaire Flaura.dev", address: "formulaire@flaura-dev.com" };
 
+// Heure de Paris, quel que soit le fuseau du serveur.
+const day = new Intl.DateTimeFormat("fr-FR", {
+  timeZone: "Europe/Paris",
+  day: "2-digit",
+  month: "2-digit",
+});
+const time = new Intl.DateTimeFormat("fr-FR", {
+  timeZone: "Europe/Paris",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+/**
+ * « Nouveau message de Léa · Refonte · 22/10 à 13:03 ». La date et l'heure rendent chaque objet
+ * unique : sans elles, Gmail regroupe en une conversation les messages au même objet.
+ */
+function subjectFor(name: string, typeLabel: string, sentAt = new Date()) {
+  return `Nouveau message de ${name} · ${typeLabel} · ${day.format(sentAt)} à ${time.format(sentAt)}`;
+}
+
 /**
  * Envoie le message du formulaire à hello@ par le relais SMTP de Brevo. La clé SMTP ne permet
  * que l'envoi : même volée, elle n'ouvre pas le compte Brevo. E-mail en texte seul, sans HTML,
@@ -43,7 +63,7 @@ export async function sendContactEmail({ name, email, type, message }: ContactMe
     from: SENDER,
     to: site.email,
     replyTo: { name, address: email },
-    subject: `Nouveau message de ${name} · ${typeLabel}`,
+    subject: subjectFor(name, typeLabel),
     text: [
       "Nouveau message envoyé depuis le formulaire de flaura-dev.com.",
       "",

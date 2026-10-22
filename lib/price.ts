@@ -2,13 +2,12 @@
 export const VAT_RATE = 20;
 
 /**
- * Prix HT. amount seul : prix fixe. from : « à partir de ». upTo : fourchette (amount à upTo).
+ * Prix HT. amount seul : prix fixe. from : « à partir de ».
  * unit : prix par page, par mois ou par jour.
  */
 export type Price = {
   amount: number;
   from?: boolean;
-  upTo?: number;
   unit?: "page" | "mois" | "jour";
 };
 
@@ -22,8 +21,9 @@ export function euros(amount: number) {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   }).format(amount);
-  // Séparateur de milliers : espace insécable normale, l'espace fine d'Intl disparaît presque en Big Shoulders.
-  return `${number.replace(/ /g, NBSP)}${NBSP}€`;
+  // Séparateur de milliers : espace insécable normale, l'espace fine d'Intl (U+202F) disparaît
+  // presque en Big Shoulders.
+  return `${number.replace(/\u202f/g, NBSP)}${NBSP}€`;
 }
 
 /** Montant TTC d'un prix HT, arrondi au centime (calcul en centimes : pas d'erreur d'arrondi). */

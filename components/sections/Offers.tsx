@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ArrowUpRightIcon, CheckIcon } from "@/components/ui/icons";
@@ -9,6 +9,7 @@ import {
   extras,
   includedEverywhere,
   maintenancePlans,
+  planCardRows,
   planRows,
   plans,
   redesign,
@@ -21,13 +22,20 @@ import { euros, type Price, VAT_RATE, withVat } from "@/lib/price";
  * Offres : quatre cartes (Essentiel, Visibilité mise en avant, Pro, puis le module Refonte),
  * puis deux cartes en longueur (maintenance, options à la carte) et le renfort pour les
  * agences. Composant serveur : tous les prix sont du texte dans le HTML initial, lisibles par
- * Google et les IA, et les données structurées (OfferCatalog) viennent de la même source
- * (content/offers.ts).
+ * Google et les IA. Les données structurées (OfferCatalog, lib/structured-data.ts) viennent de
+ * la même source (content/offers.ts).
  *
  * Grand écran : les lignes des quatre cartes s'alignent d'une carte à l'autre (subgrid), comme
  * un tableau comparatif, et la carte recommandée déborde de 16 px en haut et en bas.
  * En dessous : deux cartes par ligne, puis une seule.
  */
+
+// Rangées partagées par les cartes (subgrid) : en-tête, prix, une par ligne de planRows, bouton.
+// Calculées depuis content/offers.ts : ajouter une ligne aux formules ne casse pas l'alignement.
+const gridRows = {
+  "--card-rows": planRows.length + 3,
+  "--plan-rows": planRows.length,
+} as CSSProperties;
 
 const cardClass = "rounded-3xl border border-line bg-surface p-7";
 const pillClass =
@@ -42,19 +50,14 @@ export function Offers() {
   return (
     <section id="offres" aria-labelledby="offres-titre" className="py-24">
       <Container className="flex flex-col gap-8">
-        {/* Même construction que la FAQ : grand titre décoratif, h2 descriptif à sa droite. */}
-        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-4">
-          <div aria-hidden="true">
-            <SectionHeading num="03" as="p" className="whitespace-nowrap">
-              Offres
-            </SectionHeading>
-          </div>
-          <h2 id="offres-titre" className="text-[1.1875rem] leading-[1.6] text-muted">
-            Tarifs de création de site internet
-          </h2>
-        </div>
+        <SectionHeading num="03" id="offres-titre" subtitle="Tarifs de création de site internet">
+          Offres
+        </SectionHeading>
 
-        <ul className="grid gap-x-4 gap-y-6 md:grid-cols-2 xl:grid-cols-4 xl:gap-y-0 xl:py-4">
+        <ul
+          style={gridRows}
+          className="grid gap-x-4 gap-y-6 md:grid-cols-2 xl:grid-cols-4 xl:gap-y-0 xl:py-4"
+        >
           {plans.map((plan) => (
             <OfferCard
               key={plan.id}
@@ -63,7 +66,7 @@ export function Offers() {
               pitch={plan.pitch}
               highlighted={plan.recommended}
               price={<PriceTag price={plan.price} inverted={plan.recommended} />}
-              rows={planRows.map(({ key, label }) => ({ label, value: plan.rows[key] }))}
+              rows={planCardRows(plan)}
               giftLabel="Cadeau"
               cta={`Choisir ${plan.name}`}
             />
@@ -73,7 +76,11 @@ export function Offers() {
             name={redesign.name}
             pitch={redesign.pitch}
             price={
-              <PriceTag price={redesign.price} prefix={"+ "} note="En plus de la formule choisie" />
+              <PriceTag
+                price={redesign.price}
+                prefix="+&nbsp;"
+                note="En plus de la formule choisie"
+              />
             }
             rows={redesign.rows}
             alignRows={false}
@@ -105,14 +112,14 @@ export function Offers() {
               L’hébergement reste à ton nom&nbsp;: je m’en occupe avec l’accès que tu me donnes.
             </>
           }
-          tiles={maintenancePlans.map(({ id, name, text, price }) => ({ id, name, text, price }))}
+          tiles={maintenancePlans}
         />
 
         <TilesCard
           id="options"
           title="Options à la carte"
           text="À ajouter à ta formule, selon ce dont tu as besoin."
-          tiles={extras.map(({ id, label, note, price }) => ({ id, name: label, note, price }))}
+          tiles={extras}
         />
 
         <article
@@ -163,14 +170,6 @@ export function Offers() {
           </div>
         </article>
       </Container>
-
-      <script
-        type="application/ld+json"
-        // Échappement de "<" pour empêcher toute injection via la balise script.
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
-      />
     </section>
   );
 }
@@ -327,34 +326,33 @@ function OfferCard({
   alignRows?: boolean;
   cta: string;
 }) {
-  const pink = highlighted;
   return (
     <li
       id={id}
       className={cx(
-        // 9 rangées partagées entre les cartes : en-tête, prix, 6 lignes, bouton.
-        "relative flex flex-col rounded-3xl p-7 xl:row-span-9 xl:grid xl:grid-rows-subgrid",
-        pink
+        // Rangées partagées entre les cartes : voir gridRows.
+        "relative flex flex-col rounded-3xl p-7 xl:row-span-(--card-rows) xl:grid xl:grid-rows-subgrid",
+        highlighted
           ? "bg-pink text-bg shadow-[0_24px_60px_-24px_var(--pink)] xl:-my-4 xl:py-11"
           : "border border-line bg-surface",
       )}
     >
       <div className="flex flex-col gap-3 pb-6">
-        <CardTitle inverted={pink}>{name}</CardTitle>
+        <CardTitle inverted={highlighted}>{name}</CardTitle>
         {/* À cheval sur le bord haut de la carte : le titre garde toute la largeur. */}
-        {pink && (
+        {highlighted && (
           <p
             className={cx(pillClass, "absolute -top-3 right-7 border border-pink bg-bg text-pink")}
           >
             Recommandée
           </p>
         )}
-        <p className={cx("leading-normal", !pink && "text-muted")}>{pitch}</p>
+        <p className={cx("leading-normal", !highlighted && "text-muted")}>{pitch}</p>
       </div>
 
       <div className="pb-6">{price}</div>
 
-      <dl className={cx("xl:row-span-6", alignRows && "xl:grid xl:grid-rows-subgrid")}>
+      <dl className={cx("xl:row-span-(--plan-rows)", alignRows && "xl:grid xl:grid-rows-subgrid")}>
         {rows.map(({ label, value }) => {
           const gift = value && label === giftLabel;
           return (
@@ -362,15 +360,15 @@ function OfferCard({
               key={label}
               className={cx(
                 "flex flex-col gap-0.5 border-t py-3",
-                pink ? "border-bg/25" : "border-line",
+                highlighted ? "border-bg/25" : "border-line",
               )}
             >
-              <dt className={cx(labelClass, !pink && "text-muted")}>{label}</dt>
+              <dt className={cx(labelClass, !highlighted && "text-muted")}>{label}</dt>
               <dd
                 className={cx(
                   gift && "font-semibold",
-                  gift && !pink && "text-pink",
-                  !value && !pink && "text-dim",
+                  gift && !highlighted && "text-pink",
+                  !value && !highlighted && "text-dim",
                 )}
               >
                 {value ?? (
@@ -388,7 +386,9 @@ function OfferCard({
       <div className="mt-auto pt-6 xl:self-end">
         <Link
           href="/#contact"
-          className={pink ? cx(buttonClass, "bg-bg text-fg hover:opacity-90") : outlineButtonClass}
+          className={
+            highlighted ? cx(buttonClass, "bg-bg text-fg hover:opacity-90") : outlineButtonClass
+          }
         >
           {cta}
         </Link>
@@ -396,138 +396,3 @@ function OfferCard({
     </li>
   );
 }
-
-/* Données structurées : catalogue d'offres relié à l'entreprise (mêmes @id que l'audit SEO). */
-
-const businessId = `${site.url}/#business`;
-const areaServed = [
-  { "@type": "AdministrativeArea", name: "Var" },
-  { "@type": "Country", name: "France" },
-];
-const unitCodes = { mois: "MON", jour: "DAY" } as const;
-
-function priceSpecification({ amount, from, upTo, unit }: Price) {
-  return {
-    "@type": unit ? "UnitPriceSpecification" : "PriceSpecification",
-    ...(upTo
-      ? { minPrice: amount, maxPrice: upTo }
-      : from
-        ? { minPrice: amount }
-        : { price: amount }),
-    priceCurrency: "EUR",
-    valueAddedTaxIncluded: false,
-    ...(unit && { unitText: unit }),
-    ...(unit && unit !== "page" && { unitCode: unitCodes[unit] }),
-  };
-}
-
-type OfferData = {
-  id: string;
-  /** Ancre de la page où l'offre est affichée (par défaut : id). */
-  anchor?: string;
-  name: string;
-  description: string;
-  price: Price;
-  serviceType: string;
-};
-
-function offer({ id, anchor = id, name, description, price, serviceType }: OfferData) {
-  return {
-    "@type": "Offer",
-    "@id": `${site.url}/#${id}`,
-    url: `${site.url}/#${anchor}`,
-    name,
-    description,
-    ...(!price.from && !price.upTo && { price: price.amount, priceCurrency: "EUR" }),
-    priceSpecification: priceSpecification(price),
-    seller: { "@id": businessId },
-    itemOffered: {
-      "@type": "Service",
-      name: `${serviceType} : ${name}`,
-      serviceType,
-      provider: { "@id": businessId },
-      areaServed,
-    },
-  };
-}
-
-/** « Pages : 1 page. Contenu : … » : les lignes remplies d'une carte, en phrases. */
-function describeRows(rows: CardRow[]) {
-  return rows
-    .filter(({ value }) => value)
-    .map(({ label, value }) => `${label} : ${value}.`)
-    .join(" ");
-}
-
-const schema = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "ProfessionalService",
-      "@id": businessId,
-      name: site.name,
-      url: `${site.url}/`,
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Saint-Maximin-la-Sainte-Baume",
-        addressRegion: "Var",
-        addressCountry: "FR",
-      },
-      areaServed,
-      hasOfferCatalog: { "@id": `${site.url}/#offres` },
-    },
-    {
-      "@type": "OfferCatalog",
-      "@id": `${site.url}/#offres`,
-      name: "Offres et tarifs Flaura.dev",
-      url: `${site.url}/#offres`,
-      itemListElement: [
-        ...plans.map((plan) =>
-          offer({
-            id: `offre-${plan.id}`,
-            name: plan.name,
-            description: `${plan.pitch} ${describeRows(
-              planRows.map(({ key, label }) => ({ label, value: plan.rows[key] })),
-            )}`,
-            price: plan.price,
-            serviceType: "Création de site internet",
-          }),
-        ),
-        offer({
-          id: redesign.id,
-          name: redesign.name,
-          description: `${redesign.pitch} ${describeRows(redesign.rows)}`,
-          price: redesign.price,
-          serviceType: "Refonte de site internet",
-        }),
-        ...maintenancePlans.map((formula) =>
-          offer({
-            id: `maintenance-${formula.id}`,
-            anchor: "maintenance",
-            name: `Maintenance ${formula.name}`,
-            description: formula.text,
-            price: formula.price,
-            serviceType: "Maintenance de site internet",
-          }),
-        ),
-        ...extras.map(({ id, label, price, note }) =>
-          offer({
-            id: `option-${id}`,
-            anchor: "options",
-            name: label,
-            description: `Option à la carte : ${label}.${note ? ` ${note}` : ""}`,
-            price,
-            serviceType: label,
-          }),
-        ),
-        offer({
-          id: agencies.id,
-          name: agencies.title,
-          description: `${agencies.text} ${agencies.skills.join(", ")}.`,
-          price: agencies.price,
-          serviceType: "Développement web en sous-traitance pour agences",
-        }),
-      ],
-    },
-  ],
-};

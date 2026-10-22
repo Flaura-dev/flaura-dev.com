@@ -3,49 +3,25 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { faq } from "@/content/faq";
 
 /*
- * FAQ : contenu visible + données structurées FAQPage générés depuis la même source
- * (content/faq.ts), pour que le balisage corresponde toujours exactement au texte affiché
- * (exigence Google). Composant serveur : tout le texte est dans le HTML initial, donc
- * lisible par Google et les IA.
+ * FAQ, tirée de content/faq.ts comme les données structurées FAQPage (lib/structured-data.ts) :
+ * le balisage correspond toujours exactement au texte affiché (exigence Google). Composant
+ * serveur : tout le texte est dans le HTML initial, donc lisible par Google et les IA.
  *
- * Le grand « FAQ » est décoratif (même titre géant que les autres sections) ; le h2, plus
- * descriptif, est à sa droite, posé sur la même ligne de base. Accordéon en <details> natifs : fonctionne au clavier
- * et sans JavaScript, et le texte replié reste dans le HTML, donc indexé. La réponse se
- * déplie en douceur (.faq-item, globals.css), sauf si l'animation est réduite. Une seule
- * colonne : les réponses sont longues.
+ * Accordéon en <details> natifs : fonctionne au clavier et sans JavaScript, et le texte replié
+ * reste dans le HTML, donc indexé. La réponse se déplie en douceur (.faq-item, globals.css),
+ * sauf si l'animation est réduite. Une seule colonne : les réponses sont longues.
  */
-
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faq.map(({ q, a, list, after }) => ({
-    "@type": "Question",
-    name: q,
-    acceptedAnswer: {
-      "@type": "Answer",
-      // Balises <p>, <ul>, <li> autorisées par schema.org dans le texte d'une réponse.
-      text: list
-        ? `<p>${a}</p><ul>${list.map((item) => `<li>${item}</li>`).join("")}</ul>${after ? `<p>${after}</p>` : ""}`
-        : a,
-    },
-  })),
-};
-
 export function Faq() {
   return (
     <section id="faq" aria-labelledby="faq-titre" className="py-24">
       <Container className="flex flex-col gap-8">
-        {/* Le h2 passe sous le titre dès qu'il ne tient plus sur une ligne à sa droite. */}
-        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-4">
-          <div aria-hidden="true">
-            <SectionHeading num="04" as="p" className="whitespace-nowrap">
-              FAQ
-            </SectionHeading>
-          </div>
-          <h2 id="faq-titre" className="text-[1.1875rem] leading-[1.6] text-muted">
-            Questions fréquentes sur la création de site internet
-          </h2>
-        </div>
+        <SectionHeading
+          num="04"
+          id="faq-titre"
+          subtitle="Questions fréquentes sur la création de site internet"
+        >
+          FAQ
+        </SectionHeading>
 
         <div className="flex flex-col gap-4">
           {faq.map(({ q, a, list, after }) => (
@@ -76,14 +52,6 @@ export function Faq() {
           ))}
         </div>
       </Container>
-
-      <script
-        type="application/ld+json"
-        // Échappement de "<" pour empêcher toute injection via la balise script.
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
-      />
     </section>
   );
 }

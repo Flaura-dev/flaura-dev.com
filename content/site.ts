@@ -2,6 +2,8 @@ export const site = {
   name: "Flaura.dev",
   url: "https://flaura-dev.com",
   email: "hello@flaura-dev.com",
+  /** Commune et département de l'entreprise (FAQ, données structurées). */
+  address: { locality: "Saint-Maximin-la-Sainte-Baume", region: "Var" },
   linkedin: "https://www.linkedin.com/in/laura-fontaine-devweb83",
   github: "https://github.com/Flaura-dev",
   /** Lien de l'événement Calendly du café virtuel. */

@@ -17,7 +17,7 @@ export const planRows = [
 /** Une ligne d'une carte : null = non inclus. */
 export type CardRow = { label: string; value: string | null };
 
-type Plan = {
+export type Plan = {
   id: string;
   name: string;
   pitch: string;
@@ -77,6 +77,11 @@ export const plans: Plan[] = [
   },
 ];
 
+/** Lignes d'une formule dans l'ordre de planRows, prêtes à afficher. */
+export function planCardRows(plan: Plan): CardRow[] {
+  return planRows.map(({ key, label }) => ({ label, value: plan.rows[key] }));
+}
+
 /** Inclus dans les trois formules (repris des engagements du site et de la FAQ). */
 export const includedEverywhere = [
   "Design sur mesure",
@@ -119,20 +124,20 @@ export const maintenancePlans = [
 ];
 
 /** note : précision affichée sous l'option, en petit et en italique. */
-export const extras: { id: string; label: string; price: Price; note?: string }[] = [
+export const extras: { id: string; name: string; price: Price; note?: string }[] = [
   {
     id: "page-supplementaire",
-    label: "Page supplémentaire",
+    name: "Page supplémentaire",
     price: { amount: 150, from: true, unit: "page" },
   },
   {
     id: "kit-ecriture",
-    label: "Kit écriture texte",
+    name: "Kit écriture texte",
     price: { amount: 150, from: true, unit: "page" },
   },
   {
     id: "kit-graphique",
-    label: "Mini kit graphique",
+    name: "Mini kit graphique",
     price: { amount: 450, from: true },
     note: "Palette, typographies et déclinaisons simples. Le logo est à fournir de ton côté.",
   },

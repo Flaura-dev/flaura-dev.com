@@ -4,7 +4,7 @@
 // Les prix viennent de content/offers.ts : ils changent ici en même temps que sur les cartes.
 // Typographie : apostrophes ’ et espaces insécables devant « ? », « : », « % » et « HT ».
 
-import { maintenancePlans, plans, redesign } from "@/content/offers";
+import { clientCosts, maintenancePlans, plans, redesign } from "@/content/offers";
 import { site } from "@/content/site";
 import { euros } from "@/lib/price";
 
@@ -30,7 +30,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: "Combien coûte la création d’un site vitrine ?",
-    a: `Un site vitrine d’une seule page démarre à partir de ${euros(essentiel)} HT, un site jusqu’à 5 pages à partir de ${euros(visibilite)} HT, et un site jusqu’à 10 pages à partir de ${euros(pro)} HT. Le prix final dépend de ce que ton site doit faire pour toi (fonctionnalités, contenus à créer) : après notre échange, tu reçois un devis gratuit et détaillé ligne par ligne. Le paiement se fait en trois fois (30 % au démarrage, 40 % à la validation de la maquette, 30 % à la livraison), et si une demande sort du devis, je te le dis avant de m’y mettre.`,
+    a: `Un site vitrine d’une seule page démarre à partir de ${euros(essentiel)} HT, un site jusqu’à 5 pages à partir de ${euros(visibilite)} HT, et un site jusqu’à 10 pages à partir de ${euros(pro)} HT. Le nom de domaine et l’hébergement ne sont pas compris : tu les prends à ton nom, sur ton propre compte, et ils restent à ta charge. Chez ${clientCosts.provider} par exemple, compte environ ${euros(clientCosts.hostingPerYear)} HT par an pour l’hébergement et ${clientCosts.domainPerYear.min} à ${euros(clientCosts.domainPerYear.max)} HT par an pour le nom de domaine au tarif normal ; c’est souvent moins grâce aux promotions. Le prix final dépend de ce que ton site doit faire pour toi (fonctionnalités, contenus à créer) : après notre échange, tu reçois un devis gratuit et détaillé ligne par ligne. Le paiement se fait en trois fois (30 % au démarrage, 40 % à la validation de la maquette, 30 % à la livraison), et si une demande sort du devis, je te le dis avant de m’y mettre.`,
   },
   {
     q: "Combien coûte la refonte d’un site internet existant ?",

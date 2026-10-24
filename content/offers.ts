@@ -122,3 +122,21 @@ export const maintenancePlans = [
     price: { amount: 99, unit: "mois" } satisfies Price,
   },
 ];
+
+/**
+ * Nom de domaine et hébergement : non compris, au nom du client et à sa charge. Estimation au
+ * tarif normal de Hostinger (hors promotions), relevée le 24 octobre 2026 sur
+ * hostinger.com/fr. Ces prix changent souvent : à revérifier. Montants HT : Hostinger ajoute la
+ * TVA dans le panier (vérifié dans le panier le 24 octobre 2026).
+ */
+export const clientCosts = {
+  provider: "Hostinger",
+  /** Offre Premium : 9,99 € HT par mois au renouvellement (après 48 mois à 2,49 €). */
+  hostingPerYear: 120,
+  /** .fr : 10,99 € par an ; .com : 16,99 € par an. */
+  domainPerYear: { min: 11, max: 17 },
+};
+
+/** Total annuel avec le domaine le moins cher, arrondi à la dizaine (« environ 130 € par an »). */
+export const clientCostsPerYear =
+  Math.round((clientCosts.hostingPerYear + clientCosts.domainPerYear.min) / 10) * 10;

@@ -5,8 +5,6 @@ import { CheckIcon } from "@/components/ui/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
   type CardRow,
-  clientCosts,
-  clientCostsPerYear,
   includedEverywhere,
   maintenancePlans,
   planCardRows,
@@ -98,8 +96,7 @@ export function Offers() {
           </ul>
           <p className="font-mono text-xs leading-5 text-muted">
             Prix hors taxes, TVA {VAT_RATE}&nbsp;% en sus. Nom de domaine et hébergement non
-            compris&nbsp;: ils sont à ton nom et à ta charge (environ {euros(clientCostsPerYear)}
-            &nbsp;HT par an chez {clientCosts.provider}, hors promotions).
+            compris&nbsp;: ils sont à ton nom et à ta charge.
           </p>
         </div>
 

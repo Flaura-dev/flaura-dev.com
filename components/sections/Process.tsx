@@ -7,19 +7,15 @@ import {
   useState,
   useSyncExternalStore,
   type CSSProperties,
-  type RefObject,
 } from "react";
 import { Container } from "@/components/ui/Container";
 import { PauseIcon, PlayIcon } from "@/components/ui/icons";
 import { processSteps } from "@/content/process";
 import { cx } from "@/lib/cx";
 
-/** Durée d'affichage de chaque étape en lecture automatique (ms). */
-const STEP_MS = 5000;
-/** Retour rapide de la ligne (bouclage, reprise) avant de reprendre le remplissage. */
-const REWIND_MS = 450;
-/** Glissement de la ligne vers l'étape cliquée. */
-const SELECT_MS = 500;
+const STEP_MS = 5000; // durée de chaque étape en lecture automatique
+const REWIND_MS = 450; // retour de la ligne au début de la frise
+const SELECT_MS = 500; // glissement de la ligne vers l'étape cliquée
 const EASE_OUT = "cubic-bezier(0.2, 0, 0, 1)";
 const COUNT = processSteps.length;
 
@@ -31,25 +27,15 @@ function subscribeReducedMotion(onChange: () => void) {
   return () => query.removeEventListener("change", onChange);
 }
 
-/** Part de la frise couverte par la ligne, telle qu'elle est affichée en ce moment. */
-function shownProgress(line: HTMLElement | null) {
-  if (!line) return 0;
+/** Part de la frise couverte par la ligne en ce moment (de 0 à 1), même en pleine animation. */
+function lineProgress(line: HTMLElement) {
   return parseFloat(getComputedStyle(line).getPropertyValue("--line-p")) || 0;
 }
 
-/** Remplace l'animation en cours ; la valeur de repos devient la dernière image. */
-function animateLine(
-  line: HTMLElement | null,
-  current: RefObject<Animation | null>,
-  keyframes: Keyframe[],
-  duration: number,
-) {
-  if (!line) return null;
-  current.current?.cancel();
+/** Anime la ligne ; une fois l'animation finie, elle reste sur la dernière valeur. */
+function animateLine(line: HTMLElement, keyframes: Keyframe[], duration: number) {
   line.style.setProperty("--line-p", String(keyframes[keyframes.length - 1]["--line-p"]));
-  const animation = line.animate(keyframes, { duration });
-  current.current = animation;
-  return animation;
+  return line.animate(keyframes, { duration });
 }
 
 /*
@@ -61,7 +47,6 @@ export function Process() {
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLSpanElement>(null);
   const animationRef = useRef<Animation | null>(null);
-  const inViewRef = useRef(false);
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [inView, setInView] = useState(false);
@@ -75,13 +60,9 @@ export function Process() {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        inViewRef.current = entry.isIntersecting;
-        setInView(entry.isIntersecting);
-      },
-      { threshold: 0.35 },
-    );
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
+      threshold: 0.35,
+    });
     observer.observe(section);
     return () => {
       observer.disconnect();
@@ -89,51 +70,45 @@ export function Process() {
     };
   }, []);
 
-  // Lecture automatique : un segment par étape, qui part de la valeur affichée.
+  // Lecture automatique : la ligne se remplit jusqu'au bout de l'étape, puis on passe à la
+  // suivante. Hors de l'écran, elle attend ; elle repart ensuite de là où elle s'était arrêtée.
   useLayoutEffect(() => {
-    if (!autoplay) return;
     const line = lineRef.current;
+    if (!autoplay || !line) return;
+    if (!inView) {
+      animationRef.current?.pause();
+      return;
+    }
+
     const start = active / COUNT;
     const end = (active + 1) / COUNT;
-    const shown = shownProgress(line);
-    const fillMs = (from: number) => Math.max(0, (end - from) * COUNT * STEP_MS);
+    const from = lineProgress(line);
+    const fillMs = (progress: number) => Math.max(0, (end - progress) * COUNT * STEP_MS);
 
-    let animation: Animation | null;
-    if (shown >= start - 0.001 && shown <= end + 0.001) {
-      // Déjà sur cette étape (reprise après une pause) : on finit le remplissage.
-      animation = animateLine(
+    animationRef.current?.cancel();
+    if (from >= start - 0.001 && from <= end + 0.001) {
+      // La ligne est déjà sur cette étape : on finit de la remplir.
+      animationRef.current = animateLine(
         line,
-        animationRef,
-        [{ "--line-p": shown }, { "--line-p": end }],
-        fillMs(shown),
+        [{ "--line-p": from }, { "--line-p": end }],
+        fillMs(from),
       );
     } else {
-      // Ailleurs (retour au début de la frise) : retour rapide, puis remplissage.
+      // Retour au début de la frise : la ligne revient vite en arrière, puis se remplit.
       const total = REWIND_MS + fillMs(start);
-      animation = animateLine(
+      animationRef.current = animateLine(
         line,
-        animationRef,
         [
-          { "--line-p": shown, easing: EASE_OUT },
+          { "--line-p": from, easing: EASE_OUT },
           { "--line-p": start, offset: REWIND_MS / total },
           { "--line-p": end },
         ],
         total,
       );
     }
-    if (!animation) return;
-    if (!inViewRef.current) animation.pause();
-    animation.onfinish = () => setActive((index) => (index + 1) % COUNT);
+    animationRef.current.onfinish = () => setActive((index) => (index + 1) % COUNT);
     // Pas d'annulation au nettoyage : la pause doit figer la ligne là où elle est.
-  }, [active, autoplay]);
-
-  // Hors de l'écran, la frise attend.
-  useEffect(() => {
-    const animation = animationRef.current;
-    if (!autoplay || !animation) return;
-    if (inView) animation.play();
-    else animation.pause();
-  }, [inView, autoplay, active]);
+  }, [active, autoplay, inView]);
 
   // Animation réduite : la ligne se place directement sur l'étape choisie.
   useLayoutEffect(() => {
@@ -149,15 +124,15 @@ export function Process() {
   }
 
   function select(index: number) {
-    const line = lineRef.current;
-    const shown = shownProgress(line);
     setPlaying(false);
     setActive(index);
-    if (reducedMotion) return;
-    animateLine(
+    const line = lineRef.current;
+    if (reducedMotion || !line) return;
+    const from = lineProgress(line);
+    animationRef.current?.cancel();
+    animationRef.current = animateLine(
       line,
-      animationRef,
-      [{ "--line-p": shown, easing: EASE_OUT }, { "--line-p": (index + 1) / COUNT }],
+      [{ "--line-p": from, easing: EASE_OUT }, { "--line-p": (index + 1) / COUNT }],
       SELECT_MS,
     );
   }

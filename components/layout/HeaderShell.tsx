@@ -18,11 +18,9 @@ export function HeaderShell({ children }: { children: ReactNode }) {
     if (!header) return;
 
     let lastY = window.scrollY;
-    let frame = 0;
     let holdUntil = 0;
 
-    const update = () => {
-      frame = 0;
+    const onScroll = () => {
       const y = window.scrollY;
       header.dataset.scrolled = String(y > 8);
       if (performance.now() < holdUntil) {
@@ -30,11 +28,9 @@ export function HeaderShell({ children }: { children: ReactNode }) {
         return;
       }
       if (Math.abs(y - lastY) < 6) return;
+      // Caché quand on descend (passé le haut de page), affiché dès qu'on remonte.
       header.dataset.hidden = String(y > lastY && y > 160);
       lastY = y;
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
     };
     const onClick = (event: MouseEvent) => {
       if (!(event.target instanceof Element) || !event.target.closest('a[href*="#"]')) return;
@@ -48,7 +44,7 @@ export function HeaderShell({ children }: { children: ReactNode }) {
       lastY = window.scrollY;
     };
 
-    update();
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("scrollend", endHold);
     header.addEventListener("click", onClick);
@@ -56,7 +52,6 @@ export function HeaderShell({ children }: { children: ReactNode }) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("scrollend", endHold);
       header.removeEventListener("click", onClick);
-      cancelAnimationFrame(frame);
     };
   }, []);
 

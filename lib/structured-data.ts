@@ -29,17 +29,20 @@ const business = {
   hasOfferCatalog: { "@id": `${site.url}/#offres` },
 };
 
-const unitCodes = { mois: "MON" } as const;
-
-function priceSpecification({ amount, from, unit }: Price) {
-  return {
-    "@type": unit ? "UnitPriceSpecification" : "PriceSpecification",
-    ...(from ? { minPrice: amount } : { price: amount }),
+/** Prix HT : « à partir de » (minPrice) ou fixe (price), par mois pour la maintenance. */
+function priceSpecification(price: Price) {
+  const specification: Record<string, unknown> = {
+    "@type": price.unit ? "UnitPriceSpecification" : "PriceSpecification",
     priceCurrency: "EUR",
     valueAddedTaxIncluded: false,
-    ...(unit && { unitText: unit }),
-    ...(unit && { unitCode: unitCodes[unit] }),
   };
+  if (price.from) specification.minPrice = price.amount;
+  else specification.price = price.amount;
+  if (price.unit === "mois") {
+    specification.unitText = "mois";
+    specification.unitCode = "MON";
+  }
+  return specification;
 }
 
 type OfferData = {
@@ -53,13 +56,12 @@ type OfferData = {
 };
 
 function offer({ id, anchor = id, name, description, price, serviceType }: OfferData) {
-  return {
+  const result: Record<string, unknown> = {
     "@type": "Offer",
     "@id": `${site.url}/#${id}`,
     url: `${site.url}/#${anchor}`,
     name,
     description,
-    ...(!price.from && { price: price.amount, priceCurrency: "EUR" }),
     priceSpecification: priceSpecification(price),
     seller: { "@id": businessId },
     itemOffered: {
@@ -70,6 +72,12 @@ function offer({ id, anchor = id, name, description, price, serviceType }: Offer
       areaServed,
     },
   };
+  // Prix fixe : Google le veut aussi directement sur l'offre.
+  if (!price.from) {
+    result.price = price.amount;
+    result.priceCurrency = "EUR";
+  }
+  return result;
 }
 
 /** « Pages : 1 page. Contenu : … » : les lignes remplies d'une carte, en phrases. */
@@ -115,18 +123,20 @@ const offerCatalog = {
   ],
 };
 
+/** Texte d'une réponse de la FAQ (schema.org autorise les balises <p>, <ul> et <li>). */
+function answerText({ a, list, after }: (typeof faq)[number]) {
+  if (!list) return a;
+  const items = list.map((item) => `<li>${item}</li>`).join("");
+  const end = after ? `<p>${after}</p>` : "";
+  return `<p>${a}</p><ul>${items}</ul>${end}`;
+}
+
 const faqPage = {
   "@type": "FAQPage",
-  mainEntity: faq.map(({ q, a, list, after }) => ({
+  mainEntity: faq.map((item) => ({
     "@type": "Question",
-    name: q,
-    acceptedAnswer: {
-      "@type": "Answer",
-      // Balises <p>, <ul>, <li> autorisées par schema.org dans le texte d'une réponse.
-      text: list
-        ? `<p>${a}</p><ul>${list.map((item) => `<li>${item}</li>`).join("")}</ul>${after ? `<p>${after}</p>` : ""}`
-        : a,
-    },
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: answerText(item) },
   })),
 };
 

@@ -1,18 +1,15 @@
 import type { CSSProperties } from "react";
 
-/** Générateur pseudo-aléatoire à graine fixe : mêmes pétales côté serveur et navigateur. */
-function seededRandom(seed: number) {
-  return () => {
-    seed = (seed + 0x6d2b79f5) | 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
 const PETAL_COUNT = 16;
 
-const random = seededRandom(2026);
+// Suite pseudo-aléatoire toujours identique, pour que les pétales soient les mêmes à chaque
+// rendu : chaque appel donne un nombre entre 0 et 1.
+let seed = 2026;
+function random() {
+  seed = (seed * 16807) % 2147483647;
+  return seed / 2147483647;
+}
+
 const between = (min: number, max: number) => min + random() * (max - min);
 const round = (value: number) => Math.round(value * 100) / 100;
 

@@ -37,31 +37,31 @@ export function ScrollRail() {
     if (!rail) return;
 
     // Un repère par section, placé là où se trouvera le point quand la section devient
-    // la section en cours (son haut passe à 40 % de l'écran).
-    let measureFrame = 0;
+    // la section en cours (son haut passe à 40 % de l'écran). Recalculé si la page change de taille.
     const measure = () => {
-      measureFrame = 0;
       const max = maxScroll();
       const next: Mark[] = [];
       for (const section of sections) {
-        const el = document.getElementById(section.id);
-        if (!el) continue;
-        const top = el.getBoundingClientRect().top + window.scrollY;
+        const element = document.getElementById(section.id);
+        if (!element) continue;
+        const top = element.getBoundingClientRect().top + window.scrollY;
         const position = Math.min(1, Math.max(0, (top - window.innerHeight * 0.4) / max));
         next.push({ ...section, position });
       }
       setMarks(next);
     };
-    const scheduleMeasure = () => {
-      if (!measureFrame) measureFrame = requestAnimationFrame(measure);
-    };
-    const resizeObserver = new ResizeObserver(scheduleMeasure);
+    const resizeObserver = new ResizeObserver(measure);
     resizeObserver.observe(document.body);
-    window.addEventListener("resize", scheduleMeasure);
+    window.addEventListener("resize", measure);
+
+    // Firefox n'a pas les animations liées au défilement : on met --rail-p à jour nous-mêmes.
+    const supportsTimeline = CSS.supports("animation-timeline", "scroll()");
+    const updateProgress = () => {
+      rail.style.setProperty("--rail-p", String(Math.min(1, window.scrollY / maxScroll())));
+    };
+    if (!supportsTimeline) updateProgress();
 
     // Pendant le défilement, l'étiquette de la section s'affiche à côté du point.
-    const supportsTimeline = CSS.supports("animation-timeline", "scroll()");
-    let scrollFrame = 0;
     let hideTimer = 0;
     const onScroll = () => {
       rail.dataset.scrolling = "true";
@@ -69,24 +69,14 @@ export function ScrollRail() {
       hideTimer = window.setTimeout(() => {
         rail.dataset.scrolling = "false";
       }, 1200);
-      if (!supportsTimeline && !scrollFrame) {
-        scrollFrame = requestAnimationFrame(() => {
-          scrollFrame = 0;
-          rail.style.setProperty("--rail-p", String(Math.min(1, window.scrollY / maxScroll())));
-        });
-      }
+      if (!supportsTimeline) updateProgress();
     };
-    if (!supportsTimeline) {
-      rail.style.setProperty("--rail-p", String(Math.min(1, window.scrollY / maxScroll())));
-    }
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       resizeObserver.disconnect();
-      window.removeEventListener("resize", scheduleMeasure);
+      window.removeEventListener("resize", measure);
       window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(measureFrame);
-      cancelAnimationFrame(scrollFrame);
       window.clearTimeout(hideTimer);
     };
   }, []);

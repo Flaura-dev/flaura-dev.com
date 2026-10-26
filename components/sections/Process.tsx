@@ -13,11 +13,12 @@ import { PauseIcon, PlayIcon } from "@/components/ui/icons";
 import { processSteps } from "@/content/process";
 import { cx } from "@/lib/cx";
 
-const STEP_MS = 5000; // durée de chaque étape en lecture automatique
+const COUNT = processSteps.length;
+const CYCLE_MS = 8000; // durée d'un tour complet de la frise en lecture automatique
+const STEP_MS = CYCLE_MS / COUNT;
 const REWIND_MS = 450; // retour de la ligne au début de la frise
 const SELECT_MS = 500; // glissement de la ligne vers l'étape cliquée
 const EASE_OUT = "cubic-bezier(0.2, 0, 0, 1)";
-const COUNT = processSteps.length;
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 
@@ -39,7 +40,7 @@ function animateLine(line: HTMLElement, keyframes: Keyframe[], duration: number)
 }
 
 /*
- * Frise qui avance seule (5 s par étape) jusqu'à un clic ou une pause, et attend hors
+ * Frise qui avance seule (8 s pour toutes les étapes) jusqu'à un clic ou une pause, et attend hors
  * de l'écran. Pas de lecture automatique si l'animation est réduite.
  * La ligne (--line-p) repart toujours de sa valeur affichée : jamais de saut.
  */

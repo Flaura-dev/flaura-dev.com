@@ -30,8 +30,10 @@ export const projects: Project[] = [
     label: "site vitrine · refonte",
     categories: ["site-vitrine", "refonte"],
     visual: "lea",
-    problem: "[à compléter]",
-    solution: "refonte complète, du design à l’hébergement",
+    problem:
+      "un one-page créé sur Lovable (IA), trop long pour comprendre vite ce que propose cette consultante business et on ne retrouvait pas la signature de Léa",
+    solution:
+      "un site vitrine multi-pages et une interface responsive en Next.js, structuré pour être bien référencé sur Google et les IA",
     result: "[après mise en ligne]",
   },
   {
@@ -42,7 +44,7 @@ export const projects: Project[] = [
     visual: "pendu",
     url: "https://darkslateblue-bear-545715.hostingersite.com/",
     description:
-      "Un jeu du pendu dans l’univers de League of Legends, en solo ou à plusieurs. [Défi technique et résultat à détailler]",
+      "Un jeu du pendu en ligne dans l’univers de League of Legends, en solo ou à plusieurs sur le même écran. Intégration de l’API Data Dragon de Riot Games pour charger les champions et leurs citations en direct, avec gestion des accents et des coupures réseau. Développé en JavaScript sans framework, avec une interface responsive pensée pour mobile, tablette et ordinateur.",
   },
 ];
 

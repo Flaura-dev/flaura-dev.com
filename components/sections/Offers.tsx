@@ -76,10 +76,16 @@ export function Offers() {
               </li>
             ))}
           </ul>
-          <p className="font-mono text-xs leading-5 text-muted">
-            Prix hors taxes, TVA {VAT_RATE}&nbsp;% en sus. Nom de domaine et hébergement non
-            compris&nbsp;: ils sont à ton nom et à ta charge.
-          </p>
+          <div className="flex flex-col gap-1 font-mono text-xs leading-5 text-muted">
+            <p>
+              Prix hors taxes, TVA {VAT_RATE}&nbsp;% en sus. Nom de domaine et hébergement non
+              compris&nbsp;: ils sont à ton nom et à ta charge.
+            </p>
+            <p>
+              Demandes particulières non comprises, elles sont chiffrées en supplément sur le devis.
+              N’hésite pas à m’en faire part dès le début.
+            </p>
+          </div>
         </div>
 
         <MaintenanceCard />

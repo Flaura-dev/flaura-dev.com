@@ -82,7 +82,7 @@ export function planCardRows(plan: Plan): CardRow[] {
   return planRows.map(({ key, label }) => ({ label, value: plan.rows[key] }));
 }
 
-/** Inclus dans les trois formules (repris des engagements du site et de la FAQ). */
+/** Inclus dans les trois formules. */
 export const includedEverywhere = [
   "Design sur mesure",
   "Adapté au mobile",
@@ -124,11 +124,8 @@ export const maintenancePlans = [
 ];
 
 /**
- * Nom de domaine et hébergement : non compris, au nom du client et à sa charge (mention sous les
- * cartes, sans montant ; l'estimation n'est donnée que dans la FAQ sur les prix). Estimation au
- * tarif normal de Hostinger (hors promotions), relevée le 24 octobre 2026 sur
- * hostinger.com/fr. Ces prix changent souvent : à revérifier. Montants HT : Hostinger ajoute la
- * TVA dans le panier (vérifié dans le panier le 24 octobre 2026).
+ * Domaine et hébergement, à la charge du client (estimation citée dans la FAQ seulement).
+ * Tarifs Hostinger HT hors promotions, relevés en octobre 2026 : à revérifier de temps en temps.
  */
 export const clientCosts = {
   provider: "Hostinger",

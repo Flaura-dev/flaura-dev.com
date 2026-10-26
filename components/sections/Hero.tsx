@@ -7,11 +7,8 @@ import { PhoneIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
 
 /*
- * Grand écran (xl) : la composition de la maquette, en positions absolues exprimées en
- * unités cqi (% de la largeur de la colonne) — à 1 200 px de large, on retombe exactement
- * sur les valeurs de la maquette, et tout se réduit proportionnellement en dessous.
- * Plus petit : la même chose empilée (titre, photo qui chevauche le bas du titre,
- * accroche et bouton, carte « disponible »).
+ * xl : positions absolues en cqi (% de la largeur de la colonne), calées sur 1 200 px,
+ * qui se réduisent proportionnellement. En dessous : tout empilé.
  */
 export function Hero() {
   return (

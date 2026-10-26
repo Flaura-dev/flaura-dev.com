@@ -6,11 +6,9 @@ import { useEffect, useRef, type ReactNode } from "react";
 const NAV_HOLD_MS = 2000;
 
 /**
- * Header collant : il prend un fond dès qu'on quitte le haut de page, se cache quand
- * on descend et revient dès qu'on remonte (ou qu'un de ses liens reçoit le focus).
- * Après un clic sur un de ses liens, il reste affiché pendant le saut vers la section :
- * on garde sous les yeux le menu qu'on vient d'utiliser. Animation réduite : il ne se
- * cache jamais (pas de glissement).
+ * Header collant : se cache quand on descend, revient quand on remonte ou au focus.
+ * Reste affiché pendant le saut qui suit un clic dans le menu. Jamais caché si
+ * l'animation est réduite.
  */
 export function HeaderShell({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLElement>(null);

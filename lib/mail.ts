@@ -25,19 +25,12 @@ const time = new Intl.DateTimeFormat("fr-FR", {
   minute: "2-digit",
 });
 
-/**
- * « Nouveau message de Léa · Refonte · 22/10 à 13:03 ». La date et l'heure rendent chaque objet
- * unique : sans elles, Gmail regroupe en une conversation les messages au même objet.
- */
+/** « Nouveau message de Léa · Refonte · 22/10 à 13:03 » : la date évite que Gmail les regroupe. */
 function subjectFor(name: string, typeLabel: string, sentAt = new Date()) {
   return `Nouveau message de ${name} · ${typeLabel} · ${day.format(sentAt)} à ${time.format(sentAt)}`;
 }
 
-/**
- * Envoie le message du formulaire à hello@ par le relais SMTP de Brevo. La clé SMTP ne permet
- * que l'envoi : même volée, elle n'ouvre pas le compte Brevo. E-mail en texte seul, sans HTML,
- * et « Répondre » écrit directement au visiteur.
- */
+/** Envoie le message à hello@ par le relais SMTP de Brevo, en texte seul, réponse au visiteur. */
 export async function sendContactEmail({ name, email, type, message }: ContactMessage) {
   const user = process.env.BREVO_SMTP_LOGIN;
   const pass = process.env.BREVO_SMTP_KEY;

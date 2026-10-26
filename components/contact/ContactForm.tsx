@@ -144,11 +144,7 @@ export function ContactForm() {
         )}
       >
         {notice}
-        {/*
-          Coche verte après la confirmation : elle attire l'œil sur le message envoyé. Vert
-          « disponible » de la charte (identique dans les deux thèmes), coche foncée pour rester
-          lisible en clair comme en sombre.
-        */}
+        {/* Coche verte (vert « disponible »), foncée pour rester lisible dans les deux thèmes. */}
         {state.status === "sent" && (
           <span className="inline-flex size-6 shrink-0 items-center justify-center rounded-md bg-avail text-[#0D0817]">
             <CheckIcon size={14} strokeWidth={3} />

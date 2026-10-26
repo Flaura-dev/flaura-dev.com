@@ -31,11 +31,7 @@ const petals = Array.from({ length: PETAL_COUNT }, (_, index) => {
   } as CSSProperties;
 });
 
-/**
- * Pétales de sakura qui tombent doucement derrière le contenu. Purement décoratifs :
- * masqués des lecteurs d'écran, absents si l'animation est réduite ou si le visiteur
- * les coupe depuis le footer (voir .petals dans globals.css).
- */
+/** Pétales décoratifs en arrière-plan, masqués des lecteurs d'écran (voir .petals dans globals.css). */
 export function SakuraPetals() {
   return (
     <div aria-hidden="true" className="petals">

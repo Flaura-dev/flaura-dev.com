@@ -1,8 +1,4 @@
-/**
- * Point vert « disponible » qui clignote lentement, avec une onde qui s'en échappe
- * (fixe si les animations sont réduites). Opacité et échelle seulement : rien à
- * repeindre à chaque image.
- */
+/** Point vert « disponible » qui clignote lentement (opacité et échelle seulement). */
 export function AvailabilityDot() {
   return (
     <span

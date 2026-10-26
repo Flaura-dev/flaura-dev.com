@@ -4,9 +4,8 @@ import { site } from "@/content/site";
 import type { Price } from "@/lib/price";
 
 /*
- * Données structurées de l'accueil : un seul graphe schema.org (recommandation de l'audit SEO),
- * tiré des mêmes sources que le texte affiché (content/offers.ts, content/faq.ts, content/site.ts),
- * pour que le balisage corresponde toujours exactement à la page.
+ * Données structurées de l'accueil : un seul graphe schema.org, tiré des mêmes sources que
+ * le texte affiché (content/offers.ts, content/faq.ts, content/site.ts).
  */
 
 const businessId = `${site.url}/#business`;

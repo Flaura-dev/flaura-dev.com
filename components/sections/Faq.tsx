@@ -3,13 +3,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { faq } from "@/content/faq";
 
 /*
- * FAQ, tirée de content/faq.ts comme les données structurées FAQPage (lib/structured-data.ts) :
- * le balisage correspond toujours exactement au texte affiché (exigence Google). Composant
- * serveur : tout le texte est dans le HTML initial, donc lisible par Google et les IA.
- *
- * Accordéon en <details> natifs : fonctionne au clavier et sans JavaScript, et le texte replié
- * reste dans le HTML, donc indexé. La réponse se déplie en douceur (.faq-item, globals.css),
- * sauf si l'animation est réduite. Une seule colonne : les réponses sont longues.
+ * Texte tiré de content/faq.ts, comme les données FAQPage : les deux restent identiques.
+ * <details> natifs : clavier et sans JavaScript, et le texte replié reste indexé.
  */
 export function Faq() {
   return (

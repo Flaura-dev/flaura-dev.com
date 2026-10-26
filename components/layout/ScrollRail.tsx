@@ -17,11 +17,9 @@ function maxScroll() {
 }
 
 /**
- * Fil conducteur à droite (desktop) : c'est la barre de défilement de la page.
- * Le point lumineux est à 75 % du rail quand on est à 75 % de la page ; on peut le
- * glisser, cliquer sur le rail pour y sauter, ou cliquer sur le repère d'une section.
- * Le défilement natif (molette, clavier, lecteurs d'écran) reste intact : ce rail n'est
- * qu'un raccourci visuel, masqué des technologies d'assistance.
+ * Fil conducteur (desktop), qui sert de barre de défilement : point déplaçable, clic sur
+ * le rail ou sur le repère d'une section. Masqué des lecteurs d'écran, le défilement natif
+ * reste intact.
  */
 export function ScrollRail() {
   const railRef = useRef<HTMLDivElement>(null);

@@ -8,10 +8,7 @@ type ProjectCardProps = {
   withAnchor?: boolean;
 };
 
-/**
- * Carte projet. Pas de lien vers /projets (le bouton « voir tous les projets » s'en
- * charge) ; un lien ↗ vers le site apparaît dès qu'un projet a une adresse en ligne.
- */
+/** Carte projet, avec un lien ↗ quand le site est en ligne. */
 export function ProjectCard({ project, withAnchor = false }: ProjectCardProps) {
   return (
     <article

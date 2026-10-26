@@ -1,4 +1,4 @@
-/** Taux de TVA ajouté aux prix HT (Flaura.dev facture la TVA dès son lancement, le 1er janvier 2027). */
+/** Taux de TVA ajouté aux prix HT. */
 export const VAT_RATE = 20;
 
 /**

@@ -3,12 +3,7 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-/*
- * Réservation (7/11) et formulaire (4/11) côte à côte sur grand écran ; en dessous,
- * l'un au-dessus de l'autre pour que le formulaire garde une largeur confortable.
- * Le lien LinkedIn est dans la présentation du bloc de réservation : les deux colonnes
- * gardent ainsi à peu près la même hauteur que le calendrier (pas de grand vide).
- */
+/* Réservation (7/11) et formulaire (4/11) côte à côte sur grand écran, empilés en dessous. */
 export function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-titre" className="py-24">

@@ -19,11 +19,7 @@ export function About() {
         </SectionHeading>
 
         <div className="grid auto-rows-[minmax(180px,auto)] gap-4 md:grid-cols-4">
-          {/*
-            Photo en bichromie rose / nuit : noir et blanc contrasté, puis deux calques de
-            fusion. Rose de la marque dans les deux thèmes (le rose plus foncé du thème
-            clair sert au contraste du texte, il assombrirait la photo).
-          */}
+          {/* Bichromie rose / nuit, avec le rose du thème sombre (le foncé assombrirait la photo). */}
           <div className="relative min-h-[380px] overflow-hidden rounded-3xl md:row-span-2">
             <Image
               src={photo}

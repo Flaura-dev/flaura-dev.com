@@ -10,18 +10,11 @@ type ScrollingShotProps = {
 };
 
 /**
- * Capture pleine page qui défile dans le cadre navigateur, pour les projets sans
- * comparateur avant/après. Au survol du cadre (ou quand le lien de la carte a le focus
- * clavier), elle descend jusqu'en bas du site, puis remonte plus vite. Sur écran
- * tactile, elle défile au rythme de la page (globals.css). Animation réduite : le haut
- * de page, immobile.
+ * Capture pleine page qui défile au survol (ou au focus) jusqu'en bas du site, puis
+ * remonte. Sur écran tactile, elle suit le défilement de la page (globals.css).
  *
- * Le conteneur est un conteneur de taille : 100cqw et 100cqh valent la largeur et la
- * hauteur visibles, donc « -100% + 100cqh » amène pile le bas de la capture en bas du
- * cadre. Si la capture est plus courte que le cadre (carte étroite, page courte), elle
- * le remplit quand même (min-h-full) et ne bouge pas. overflow-clip plutôt que hidden :
- * le cadre ne peut pas défiler, même par script (scrollIntoView), donc la course part
- * toujours du haut de la capture.
+ * Conteneur de taille : « -100% + 100cqh » amène le bas de la capture en bas du cadre.
+ * overflow-clip plutôt que hidden : le cadre ne peut pas défiler, même par script.
  */
 export function ScrollingShot({ src, alt, sizes }: ScrollingShotProps) {
   const ratio = src.height / src.width;
@@ -39,11 +32,7 @@ export function ScrollingShot({ src, alt, sizes }: ScrollingShotProps) {
         sizes={sizes}
         className="block h-auto min-h-full w-full object-cover object-top motion-safe:transition-[translate] motion-safe:duration-700 motion-safe:ease-in-out motion-safe:group-hover/frame:translate-y-[calc(-100%_+_100cqh)] motion-safe:group-hover/frame:duration-(--shot-duration) motion-safe:group-has-[:focus-visible]:translate-y-[calc(-100%_+_100cqh)] motion-safe:group-has-[:focus-visible]:duration-(--shot-duration)"
       />
-      {/*
-       * L'indice n'a de sens que s'il reste au moins 24 px à parcourir. La course vaut
-       * 100cqw × ratio − 100cqh : sa boîte prend (course − 24 px) × 1000 de haut, soit 0
-       * quand la capture tient presque entière dans le cadre, et l'indice est rogné.
-       */}
+      {/* Indice masqué (hauteur 0) s'il reste moins de 24 px à faire défiler. */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 hidden max-h-full overflow-hidden motion-safe:[@media(hover:hover)]:block"
         style={{ height: `max(0px, (100cqw * ${ratio} - 100cqh - 24px) * 1000)` }}

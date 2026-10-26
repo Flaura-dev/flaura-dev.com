@@ -16,14 +16,11 @@ import { cx } from "@/lib/cx";
 import { euros, type Price, VAT_RATE, withVat } from "@/lib/price";
 
 /*
- * Offres : quatre cartes (Essentiel, Visibilité mise en avant, Pro, puis le module Refonte),
- * puis la maintenance en longueur. Composant serveur : tous les prix sont du texte dans le HTML initial, lisibles par
- * Google et les IA. Les données structurées (OfferCatalog, lib/structured-data.ts) viennent de
- * la même source (content/offers.ts).
+ * Quatre cartes (trois formules + Refonte), puis la maintenance. Prix tirés de
+ * content/offers.ts, comme les données structurées.
  *
- * Grand écran : les lignes des quatre cartes s'alignent d'une carte à l'autre (subgrid), comme
- * un tableau comparatif, et la carte recommandée déborde de 16 px en haut et en bas.
- * En dessous : deux cartes par ligne, puis une seule.
+ * À partir de 1280 px, les lignes s'alignent d'une carte à l'autre (subgrid) et la carte
+ * recommandée déborde de 16 px. En dessous : deux cartes par ligne, puis une.
  */
 
 // Rangées partagées par les cartes (subgrid) : en-tête, prix, une par ligne de planRows, bouton.

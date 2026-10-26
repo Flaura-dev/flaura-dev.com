@@ -11,11 +11,7 @@ import {
 import { site } from "@/content/site";
 import { CalendlyEmbed } from "./CalendlyEmbed";
 
-/*
- * Bloc « Café virtuel » (l'appel découverte, même nom que l'événement Calendly) :
- * présentation à gauche (avec le lien LinkedIn, en bas), Calendly à droite. Les deux
- * colonnes se placent selon la largeur du bloc lui-même (requête de conteneur).
- */
+/* Café virtuel : présentation à gauche, Calendly à droite (requête de conteneur). */
 export function BookingPanel() {
   return (
     <div

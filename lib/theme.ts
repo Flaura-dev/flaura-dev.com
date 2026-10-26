@@ -39,11 +39,7 @@ export function resolveTheme(): Theme {
   return readStoredTheme() ?? systemTheme();
 }
 
-/**
- * Mémorise le choix du visiteur. S'il revient au thème de son système, on efface
- * l'exception : le site suivra de nouveau son système (y compris s'il bascule
- * automatiquement entre clair et sombre selon l'heure).
- */
+/** Mémorise le choix du visiteur ; s'il revient au thème du système, on l'oublie. */
 export function storeTheme(theme: Theme) {
   try {
     if (theme === systemTheme()) localStorage.removeItem(THEME_STORAGE_KEY);

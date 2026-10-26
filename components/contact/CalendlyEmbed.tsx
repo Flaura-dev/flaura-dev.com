@@ -11,36 +11,23 @@ type CalendlyEmbedProps = {
 
 /** Hauteur du cadre avant que Calendly n'annonce celle de son contenu (px). */
 const DEFAULT_HEIGHT = 700;
-/** En dessous, la hauteur annoncée est transitoire (2 px, 26 px au chargement) : ignorée. */
+/** Hauteurs transitoires envoyées au chargement, ignorées. */
 const MIN_REPORTED_HEIGHT = 200;
-/**
- * Sous son contenu, la page Calendly est blanche : on rogne le cadre de 2 px pour
- * qu'aucun liseré blanc n'apparaisse sous le calendrier (arrondis de hauteur).
- */
+/** Rogne 2 px en bas : évite un liseré blanc sous le calendrier. */
 const BOTTOM_CLIP = 2;
 /**
- * Étape « choisir un jour » : Calendly annonce 602 px quel que soit le mois (hauteur
- * minimale de 600 px dans sa page), alors que le calendrier visible fait 474 px (mois
- * sur 5 semaines) à 506 px (6 semaines), sur ordinateur comme sur téléphone (mesuré le
- * 14 octobre 2026). On affiche 536 px : le vide sous le calendrier disparaît, sans
- * jamais couper un mois de 6 semaines. Les étapes suivantes gardent leur hauteur.
+ * Étape « choisir un jour » : Calendly annonce toujours 602 px, mais le calendrier n'en
+ * occupe que 474 à 506 (mois de 5 ou 6 semaines). 536 px suffisent sans rien couper.
  */
 const CALENDAR_STEP_REPORTED = 602;
 const CALENDAR_STEP_VISIBLE = 536;
 /**
- * La page Calendly reste vide un moment après son chargement, le temps de dessiner le
- * calendrier (environ 3 s mesurées le 22 octobre 2026, bien plus sur une connexion lente) :
- * « Chargement des créneaux… » reste affiché jusqu'à ce qu'elle annonce la hauteur de son
- * contenu. Secours si ce message n'arrive jamais (Calendly qui changerait ses messages) : le
- * cadre s'affiche quand même au bout de ce délai (ms après le chargement de la page).
+ * Calendly reste vide quelques secondes après le chargement : le message d'attente reste
+ * affiché jusqu'à ce qu'il annonce sa hauteur. Passé ce délai, on affiche quand même.
  */
 const REVEAL_FALLBACK_MS = 30_000;
 
-/**
- * Ajoute au lien Calendly les réglages d'intégration et les couleurs du thème en cours.
- * Les détails de l'événement (titre, durée, description) sont masqués : le bloc de
- * gauche les présente déjà.
- */
+/** Lien Calendly aux couleurs du thème, sans les détails de l'événement (déjà à gauche). */
 function buildEmbedSrc(url: string) {
   const light = document.documentElement.getAttribute("data-theme") === "light";
   const src = new URL(url);
@@ -54,10 +41,7 @@ function buildEmbedSrc(url: string) {
   return src.toString();
 }
 
-/**
- * Calendly n'est chargé qu'au clic du visiteur : aucune requête ni cookie tiers avant
- * qu'il le demande, donc pas besoin de bandeau cookies.
- */
+/** Chargé seulement au clic : aucune requête ni cookie tiers avant, donc pas de bandeau cookies. */
 export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
   const [src, setSrc] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -122,8 +106,7 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
             window.clearTimeout(revealTimer.current);
             revealTimer.current = window.setTimeout(() => setReady(true), REVEAL_FALLBACK_MS);
           }}
-          // Même color-scheme que la page Calendly : sinon le navigateur peint le cadre
-          // en blanc opaque autour de la carte (grandes marges blanches en thème sombre).
+          // Même color-scheme que Calendly, sinon le cadre est peint en blanc en thème sombre.
           style={{ height, colorScheme: "light" }}
           className={cx(
             "relative block w-full border-0 motion-safe:transition-opacity motion-safe:duration-300",

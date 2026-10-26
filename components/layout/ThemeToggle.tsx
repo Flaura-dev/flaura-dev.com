@@ -13,11 +13,7 @@ import {
   type Theme,
 } from "@/lib/theme";
 
-/**
- * Change de thème d'un seul bloc : fondu enchaîné de toute la page (View Transitions)
- * quand le navigateur le permet, bascule nette sinon. Les transitions de couleur des
- * éléments sont coupées pendant le changement (data-theme-switching, globals.css).
- */
+/** Change de thème en un seul fondu (View Transitions), ou d'un coup si non pris en charge. */
 function switchTheme(next: Theme) {
   const root = document.documentElement;
   if (root.getAttribute("data-theme") === next) return;
@@ -25,9 +21,7 @@ function switchTheme(next: Theme) {
     root.dataset.themeSwitching = "";
     applyTheme(next);
   };
-  // Une fois le nouveau thème affiché, les transitions peuvent revenir : plus rien ne
-  // change, elles ne se déclenchent pas. On n'attend pas la fin du fondu, qui peut
-  // traîner (onglet en arrière-plan).
+  // Thème affiché : les transitions peuvent revenir, sans attendre la fin du fondu.
   const done = () =>
     requestAnimationFrame(() => requestAnimationFrame(() => delete root.dataset.themeSwitching));
 
@@ -43,10 +37,8 @@ function switchTheme(next: Theme) {
 }
 
 /**
- * Bascule sombre/clair. Sans choix du visiteur, le site suit le réglage de son système
- * (et le suit en direct s'il change) ; le bouton passe à l'autre thème. L'icône et le
- * libellé suivent l'attribut data-theme en CSS : aucun écart entre le rendu serveur
- * et le navigateur, donc aucun flash.
+ * Bascule sombre/clair. Sans choix du visiteur, le site suit son système. Icône et
+ * libellé dépendent de data-theme en CSS : pas de flash à l'hydratation.
  */
 export function ThemeToggle() {
   // En développement, React remonte <html> et efface l'attribut posé par le script :

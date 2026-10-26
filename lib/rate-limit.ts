@@ -1,9 +1,8 @@
 import "server-only";
 
 /*
- * Limites d'envoi du formulaire de contact, gardées en mémoire du serveur : elles repartent
- * à zéro à chaque redémarrage, ce qui suffit contre les robots pour un petit site.
- * Les adresses IP ne restent que le temps de la fenêtre et ne sont jamais écrites sur disque.
+ * Limites d'envoi du formulaire, en mémoire : remises à zéro au redémarrage, ce qui suffit
+ * pour un petit site. Les IP ne sont jamais écrites sur disque.
  */
 
 /** Messages acceptés par adresse IP sur la fenêtre glissante. */

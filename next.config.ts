@@ -3,10 +3,8 @@ import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV === "development";
 
 /*
- * Politique de sécurité du contenu (CSP). Les pages sont générées à l'avance : pas de « nonce »
- * possible, et Next comme le script du thème s'exécutent en ligne, d'où 'unsafe-inline' pour les
- * scripts (recommandation de la doc Next 16). Tout le reste est verrouillé : aucun script, style,
- * police ou image venu d'ailleurs, et Calendly comme seul cadre autorisé.
+ * CSP. Pages statiques, donc pas de nonce : 'unsafe-inline' pour les scripts de Next et du
+ * thème. Rien d'autre ne vient de l'extérieur, à part le cadre Calendly.
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -25,7 +23,7 @@ const contentSecurityPolicy = [
 
 const securityHeaders = [
   { key: "Content-Security-Policy", value: contentSecurityPolicy },
-  // HTTPS obligatoire pendant un an, sans les sous-domaines (même choix que la page d'attente).
+  // HTTPS obligatoire pendant un an, sans les sous-domaines.
   { key: "Strict-Transport-Security", value: "max-age=31536000" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   // Doublon de frame-ancestors pour les navigateurs anciens : le site ne s'affiche dans aucun cadre.

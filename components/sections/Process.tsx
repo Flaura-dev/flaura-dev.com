@@ -53,15 +53,9 @@ function animateLine(
 }
 
 /*
- * Frise interactive. Tant qu'on n'y touche pas, elle avance toute seule (la ligne se
- * remplit pendant 5 s, puis on passe à l'étape suivante). Elle s'arrête avec le
- * bouton pause ou dès qu'on clique sur une étape (le bouton « lecture » la relance),
- * et attend quand la section n'est pas à l'écran. Sans lecture automatique si
- * l'animation est réduite.
- *
- * La ligne (--line-p, cf. globals.css) est animée avec les Web Animations en partant
- * toujours de sa valeur affichée : pause, clic ou reprise en plein remplissage, elle
- * continue d'où elle est, sans saut.
+ * Frise qui avance seule (5 s par étape) jusqu'à un clic ou une pause, et attend hors
+ * de l'écran. Pas de lecture automatique si l'animation est réduite.
+ * La ligne (--line-p) repart toujours de sa valeur affichée : jamais de saut.
  */
 export function Process() {
   const sectionRef = useRef<HTMLElement>(null);

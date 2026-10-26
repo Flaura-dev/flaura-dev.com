@@ -3,23 +3,13 @@ import { cx } from "@/lib/cx";
 
 type BrowserFrameProps = {
   children: ReactNode;
-  /**
-   * Capture manipulable : la fenêtre se soulève au survol. Lien vers le site : elle
-   * s'enfonce aussi à l'appui. Comparateur : elle ne bouge pas pendant qu'on glisse
-   * (c'est la poignée qui réagit). Sans interaction, elle reste immobile pour ne pas
-   * promettre un clic qui n'existe pas.
-   */
+  /** link : se soulève au survol et s'enfonce à l'appui. drag : immobile (la poignée réagit). */
   interactive?: "link" | "drag";
 };
 
 /**
- * Mise en scène commune des captures de projets : une fenêtre de navigateur stylisée,
- * posée sur un fond teinté de rose avec un halo. Quel que soit le style du site
- * présenté, toutes les cartes gardent la même allure.
- *
- * overflow-clip et non overflow-hidden, ici comme dans ProjectCard : un cadre en
- * hidden compte comme une zone défilable, et la capture qui défile au rythme de la
- * page sur mobile (ScrollingShot) suivrait ce cadre immobile au lieu de la page.
+ * Fenêtre de navigateur stylisée sur fond rose, commune à toutes les captures.
+ * overflow-clip (pas hidden) : sinon ScrollingShot suivrait ce cadre au lieu de la page.
  */
 export function BrowserFrame({ children, interactive }: BrowserFrameProps) {
   return (

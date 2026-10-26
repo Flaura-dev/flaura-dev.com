@@ -16,11 +16,7 @@ function apply(off: boolean) {
   else document.documentElement.removeAttribute("data-petals");
 }
 
-/**
- * Interrupteur des pétales animés (footer) : un moyen de couper une animation
- * permanente, exigé par l'accessibilité. Le libellé suit l'attribut en CSS, sans écart
- * entre le rendu serveur et le navigateur.
- */
+/** Interrupteur des pétales (footer) : toute animation permanente doit pouvoir être coupée. */
 export function PetalsToggle() {
   // En développement, React remonte <html> et efface l'attribut : on le réapplique.
   useLayoutEffect(() => {

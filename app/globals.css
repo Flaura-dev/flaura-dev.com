@@ -1,17 +1,16 @@
 @import "tailwindcss";
 
-/* La maquette n'est qu'une référence : on ne veut pas que Tailwind y cherche des classes. */
+/* La maquette ne sert que de référence. */
 @source not "../maquette";
 
 /*
- * Palettes de la charte. Le thème suit le système du visiteur :
- * le serveur rend <html data-theme="dark"> et le script inline de app/layout.tsx
- * bascule en clair avant l’affichage si c’est son réglage ou son choix (lib/theme.ts).
+ * Palettes sombre et claire. Le serveur rend data-theme="dark" ; le script inline du
+ * layout passe en clair avant l’affichage si besoin (lib/theme.ts).
  */
 :root,
 [data-theme="dark"] {
   color-scheme: dark;
-  /* Violet abysse (choix du 18 octobre 2026) : aussi profond que l’ancien noir, mais violet. */
+  /* Violet abysse : presque noir, mais violet. */
   --bg: #0d0817;
   --surface: #160f21;
   --line: #282036;
@@ -48,10 +47,7 @@
   --scrim: rgb(27 23 32 / 0.35);
 }
 
-/*
- * Contraste élevé demandé par le système : bordures à 3:1 au moins (limites des cartes
- * et des champs), textes secondaires et discrets nettement plus lisibles.
- */
+/* Contraste élevé : bordures à 3:1 minimum, textes secondaires plus lisibles. */
 @media (prefers-contrast: more) {
   [data-theme="dark"] {
     --line: #6e6672;
@@ -80,8 +76,7 @@
 }
 
 /*
- * Retour immédiat à l'appui, au doigt comme à la souris : le bouton s'enfonce
- * légèrement (60 ms), puis revient en douceur. Remplace transition-colors.
+ * Retour à l'appui : le bouton s'enfonce (60 ms) puis revient en douceur.
  * Mouvement réduit : il s'assombrit au lieu de rétrécir.
  */
 @utility press {
@@ -128,7 +123,7 @@
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
-  /* Big Shoulders est désormais une seule police variable : opsz 72 = l'ancienne « Display ». */
+  /* Big Shoulders variable : opsz 72 = la coupe « Display ». */
   --font-display: var(--font-big-shoulders), "Arial Narrow", sans-serif;
   --font-display--font-variation-settings: "opsz" 72;
 }
@@ -136,7 +131,7 @@
 @theme {
   /* Rupture mobile de la maquette. */
   --breakpoint-md: 56.25rem;
-  /* À partir d'ici, le menu en pilule tient dans le header (mesuré, cf. Header.tsx). */
+  /* À partir d'ici, le menu en pilule tient dans le header (cf. Header.tsx). */
   --breakpoint-nav: 78rem;
 
   /* Titres de section : 110 px sur desktop ; « PARLONS-EN. » (4,84 em de large) doit tenir à 320 px. */
@@ -186,10 +181,7 @@
     scrollbar-color: var(--faint) var(--bg);
   }
 
-  /*
-   * Desktop : la barre de défilement native est masquée (le défilement reste intact :
-   * molette, pavé tactile, clavier) et remplacée par le fil conducteur, déplaçable.
-   */
+  /* Desktop : barre de défilement native masquée, remplacée par le fil conducteur. */
   @media (width >= 56.25rem) {
     html {
       scrollbar-width: none;
@@ -222,9 +214,8 @@
   }
 
   /*
-   * Changement de thème (ThemeToggle.tsx) : toute la page change d'un bloc, en fondu
-   * enchaîné (View Transitions). Les transitions de couleur des éléments sont coupées
-   * pendant ce temps, sinon chacun ferait son propre fondu, à son propre rythme.
+   * Changement de thème (ThemeToggle.tsx) : un seul fondu pour toute la page. Les
+   * transitions de couleur sont coupées, sinon chaque élément ferait le sien.
    */
   [data-theme-switching] *,
   [data-theme-switching] *::before,
@@ -293,9 +284,8 @@
   }
 
   /*
-   * Menu en pilule : une bulle rose translucide se pose sur la section en cours et suit
-   * le lien survolé (ou focalisé au clavier). Positionnement par ancre CSS ; sans prise
-   * en charge, chaque lien prend simplement un fond au survol.
+   * Bulle du menu : sur la section en cours, elle suit le lien survolé ou focalisé.
+   * Positionnement par ancre CSS ; sinon, simple fond au survol.
    */
   .nav-bubble {
     position: relative;
@@ -354,10 +344,8 @@
   }
 
   /*
-   * Liste déroulante « Type de projet ». Navigateurs qui le permettent : <select>
-   * personnalisable (appearance: base-select), la liste ouverte prend les couleurs du
-   * site, tout en restant un vrai <select> (clavier, lecteurs d'écran, formulaire).
-   * Les autres : menu fermé stylé, liste ouverte du système.
+   * Liste « Type de projet » : <select> personnalisable (appearance: base-select) quand
+   * le navigateur le permet, sinon seul le menu fermé est stylé.
    */
   .select-themed {
     appearance: none;
@@ -452,11 +440,7 @@
     }
   }
 
-  /*
-   * « Comment on travaille ensemble » : --line-p (de 0 à 1) est la part de la frise
-   * couverte par la ligne. Process.tsx l'anime en partant toujours de la valeur
-   * affichée : un clic ou une reprise en cours de route ne fait jamais sauter la ligne.
-   */
+  /* Frise du process : --line-p (0 à 1) = part couverte par la ligne, animée par Process.tsx. */
   .process-line {
     transform-origin: top;
     transform: scaleY(var(--line-p));
@@ -469,10 +453,7 @@
     }
   }
 
-  /*
-   * FAQ : la réponse se déplie et se replie au lieu d'apparaître d'un coup (Chrome et
-   * Edge ; ailleurs, elle s'ouvre instantanément comme avant).
-   */
+  /* FAQ : la réponse se déplie en douceur (Chrome et Edge, instantané ailleurs). */
   @media (prefers-reduced-motion: no-preference) {
     .faq-item {
       interpolate-size: allow-keywords;
@@ -495,9 +476,8 @@
   }
 
   /*
-   * Pétales de sakura en arrière-plan : couche fixe sous le contenu, animations CSS
-   * (transform uniquement). Absents si l'animation est réduite ou si le visiteur les
-   * a coupés (footer). Moitié moins de pétales sur mobile.
+   * Pétales en arrière-plan : couche fixe sous le contenu, transform uniquement.
+   * Moitié moins sur mobile.
    */
   .petals {
     position: fixed;
@@ -529,10 +509,7 @@
     animation: petal-flutter var(--flutter) ease-in-out infinite alternate;
   }
 
-  /*
-   * Les pétales sont rangés de gauche à droite (SakuraPetals.tsx) : on en retire un sur
-   * deux, pas la seconde moitié, pour qu'ils couvrent toujours toute la largeur.
-   */
+  /* Un pétale sur deux (ils sont rangés de gauche à droite) : toute la largeur reste couverte. */
   @media (width < 56.25rem) {
     .petal:nth-child(even) {
       display: none;
@@ -556,9 +533,8 @@
   }
 
   /*
-   * Fil conducteur = barre de défilement de la page. --rail-p va de 0 (haut de page)
-   * à 1 (bas de page). Navigateurs récents : animation liée au défilement, sans
-   * JavaScript. Les autres (Firefox) : ScrollRail.tsx met --rail-p à jour.
+   * Fil conducteur : --rail-p va de 0 (haut) à 1 (bas). Animation liée au défilement,
+   * ou mise à jour par ScrollRail.tsx quand elle n'est pas prise en charge (Firefox).
    */
   .rail-fill {
     transform-origin: top;
@@ -583,10 +559,8 @@
   }
 
   /*
-   * Capture qui défile (ScrollingShot.tsx) sur écran tactile : sans survol possible,
-   * elle descend au rythme de la page pendant que la carte traverse l'écran. Effet
-   * décoratif : les navigateurs sans animation liée au défilement (Firefox) gardent
-   * le haut de page.
+   * ScrollingShot sur écran tactile : la capture descend au rythme de la page.
+   * Sans animation liée au défilement (Firefox), elle reste en haut.
    */
   @supports ((animation-timeline: view()) and (animation-range: entry)) {
     @media (hover: none) and (prefers-reduced-motion: no-preference) {

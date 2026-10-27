@@ -28,7 +28,7 @@ export function Hero() {
               </span>
             </h1>
 
-            <div className="relative mx-auto -mt-[9.2cqi] w-[min(480px,82cqi)] xl:absolute xl:top-[14.17cqi] xl:left-1/2 xl:mt-0 xl:w-[45cqi] xl:-translate-x-1/2">
+            <div className="relative mx-auto -mt-[9.2cqi] w-[min(480px,82cqi)] select-none xl:absolute xl:top-[14.17cqi] xl:left-1/2 xl:mt-0 xl:w-[45cqi] xl:-translate-x-1/2">
               <div
                 aria-hidden="true"
                 className="absolute top-0 left-1/2 -mt-[3.7%] aspect-[460/420] w-[85%] -translate-x-1/2 rounded-full bg-[#C2457A] opacity-50 blur-[7.5cqi]"
@@ -39,6 +39,7 @@ export function Hero() {
                 sizes="(min-width: 1280px) 540px, (min-width: 640px) 480px, 82vw"
                 loading="eager"
                 fetchPriority="high"
+                draggable={false}
                 className="relative block h-auto w-full [filter:saturate(0.9)_contrast(1.05)_drop-shadow(0_0_40px_rgb(240_127_162/0.25))]"
               />
             </div>

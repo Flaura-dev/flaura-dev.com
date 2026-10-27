@@ -30,7 +30,7 @@ const bigShoulders = Big_Shoulders({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(site.servedUrl),
   title: {
     default: "Flaura.dev — Développeuse web freelance dans le Var",
     template: "%s · Flaura.dev",

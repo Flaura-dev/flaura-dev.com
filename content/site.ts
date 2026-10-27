@@ -1,6 +1,11 @@
 export const site = {
   name: "Flaura.dev",
   url: "https://flaura-dev.com",
+  /**
+   * Adresse où le site est servi : base des liens absolus des métadonnées (image d'aperçu, canonical).
+   * Domaine temporaire tant que flaura-dev.com affiche la page d'attente : reprend `url` au lancement.
+   */
+  servedUrl: "https://palegoldenrod-swallow-512762.hostingersite.com",
   email: "hello@flaura-dev.com",
   /** Commune et département de l'entreprise (FAQ, données structurées). */
   address: { locality: "Saint-Maximin-la-Sainte-Baume", region: "Var" },

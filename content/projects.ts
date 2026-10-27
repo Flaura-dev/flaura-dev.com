@@ -52,6 +52,10 @@ export const projects: Project[] = [
 export const HOME_PROJECTS_COUNT = 3;
 
 export const testimonial = {
-  quote: "[Le témoignage de Léa arrivera ici, une fois son nouveau site en ligne.]",
-  author: "Léa Grondin — consultante",
+  /** Paragraphes de la citation ; les passages entre astérisques ressortent en rose. */
+  quote: [
+    "Laura a refait entièrement mon site web. Et c’est un vrai plaisir d’avoir travaillé avec elle ! Elle a *tout de suite compris mon positionnement* et ses recommandations ont été super pertinentes pour clarifier mon offre. Côté technique, elle maîtrise son sujet : *le résultat est très pro* et je suis ravie de mon nouveau site.",
+    "Mais ce que j’ai le plus apprécié, c’est sa posture : à l’écoute, rigoureuse dans le suivi, réactive sur les corrections. On se sent *entre de bonnes mains*. Si vous cherchez quelqu’un pour votre site, *foncez !*",
+  ],
+  author: "Léa Grondin — Consultante Business",
 };

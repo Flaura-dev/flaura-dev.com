@@ -26,7 +26,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "lea-grondin",
-    title: "Site de Léa Grondin",
+    title: "Site de Léa Grondin — Consultante Business",
     label: "site vitrine · refonte",
     categories: ["site-vitrine", "refonte"],
     visual: "lea",

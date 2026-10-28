@@ -34,7 +34,7 @@ export const projects: Project[] = [
       "un one-page créé sur Lovable (IA), trop long pour comprendre vite ce que propose cette consultante business et on ne retrouvait pas la signature de Léa",
     solution:
       "un site vitrine multi-pages et une interface responsive en Next.js, structuré pour être bien référencé sur Google et les IA",
-    result: "[après mise en ligne]",
+    result: "une offre plus claire et un site qui lui ressemble",
   },
   {
     slug: "pendu-de-la-faille",

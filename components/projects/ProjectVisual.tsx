@@ -24,8 +24,18 @@ export function ProjectVisual({ project }: { project: Project }) {
       return (
         <BrowserFrame interactive="drag">
           <BeforeAfter
-            before={<Shot src={leaBefore} alt="" />}
-            after={<Shot src={leaAfter} alt="" />}
+            before={
+              <Shot
+                src={leaBefore}
+                alt="Ancien site de Léa Grondin : une seule page, un grand titre centré sur fond blanc, sans photo"
+              />
+            }
+            after={
+              <Shot
+                src={leaAfter}
+                alt="Nouveau site de Léa Grondin : un menu, son titre de bras droit pédagogique des formateurs et sa photo devant son ordinateur"
+              />
+            }
             label="Comparer l’ancien et le nouveau site de Léa Grondin"
           />
         </BrowserFrame>

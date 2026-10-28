@@ -27,7 +27,7 @@ export function Brand() {
     >
       <Image
         src={sakura}
-        alt=""
+        alt="Fleur de sakura, logo de Flaura.dev"
         width={38}
         height={38}
         loading="eager"

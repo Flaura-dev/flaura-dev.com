@@ -19,14 +19,8 @@ export function BeforeAfter({ before, after, label }: BeforeAfterProps) {
 
   return (
     <div className="relative h-full overflow-hidden">
-      <div aria-hidden="true" className="absolute inset-0">
-        {before}
-      </div>
-      <div
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{ clipPath: `inset(0 0 0 ${position}%)` }}
-      >
+      <div className="absolute inset-0">{before}</div>
+      <div className="absolute inset-0" style={{ clipPath: `inset(0 0 0 ${position}%)` }}>
         {after}
       </div>
 

@@ -27,8 +27,18 @@ export function Footer() {
               aria-label="Flaura.dev, retour en haut"
               className="block w-full max-w-[340px] press-text"
             >
-              <Image src={logoDark} alt="" sizes="340px" className="h-auto w-full light:hidden" />
-              <Image src={logoLight} alt="" sizes="340px" className="h-auto w-full dark:hidden" />
+              <Image
+                src={logoDark}
+                alt="Logo Flaura.dev, développeuse web full stack"
+                sizes="340px"
+                className="h-auto w-full light:hidden"
+              />
+              <Image
+                src={logoLight}
+                alt="Logo Flaura.dev, développeuse web full stack"
+                sizes="340px"
+                className="h-auto w-full dark:hidden"
+              />
             </Link>
             <p className="text-[0.9375rem] leading-[1.6] text-muted">
               Tes clients doivent pouvoir te trouver, ton site doit leur donner envie de te choisir.

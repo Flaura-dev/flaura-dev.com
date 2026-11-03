@@ -440,6 +440,74 @@
     }
   }
 
+  /* Pages légales : texte courant, intertitres, listes et liens (LegalPage.tsx). */
+  .legal-prose {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* Intertitres en étiquette Geist Mono, précédés du « // » rose. */
+  .legal-prose h3 {
+    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .legal-prose h3::before {
+    content: "// ";
+    content: "// " / "";
+    color: var(--pink);
+  }
+
+  .legal-prose strong {
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .legal-prose a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--pink);
+    text-underline-offset: 0.2em;
+    transition: color 150ms;
+  }
+
+  .legal-prose a:hover {
+    color: var(--pink);
+  }
+
+  .legal-prose a:active {
+    opacity: 0.6;
+  }
+
+  .legal-prose ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .legal-prose li {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .legal-prose li::before {
+    content: "";
+    position: absolute;
+    top: 0.85em;
+    left: 0.25rem;
+    width: 0.5rem;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--pink);
+  }
+
   /* Frise du process : --line-p (0 à 1) = part couverte par la ligne, animée par Process.tsx. */
   .process-line {
     transform-origin: top;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { CalendarIcon } from "@/components/ui/icons";
 import { cx } from "@/lib/cx";
 
@@ -134,8 +135,16 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
         </button>
       </div>
       <p className="font-mono text-[0.6875rem] text-muted">
-        Créneaux synchronisés via Calendly · fuseau Europe/Paris. Le calendrier se charge uniquement
-        si tu cliques.
+        Créneaux synchronisés via Calendly · fuseau Europe/Paris. Le calendrier ne se charge
+        qu’après ton clic&nbsp;; Calendly peut alors déposer{" "}
+        {/* Lien d'information, volontairement discret : même couleur, pointillé fin. */}
+        <Link
+          href="/confidentialite#cookies"
+          className="py-3 underline decoration-dotted underline-offset-2 press-text hover:text-pink"
+        >
+          ses propres cookies
+        </Link>
+        .
       </p>
     </div>
   );

@@ -5,6 +5,7 @@ import logoLight from "@/assets/logos/flaura-logo-long-slogan-noir.webp";
 import { AvailabilityDot } from "@/components/ui/AvailabilityDot";
 import { Container } from "@/components/ui/Container";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
+import { legal } from "@/content/legal";
 import { site } from "@/content/site";
 import { PetalsToggle } from "./PetalsToggle";
 
@@ -104,13 +105,18 @@ export function Footer() {
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6 font-mono text-xs text-muted">
-          <span>© 2026 Flaura.dev · Laura Fontaine · [SIRET]</span>
+          <span>
+            © 2026 Flaura.dev · {legal.name} EI{legal.siren && ` · SIREN ${legal.siren}`}
+          </span>
           <span className="flex flex-wrap gap-5 pointer-coarse:gap-y-0">
             <Link href="/mentions-legales" className={legalLink}>
               mentions légales
             </Link>
             <Link href="/confidentialite" className={legalLink}>
               confidentialité
+            </Link>
+            <Link href="/cgv" className={legalLink}>
+              cgv
             </Link>
             {site.petals && <PetalsToggle />}
             <a

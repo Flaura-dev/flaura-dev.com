@@ -47,6 +47,6 @@ export const faq: FaqItem[] = [
   },
   {
     q: "Où intervient Flaura.dev ?",
-    a: `Je suis développeuse web freelance à ${site.address.locality}, dans le ${site.address.region}. J’accompagne les entreprises du Var et de la région PACA (Toulon, Brignoles, Aix-en-Provence, Marseille…) et je travaille aussi à distance partout en France, en visio ou par e-mail. Je travaille uniquement avec des professionnels : indépendants, artisans, commerçants, TPE et PME.`,
+    a: `Je suis développeuse web freelance dans le ${site.address.region} et je travaille exclusivement à distance, en visio ou par e-mail. J’accompagne aussi bien les entreprises du Var et de la région PACA (Toulon, Brignoles, Aix-en-Provence, Marseille…) que celles du reste de la France. Je travaille uniquement avec des professionnels : indépendants, artisans, commerçants, TPE et PME.`,
   },
 ];

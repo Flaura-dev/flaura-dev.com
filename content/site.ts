@@ -13,8 +13,11 @@ export const site = {
    */
   servedUrl: "https://palegoldenrod-swallow-512762.hostingersite.com",
   email: "hello@flaura-dev.com",
-  /** Commune, code postal et département de l'entreprise (FAQ, données structurées). */
-  address: { locality: "Saint-Maximin-la-Sainte-Baume", postalCode: "83470", region: "Var" },
+  /**
+   * Département de l'entreprise (FAQ, données structurées). Pas de commune : seules les mentions
+   * légales donnent l'adresse.
+   */
+  address: { region: "Var" },
   linkedin: "https://www.linkedin.com/in/laura-fontaine-devweb83",
   github: "https://github.com/Flaura-dev",
   /** Lien de l'événement Calendly du café virtuel. */

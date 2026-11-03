@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { ArrowRightIcon, MapPinIcon } from "@/components/ui/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { career } from "@/content/about";
+import { site } from "@/content/site";
 import { cx } from "@/lib/cx";
 
 /*
@@ -47,8 +48,10 @@ export function About() {
               </span>
             </p>
             <p className="leading-[1.7] text-muted">
-              Je fais des sites de A à Z : le design, le code, l’hébergement et les animations qui
-              donnent envie de scroller.
+              Je suis Laura Fontaine, développeuse web freelance dans le {site.address.region}. Je
+              crée et refais les sites vitrines des indépendants, artisans, commerçants et TPE de
+              toute la France, uniquement à distance. De A à Z&nbsp;: le design, le code,
+              l’hébergement et les animations qui donnent envie de scroller.
             </p>
           </div>
 
@@ -82,7 +85,9 @@ export function About() {
               })}
             </ol>
             <p className="leading-[1.6] text-muted">
-              Des années en ingénierie m’ont appris à tenir un planning, un budget et une promesse.
+              Plus de sept&nbsp;ans en ingénierie m’ont appris à tenir un planning, un budget et une
+              promesse, et à ne jamais lancer un chantier sans plan validé. C’est pour ça que tu
+              valides la maquette de ton site avant que j’écrive la moindre ligne de code.
             </p>
           </div>
         </div>

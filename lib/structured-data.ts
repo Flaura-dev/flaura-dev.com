@@ -66,11 +66,9 @@ function business(withCatalog: boolean) {
     image: logo,
     email: site.email,
     founder: { "@id": ids.person },
-    // Commune et code postal seulement : pas de local ouvert au public.
+    // Département seulement : travail à distance, pas de local ouvert au public.
     address: {
       "@type": "PostalAddress",
-      addressLocality: site.address.locality,
-      postalCode: site.address.postalCode,
       addressRegion: site.address.region,
       addressCountry: "FR",
     },

@@ -23,9 +23,8 @@ export function Hero() {
                   .dev_
                 </span>
               </span>
-              <span className="sr-only">
-                Flaura.dev — Laura Fontaine, développeuse web freelance dans le Var
-              </span>
+              {/* Espace de tête : sans lui, le texte lu par les robots colle au logo. */}
+              <span className="sr-only"> {site.title}</span>
             </h1>
 
             <div className="relative mx-auto -mt-[9.2cqi] w-[min(480px,82cqi)] select-none xl:absolute xl:top-[14.17cqi] xl:left-1/2 xl:mt-0 xl:w-[45cqi] xl:-translate-x-1/2">
@@ -71,8 +70,7 @@ export function Hero() {
                     Disponible
                   </p>
                   <p className="text-lg leading-[1.3] font-semibold">
-                    Freelance
-                    <br />
+                    Freelance <br />
                     <span className="font-normal text-muted">Var · France en remote</span>
                   </p>
                 </div>

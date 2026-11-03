@@ -55,8 +55,7 @@ export function About() {
           <div className="flex flex-col justify-between gap-6 rounded-3xl bg-pink p-7 text-bg">
             <MapPinIcon size={28} />
             <p className="font-display text-[2.5rem] leading-[0.95] font-black uppercase">
-              Var,
-              <br />
+              Var, <br />
               France
             </p>
             <p className="font-mono text-xs">+ remote partout en France</p>

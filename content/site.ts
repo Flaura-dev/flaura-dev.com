@@ -1,7 +1,7 @@
 export const site = {
   name: "Flaura.dev",
-  /** Titre et description de l'accueil (balises meta et données structurées). */
-  title: "Flaura.dev — Développeuse web freelance dans le Var",
+  /** Titre et description de l'accueil (balises meta, h1 et données structurées). */
+  title: "Flaura.dev — Laura Fontaine, développeuse web freelance dans le Var",
   description:
     "Laura Fontaine, développeuse web freelance dans le Var : création et refonte de sites internet pour TPE et indépendants, dans le Var et à distance.",
   /** Nom complet de Laura, tel qu'il apparaît dans les données structurées. */

@@ -264,11 +264,15 @@ export function ScrollRail() {
             className="pointer-events-auto absolute bottom-0 left-[44px] flex size-11 -translate-x-1/2 translate-y-1/2 cursor-grab touch-none items-center justify-center group-data-[dragging=true]/rail:cursor-grabbing"
           >
             <span className="size-4 rounded-full bg-pink shadow-[0_0_0_4px_var(--bg),0_0_20px_var(--pink)] transition-transform group-hover/rail:scale-125 group-data-[dragging=true]/rail:scale-150 motion-reduce:transition-none" />
-            {/* Étiquette calée sur le bord droit de l'écran : elle tient dans la marge, sans recouvrir le contenu. */}
+            {/*
+             * Étiquette centrée sur le fil, dans la marge droite : elle ne recouvre jamais le
+             * contenu. Sur les pages légales, le numéro seul : leurs titres ne tiennent pas
+             * dans la marge, et leur sommaire les affiche déjà.
+             */}
             {current && (
-              <span className="pointer-events-none absolute -right-3.5 bottom-full mb-0.5 flex w-max max-w-28 flex-col gap-0.5 rounded-xl border border-line bg-bg/85 px-2.5 py-1.5 font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase opacity-0 backdrop-blur-md transition-opacity group-hover/rail:opacity-100 group-data-[dragging=true]/rail:opacity-100 group-data-[label-below=true]/rail:top-full group-data-[label-below=true]/rail:bottom-auto group-data-[label-below=true]/rail:mt-0.5 group-data-[label-below=true]/rail:mb-0 group-data-[scrolling=true]/rail:opacity-100 motion-reduce:transition-none opaque:bg-bg opaque:backdrop-blur-none">
+              <span className="pointer-events-none absolute bottom-full left-1/2 mb-0.5 flex w-max max-w-20 -translate-x-1/2 flex-col items-center gap-0.5 rounded-xl border border-line bg-bg/85 px-2 py-1.5 text-center font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase opacity-0 backdrop-blur-md transition-opacity group-hover/rail:opacity-100 group-data-[dragging=true]/rail:opacity-100 group-data-[label-below=true]/rail:top-full group-data-[label-below=true]/rail:bottom-auto group-data-[label-below=true]/rail:mt-0.5 group-data-[label-below=true]/rail:mb-0 group-data-[scrolling=true]/rail:opacity-100 motion-reduce:transition-none opaque:bg-bg opaque:backdrop-blur-none">
                 <span className="text-pink">{current.num}</span>
-                <span className="line-clamp-3 text-fg">{current.label}</span>
+                {!fromPage && <span className="text-fg">{current.label}</span>}
               </span>
             )}
           </div>

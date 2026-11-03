@@ -50,7 +50,7 @@ export function ContactForm() {
             name="name"
             type="text"
             autoComplete="name"
-            placeholder="Camille Martin"
+            placeholder="Prénom Nom"
             required
             maxLength={100}
             defaultValue={state.values?.name}

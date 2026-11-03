@@ -6,23 +6,27 @@ type ProjectCardProps = {
   project: Project;
   /** Sur /projets, chaque carte porte une ancre (/projets#slug). */
   withAnchor?: boolean;
+  /** Carte visible dès l'arrivée sur la page : captures chargées tout de suite. */
+  eager?: boolean;
 };
 
 /** Carte projet, avec un lien ↗ quand le site est en ligne. */
-export function ProjectCard({ project, withAnchor = false }: ProjectCardProps) {
+export function ProjectCard({ project, withAnchor = false, eager = false }: ProjectCardProps) {
   return (
     <article
       id={withAnchor ? project.slug : undefined}
       className="group flex scroll-mt-28 flex-col overflow-clip rounded-3xl border border-line bg-surface"
     >
       <div className="relative h-[230px] overflow-clip">
-        <ProjectVisual project={project} />
+        <ProjectVisual project={project} eager={eager} />
       </div>
       <div className="flex flex-1 flex-col gap-3 p-6">
         <p className="font-mono text-xs text-pink">{project.label}</p>
         {/* Le lien ↗ déborde sans agrandir la ligne : les titres restent alignés entre les cartes. */}
         <div className="flex items-start justify-between gap-4">
-          <h3 className="font-display text-[2.125rem] leading-none font-black uppercase">
+          {/* « Consultante Business » (insécable) fait environ 9 fois la taille de la police :
+              sous 400 px de large, la police se réduit pour que le titre tienne dans la carte. */}
+          <h3 className="font-display text-[length:min(2.125rem,calc((100vw_-_5.5rem)/9))] leading-none font-black uppercase">
             {project.title}
           </h3>
           {project.url && (

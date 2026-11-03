@@ -34,12 +34,13 @@ export function Brand() {
         onAnimationEnd={() => setSpinning(false)}
         className={cx(
           // En clair, un fin liseré rose redonne du relief à la fleur, très pâle sur le crème.
-          "block size-[38px] light:[filter:drop-shadow(0_0_0.75px_rgb(194_56_107/0.75))_saturate(1.3)]",
+          // Sous 360 px, logo un peu plus petit : l'en-tête tient avec ses marges.
+          "block size-[38px] max-[360px]:size-8 light:[filter:drop-shadow(0_0_0.75px_rgb(194_56_107/0.75))_saturate(1.3)]",
           spinning && "motion-safe:animate-sakura-spin",
         )}
       />
       <span className="whitespace-nowrap">
-        <span className="font-display text-[2.125rem] leading-none font-black uppercase">
+        <span className="font-display text-[2.125rem] leading-none font-black uppercase max-[360px]:text-[1.875rem]">
           Flaura
         </span>
         <span className="font-mono text-[0.9375rem] text-pink">.dev_</span>

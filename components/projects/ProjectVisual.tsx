@@ -14,11 +14,23 @@ import { ScrollingShot } from "./ScrollingShot";
  * Sans comparateur, la capture couvre toute la page et défile (ScrollingShot).
  */
 
-function Shot({ src, alt }: { src: StaticImageData; alt: string }) {
-  return <Image src={src} alt={alt} fill sizes={SIZES} className="object-cover object-top" />;
+type ShotProps = { src: StaticImageData; alt: string; eager: boolean };
+
+function Shot({ src, alt, eager }: ShotProps) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      sizes={SIZES}
+      loading={eager ? "eager" : undefined}
+      fetchPriority={eager ? "high" : undefined}
+      className="object-cover object-top"
+    />
+  );
 }
 
-export function ProjectVisual({ project }: { project: Project }) {
+export function ProjectVisual({ project, eager }: { project: Project; eager: boolean }) {
   switch (project.visual) {
     case "lea":
       return (
@@ -27,12 +39,14 @@ export function ProjectVisual({ project }: { project: Project }) {
             before={
               <Shot
                 src={leaBefore}
+                eager={eager}
                 alt="Ancien site de Léa Grondin : une seule page, un grand titre centré sur fond blanc, sans photo"
               />
             }
             after={
               <Shot
                 src={leaAfter}
+                eager={eager}
                 alt="Nouveau site de Léa Grondin : un menu, son titre de bras droit pédagogique des formateurs et sa photo devant son ordinateur"
               />
             }
@@ -46,6 +60,7 @@ export function ProjectVisual({ project }: { project: Project }) {
           src={pendu}
           alt="Page d’accueil du jeu Le Pendu de la Faille"
           sizes={SIZES}
+          eager={eager}
         />
       );
       if (!project.url) return <BrowserFrame>{shot}</BrowserFrame>;

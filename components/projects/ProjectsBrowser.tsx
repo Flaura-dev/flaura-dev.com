@@ -96,8 +96,8 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
 
       {visible.length > 0 ? (
         <div className={cx("grid gap-4", PROJECT_GRID)}>
-          {visible.map((project) => (
-            <ProjectCard key={project.slug} project={project} withAnchor />
+          {visible.map((project, index) => (
+            <ProjectCard key={project.slug} project={project} withAnchor eager={index === 0} />
           ))}
         </div>
       ) : (

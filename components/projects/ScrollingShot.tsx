@@ -7,6 +7,7 @@ type ScrollingShotProps = {
   src: StaticImageData;
   alt: string;
   sizes: string;
+  eager?: boolean;
 };
 
 /**
@@ -16,7 +17,7 @@ type ScrollingShotProps = {
  * Conteneur de taille : « -100% + 100cqh » amène le bas de la capture en bas du cadre.
  * overflow-clip plutôt que hidden : le cadre ne peut pas défiler, même par script.
  */
-export function ScrollingShot({ src, alt, sizes }: ScrollingShotProps) {
+export function ScrollingShot({ src, alt, sizes, eager = false }: ScrollingShotProps) {
   const ratio = src.height / src.width;
   // Plus la page est longue, plus la descente dure : la vitesse reste à peu près la même.
   const duration = Math.max(2, ratio * 1.5);
@@ -30,6 +31,8 @@ export function ScrollingShot({ src, alt, sizes }: ScrollingShotProps) {
         src={src}
         alt={alt}
         sizes={sizes}
+        loading={eager ? "eager" : undefined}
+        fetchPriority={eager ? "high" : undefined}
         className="block h-auto min-h-full w-full object-cover object-top motion-safe:transition-[translate] motion-safe:duration-700 motion-safe:ease-in-out motion-safe:group-hover/frame:translate-y-[calc(-100%_+_100cqh)] motion-safe:group-hover/frame:duration-(--shot-duration) motion-safe:group-has-[:focus-visible]:translate-y-[calc(-100%_+_100cqh)] motion-safe:group-has-[:focus-visible]:duration-(--shot-duration)"
       />
       {/* Indice masqué (hauteur 0) s'il reste moins de 24 px à faire défiler. */}

@@ -32,11 +32,10 @@ const bigShoulders = Big_Shoulders({
 export const metadata: Metadata = {
   metadataBase: new URL(site.servedUrl),
   title: {
-    default: "Flaura.dev — Développeuse web freelance dans le Var",
+    default: site.title,
     template: "%s · Flaura.dev",
   },
-  description:
-    "Laura Fontaine, développeuse web freelance dans le Var : création et refonte de sites internet pour TPE et indépendants, dans le Var et à distance.",
+  description: site.description,
   robots: site.indexable ? undefined : { index: false, follow: false },
   openGraph: openGraphBase,
 };

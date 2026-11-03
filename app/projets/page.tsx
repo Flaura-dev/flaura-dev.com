@@ -4,7 +4,9 @@ import { CtaBanner } from "@/components/projects/CtaBanner";
 import { ProjectsBrowser } from "@/components/projects/ProjectsBrowser";
 import { Container } from "@/components/ui/Container";
 import { ArrowLeftIcon } from "@/components/ui/icons";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { pageUrls } from "@/lib/metadata";
+import { projectsStructuredData } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "Projets : sites vitrines et créations web",
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
   ...pageUrls("/projets"),
 };
 
-/** Tous les projets, avec filtres. Page hors menu : on y arrive par les cartes de l'accueil. */
+/** Tous les projets, avec filtres. Page hors menu : on y arrive par l'accueil et le pied de page. */
 export default function ProjectsPage() {
   return (
     <main id="contenu" className="pt-8 pb-24">
@@ -33,9 +35,12 @@ export default function ProjectsPage() {
           </p>
         </div>
 
+        {/* Titre de la liste pour les lecteurs d'écran : les cartes sont en h3. */}
+        <h2 className="sr-only">Sites vitrines, refontes et créations web</h2>
         <ProjectsBrowser />
         <CtaBanner />
       </Container>
+      <JsonLd data={projectsStructuredData} />
     </main>
   );
 }

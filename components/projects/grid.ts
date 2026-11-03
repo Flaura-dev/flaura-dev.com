@@ -6,7 +6,10 @@ import { projects } from "@/content/projects";
  */
 const twoColumns = projects.length < 3;
 
-export const PROJECT_GRID = twoColumns ? "md:grid-cols-2" : "md:grid-cols-3";
+// grid-cols-1 : sans colonne définie, la carte s'élargit à son contenu et dépasse sur petit écran.
+export const PROJECT_GRID = twoColumns
+  ? "grid-cols-1 md:grid-cols-2"
+  : "grid-cols-1 md:grid-cols-3";
 
 /** Largeur affichée des captures, pour que next/image charge la bonne taille. */
 export const PROJECT_SHOT_SIZES = twoColumns

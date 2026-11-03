@@ -7,8 +7,9 @@ import { ArrowRightIcon, CheckIcon, ChevronDownIcon } from "@/components/ui/icon
 import { contactMessages, honeypotField, projectTypes } from "@/content/contact";
 import { cx } from "@/lib/cx";
 
+// 16 px sur mobile : en dessous, Safari sur iPhone zoome la page dès qu'on touche un champ.
 const fieldClass =
-  "w-full rounded-xl border border-field-line bg-bg px-4 py-3.5 font-mono text-sm text-fg placeholder:text-muted aria-invalid:border-pink";
+  "w-full rounded-xl border border-field-line bg-bg px-4 py-3.5 font-mono text-base text-fg placeholder:text-muted aria-invalid:border-pink md:text-sm";
 const labelClass = "font-mono text-xs font-medium tracking-[0.125em] text-muted uppercase";
 
 const initialState: ContactState = { status: "idle" };

@@ -1,5 +1,11 @@
 export const site = {
   name: "Flaura.dev",
+  /** Titre et description de l'accueil (balises meta et données structurées). */
+  title: "Flaura.dev — Développeuse web freelance dans le Var",
+  description:
+    "Laura Fontaine, développeuse web freelance dans le Var : création et refonte de sites internet pour TPE et indépendants, dans le Var et à distance.",
+  /** Nom complet de Laura, tel qu'il apparaît dans les données structurées. */
+  owner: { givenName: "Laura", familyName: "Fontaine" },
   url: "https://flaura-dev.com",
   /**
    * Adresse où le site est servi : base des liens absolus des métadonnées (image d'aperçu, canonical).
@@ -7,8 +13,8 @@ export const site = {
    */
   servedUrl: "https://palegoldenrod-swallow-512762.hostingersite.com",
   email: "hello@flaura-dev.com",
-  /** Commune et département de l'entreprise (FAQ, données structurées). */
-  address: { locality: "Saint-Maximin-la-Sainte-Baume", region: "Var" },
+  /** Commune, code postal et département de l'entreprise (FAQ, données structurées). */
+  address: { locality: "Saint-Maximin-la-Sainte-Baume", postalCode: "83470", region: "Var" },
   linkedin: "https://www.linkedin.com/in/laura-fontaine-devweb83",
   github: "https://github.com/Flaura-dev",
   /** Lien de l'événement Calendly du café virtuel. */

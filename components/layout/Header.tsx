@@ -14,7 +14,7 @@ import { ThemeToggle } from "./ThemeToggle";
 export function Header() {
   return (
     <HeaderShell>
-      <Container className="flex items-center justify-between gap-6 py-[22px]">
+      <Container className="flex items-center justify-between gap-2 py-[22px] min-[360px]:gap-6">
         <Brand />
         <NavPill />
         <div className="flex items-center gap-2.5">

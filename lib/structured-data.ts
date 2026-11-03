@@ -27,11 +27,6 @@ const ids = {
 /** Logo carré servi par app/icon.png. */
 const logo = url("/icon.png");
 
-const areaServed = [
-  { "@type": "AdministrativeArea", name: site.address.region },
-  { "@type": "Country", name: "France" },
-];
-
 const website = {
   "@type": "WebSite",
   "@id": ids.website,
@@ -53,6 +48,7 @@ const person = {
   worksFor: { "@id": ids.business },
   sameAs: [site.linkedin, site.github],
   knowsAbout: ["Création de site internet", "Refonte de site internet", "Développement web"],
+  knowsLanguage: "fr",
 };
 
 function business(withCatalog: boolean) {
@@ -72,7 +68,8 @@ function business(withCatalog: boolean) {
       addressRegion: site.address.region,
       addressCountry: "FR",
     },
-    areaServed,
+    // Clients francophones du monde entier, à distance : pas de zone servie à délimiter.
+    knowsLanguage: "fr",
     ...(withCatalog && { hasOfferCatalog: { "@id": ids.catalog } }),
   };
 }
@@ -122,7 +119,6 @@ function offer({ id, anchor = id, name, description, price, priceNote, serviceTy
       name: `${serviceType} : ${name}`,
       serviceType,
       provider: { "@id": ids.business },
-      areaServed,
     },
   };
   // Prix fixe : Google le veut aussi directement sur l'offre.

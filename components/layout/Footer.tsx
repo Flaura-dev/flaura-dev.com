@@ -76,7 +76,7 @@ export function Footer() {
             <a href={`mailto:${site.email}`} className={`${linkClass} break-all`}>
               {site.email}
             </a>
-            <span className="text-muted">Var, France · remote</span>
+            <span className="text-muted">Var, France · à distance</span>
           </div>
 
           <div className={columnClass}>

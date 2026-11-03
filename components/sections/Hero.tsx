@@ -71,7 +71,7 @@ export function Hero() {
                   </p>
                   <p className="text-lg leading-[1.3] font-semibold">
                     Freelance <br />
-                    <span className="font-normal text-muted">Var · France en remote</span>
+                    <span className="font-normal text-muted">Var · à distance</span>
                   </p>
                 </div>
               )}

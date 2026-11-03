@@ -7,6 +7,7 @@ import { site } from "@/content/site";
 import { euros } from "@/lib/price";
 
 const [essentiel, visibilite, pro] = plans.map((plan) => plan.price.amount);
+const [essentielName, visibiliteName, proName] = plans.map((plan) => plan.name);
 const [serenite, evolution] = maintenancePlans.map((formula) => formula.price.amount);
 
 // a : texte de la réponse. list (optionnel) : liste à puces affichée après a. after (optionnel) : texte affiché après la liste.
@@ -35,7 +36,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: "Combien de temps faut-il pour créer un site internet ?",
-    a: "Ça dépend de la taille du projet, mais tu as un planning daté dès le devis et tu sais à tout moment où on en est. S’il y a un imprévu, je préfère te prévenir trois semaines avant que trois jours après.",
+    a: `Compte environ 3 semaines pour un site ${essentielName}, 4 à 5 semaines pour un site ${visibiliteName} et 6 à 8 semaines pour un site ${proName}. Pour une refonte, compte environ une semaine de plus. Pour un projet spécifique, je te donne le délai après le cadrage. Dans tous les cas, tu as un planning daté dès le devis et tu sais à tout moment où on en est. S’il y a un imprévu, je préfère te prévenir trois semaines avant que trois jours après.`,
   },
   {
     q: "À qui appartient le site une fois livré ?",
@@ -47,6 +48,6 @@ export const faq: FaqItem[] = [
   },
   {
     q: "Où intervient Flaura.dev ?",
-    a: `Je suis développeuse web freelance dans le ${site.address.region} et je travaille exclusivement à distance, en visio ou par e-mail. J’accompagne aussi bien les entreprises du Var et de la région PACA (Toulon, Brignoles, Aix-en-Provence, Marseille…) que celles du reste de la France. Je travaille uniquement avec des professionnels : indépendants, artisans, commerçants, TPE et PME.`,
+    a: `Je suis développeuse web freelance dans le ${site.address.region} et je travaille à distance, en visio ou par e-mail. J’accompagne aussi bien les entreprises du Var et de la région PACA (Toulon, Brignoles, Aix-en-Provence, Marseille…) que celles du reste de la France, et plus largement les francophones du monde entier. Je travaille uniquement avec des professionnels : indépendants, artisans, commerçants, TPE et PME.`,
   },
 ];

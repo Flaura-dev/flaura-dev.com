@@ -49,9 +49,9 @@ export function About() {
             </p>
             <p className="leading-[1.7] text-muted">
               Je suis Laura Fontaine, développeuse web freelance dans le {site.address.region}. Je
-              crée et refais les sites vitrines des indépendants, artisans, commerçants et TPE de
-              toute la France, uniquement à distance. De A à Z&nbsp;: le design, le code,
-              l’hébergement et les animations qui donnent envie de scroller.
+              crée et refais, à distance, les sites vitrines des indépendants, artisans, commerçants
+              et TPE francophones, où qu’ils soient dans le monde. De A à Z&nbsp;: le design, le
+              code, l’hébergement et les animations qui donnent envie de scroller.
             </p>
           </div>
 
@@ -61,7 +61,7 @@ export function About() {
               Var, <br />
               France
             </p>
-            <p className="font-mono text-xs">+ remote partout en France</p>
+            <p className="font-mono text-xs">+ à distance, pour les francophones du monde entier</p>
           </div>
 
           <div className="flex flex-col gap-4 rounded-3xl border border-line bg-surface p-7 md:col-span-3">

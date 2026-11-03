@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { CalendarIcon } from "@/components/ui/icons";
+import { ArrowUpRightIcon, CalendarIcon } from "@/components/ui/icons";
 import { cx } from "@/lib/cx";
 
 type CalendlyEmbedProps = {
@@ -133,6 +133,17 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
         >
           Voir les créneaux disponibles
         </button>
+        {/* Secours sans JavaScript ni cadre : un simple lien ne charge rien avant le clic. */}
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-11 items-center gap-1.5 text-sm text-muted underline decoration-dotted underline-offset-2 press-text hover:text-pink"
+        >
+          ou ouvrir l’agenda dans Calendly
+          <span className="sr-only">(nouvel onglet)</span>
+          <ArrowUpRightIcon size={14} className="shrink-0 text-pink" />
+        </a>
       </div>
       <p className="font-mono text-[0.6875rem] text-muted">
         Créneaux synchronisés via Calendly · fuseau Europe/Paris. Le calendrier ne se charge

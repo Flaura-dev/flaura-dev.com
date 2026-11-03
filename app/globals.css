@@ -521,6 +521,15 @@
     }
   }
 
+  /* FAQ : signe [+] / [−] de la question (Faq.tsx). */
+  .faq-toggle::before {
+    content: "[+]";
+  }
+
+  .faq-item[open] .faq-toggle::before {
+    content: "[−]";
+  }
+
   /* FAQ : la réponse se déplie en douceur (Chrome et Edge, instantané ailleurs). */
   @media (prefers-reduced-motion: no-preference) {
     .faq-item {

@@ -27,10 +27,8 @@ export function Faq() {
               <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-[1.1875rem] font-semibold press-text [&::-webkit-details-marker]:hidden">
                 {/* Lignes équilibrées : pas de « ? » isolé en fin de question sur mobile. */}
                 <h3 className="text-balance">{q}</h3>
-                <span aria-hidden="true" className="shrink-0 font-mono text-pink">
-                  <span className="group-open:hidden">[+]</span>
-                  <span className="hidden group-open:inline">[−]</span>
-                </span>
+                {/* [+] / [−] dessinés en CSS (globals.css) : hors du texte lu par les robots. */}
+                <span aria-hidden="true" className="faq-toggle shrink-0 font-mono text-pink" />
               </summary>
               <div className="mt-3 flex max-w-[75ch] flex-col gap-3 leading-[1.65] text-muted">
                 <p>{a}</p>

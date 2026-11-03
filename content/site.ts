@@ -31,6 +31,8 @@ export const site = {
    * (placeholders, mentions légales, formulaire) : passe à true le jour du lancement.
    */
   indexable: false,
+  /** Dernière mise à jour du contenu (lastModified du sitemap) : à changer à la main, jamais new Date(). */
+  updatedAt: "2026-11-03",
   /** Passe à false pour masquer les mentions « disponible ». */
   available: true,
 };

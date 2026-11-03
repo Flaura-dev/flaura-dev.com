@@ -63,18 +63,22 @@ export function Hero() {
                 </ButtonLink>
               </div>
 
-              {site.available && (
-                <div className="flex flex-col gap-3.5 rounded-[20px] border border-line bg-surface p-[22px] sm:w-[260px] xl:absolute xl:right-0 xl:bottom-0">
+              {/* Offre, cible et zone visibles dès le haut de page, même sans « disponible ». */}
+              <div className="flex flex-col gap-3.5 rounded-[20px] border border-line bg-surface p-[22px] sm:w-[260px] xl:absolute xl:right-0 xl:bottom-0">
+                {site.available && (
                   <p className="flex items-center gap-2 font-mono text-xs text-muted uppercase">
                     <AvailabilityDot />
                     Disponible
                   </p>
-                  <p className="text-lg leading-[1.3] font-semibold">
-                    Freelance <br />
-                    <span className="font-normal text-muted">Var · à distance</span>
+                )}
+                <div className="flex flex-col gap-1.5">
+                  <p className="text-lg leading-[1.3] font-semibold">Sites vitrines et refontes</p>
+                  <p className="text-[0.9375rem] leading-normal text-muted">
+                    pour les indépendants, artisans, commerçants et TPE, dans le{" "}
+                    {site.address.region} et à distance
                   </p>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>

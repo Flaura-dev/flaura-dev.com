@@ -14,6 +14,8 @@ type Drag = { offset: number; startY: number; tracking: boolean };
 const DRAG_THRESHOLD = 4;
 /** Écart minimal (px) entre deux numéros sur le rail ; en dessous, seul le trait reste. */
 const MIN_NUM_GAP = 18;
+/** Hauteur (px) sur le rail sous laquelle l'étiquette du point passe en dessous de lui. */
+const LABEL_FLIP = 96;
 
 /** Hauteur de défilement disponible (0 si la page tient dans l'écran). */
 function maxScroll() {
@@ -85,6 +87,13 @@ export function ScrollRail() {
       setPageActive(id);
     };
 
+    // L'étiquette se place au-dessus du point, sauf tout en haut du rail où elle sortirait de l'écran.
+    const updateLabelSide = () => {
+      const progress = Math.min(1, window.scrollY / maxScroll());
+      const thumbY = progress * (trackRef.current?.clientHeight ?? 0);
+      rail.dataset.labelBelow = String(thumbY < LABEL_FLIP);
+    };
+
     // Un repère par section, placé là où se trouvera le point quand la section devient
     // la section en cours (son haut passe à 40 % de l'écran). Recalculé si la page change de taille.
     const measure = () => {
@@ -104,6 +113,7 @@ export function ScrollRail() {
       setFromPage(fromPage);
       setMarks(next);
       updatePageActive();
+      updateLabelSide();
     };
     const resizeObserver = new ResizeObserver(measure);
     resizeObserver.observe(document.body);
@@ -116,7 +126,7 @@ export function ScrollRail() {
     };
     if (!supportsTimeline) updateProgress();
 
-    // Pendant le défilement, l'étiquette de la section s'affiche à côté du point.
+    // Pendant le défilement, l'étiquette de la section s'affiche près du point.
     let hideTimer = 0;
     const onScroll = () => {
       rail.dataset.scrolling = "true";
@@ -126,6 +136,7 @@ export function ScrollRail() {
       }, 1200);
       if (!supportsTimeline) updateProgress();
       updatePageActive();
+      updateLabelSide();
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
@@ -222,7 +233,7 @@ export function ScrollRail() {
               {mark.showNum && (
                 <span
                   className={cx(
-                    "absolute right-[54px] font-mono text-[0.6875rem] transition-colors motion-reduce:transition-none",
+                    "absolute right-[60px] font-mono text-[0.6875rem] transition-colors motion-reduce:transition-none",
                     index === activeIndex
                       ? "text-pink"
                       : passed
@@ -253,9 +264,11 @@ export function ScrollRail() {
             className="pointer-events-auto absolute bottom-0 left-[44px] flex size-11 -translate-x-1/2 translate-y-1/2 cursor-grab touch-none items-center justify-center group-data-[dragging=true]/rail:cursor-grabbing"
           >
             <span className="size-4 rounded-full bg-pink shadow-[0_0_0_4px_var(--bg),0_0_20px_var(--pink)] transition-transform group-hover/rail:scale-125 group-data-[dragging=true]/rail:scale-150 motion-reduce:transition-none" />
+            {/* Étiquette calée sur le bord droit de l'écran : elle tient dans la marge, sans recouvrir le contenu. */}
             {current && (
-              <span className="pointer-events-none absolute right-full mr-1 translate-x-1 rounded-full border border-line bg-bg/85 px-3 py-1.5 font-mono text-[0.6875rem] tracking-[0.18em] whitespace-nowrap text-pink uppercase opacity-0 backdrop-blur-md transition-[opacity,translate] group-hover/rail:translate-x-0 group-hover/rail:opacity-100 group-data-[dragging=true]/rail:translate-x-0 group-data-[dragging=true]/rail:opacity-100 group-data-[scrolling=true]/rail:translate-x-0 group-data-[scrolling=true]/rail:opacity-100 motion-reduce:transition-none opaque:bg-bg opaque:backdrop-blur-none">
-                {current.num} — {current.label}
+              <span className="pointer-events-none absolute -right-3.5 bottom-full mb-0.5 flex w-max max-w-28 flex-col gap-0.5 rounded-xl border border-line bg-bg/85 px-2.5 py-1.5 font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase opacity-0 backdrop-blur-md transition-opacity group-hover/rail:opacity-100 group-data-[dragging=true]/rail:opacity-100 group-data-[label-below=true]/rail:top-full group-data-[label-below=true]/rail:bottom-auto group-data-[label-below=true]/rail:mt-0.5 group-data-[label-below=true]/rail:mb-0 group-data-[scrolling=true]/rail:opacity-100 motion-reduce:transition-none opaque:bg-bg opaque:backdrop-blur-none">
+                <span className="text-pink">{current.num}</span>
+                <span className="line-clamp-3 text-fg">{current.label}</span>
               </span>
             )}
           </div>

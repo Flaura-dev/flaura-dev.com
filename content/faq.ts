@@ -15,10 +15,9 @@ type FaqItem = { q: string; a: string; list?: string[]; after?: string };
 export const faq: FaqItem[] = [
   {
     q: "Comment se déroule la création d’un site internet avec Flaura.dev ?",
-    a: "En cinq étapes :",
+    a: "En quatre étapes :",
     list: [
-      "Un café virtuel de 30 minutes pour comprendre ton activité",
-      "Un devis détaillé",
+      "Un café virtuel de 30 minutes pour comprendre ton activité, puis un devis détaillé",
       "Une maquette que tu valides",
       "Le développement",
       "La mise en ligne",

@@ -208,7 +208,7 @@ export function Process() {
                   </h3>
                   <p
                     className={cx(
-                      "text-[0.9375rem] leading-[1.6] motion-safe:transition-colors",
+                      "text-[0.9375rem] leading-[1.6] text-pretty motion-safe:transition-colors",
                       current ? "text-muted" : "text-dim",
                     )}
                   >

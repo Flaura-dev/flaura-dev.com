@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { CloseIcon, MenuIcon, PhoneIcon } from "@/components/ui/icons";
-import { sections } from "@/content/site";
+import { sections, site } from "@/content/site";
 import { useActiveSection } from "@/lib/use-active-section";
+import { PetalsToggle } from "./PetalsToggle";
 
 /** Même valeur que --breakpoint-nav dans globals.css : au-delà, la pilule prend le relais. */
 const NAV_BREAKPOINT = "(width >= 78rem)";
@@ -125,6 +126,7 @@ export function MobileMenu() {
             <PhoneIcon />
             Réserver un appel
           </ButtonLink>
+          {site.petals && <PetalsToggle variant="menu" className="mt-3" />}
         </div>
       </dialog>
     </>

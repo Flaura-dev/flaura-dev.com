@@ -4,7 +4,6 @@ import {
   ExternalLink,
   LegalFacts,
   LegalPage,
-  Todo,
   type LegalSection,
 } from "@/components/layout/LegalPage";
 import { legal } from "@/content/legal";
@@ -44,7 +43,7 @@ const sections: LegalSection[] = [
             { term: "Code APE", value: legal.ape },
             {
               term: "N° de TVA intracommunautaire",
-              value: legal.vatNumber ?? <Todo>à compléter après l’option pour la TVA</Todo>,
+              value: legal.vatNumber ?? "en cours d’attribution",
             },
           ]}
         />
@@ -205,7 +204,7 @@ export default function MentionsLegalesPage() {
       path="/mentions-legales"
       title="Mentions légales"
       subtitle="Site flaura-dev.com"
-      meta="Dernière mise à jour&nbsp;: 29 octobre 2026"
+      meta="Dernière mise à jour&nbsp;: 4 novembre 2026"
       sections={sections}
     />
   );

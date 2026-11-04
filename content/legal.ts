@@ -10,7 +10,7 @@ export const legal = {
   siret: "132 093 071 00018",
   registeredOn: "27 octobre 2026",
   ape: "6201Z, programmation informatique",
-  /** null tant que l'option pour la TVA n'a pas donné de numéro : les pages affichent « à compléter ». */
+  /** null tant que l'option pour la TVA n'a pas donné de numéro : les pages affichent « en cours d’attribution ». */
   vatNumber: null as string | null,
 };
 

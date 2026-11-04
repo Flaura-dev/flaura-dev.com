@@ -146,11 +146,6 @@ export function LegalFacts({ items }: { items: { term: string; value: ReactNode 
   );
 }
 
-/** Information encore manquante : reste visible tant qu'elle n'est pas fournie. */
-export function Todo({ children }: { children: ReactNode }) {
-  return <span className="font-mono text-[0.875em] text-pink">[{children}]</span>;
-}
-
 /** Lien vers un autre site, ouvert dans un nouvel onglet. */
 export function ExternalLink({ href, children }: { href: string; children: ReactNode }) {
   return (

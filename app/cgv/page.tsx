@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LegalFacts, LegalPage, Todo, type LegalSection } from "@/components/layout/LegalPage";
+import { LegalFacts, LegalPage, type LegalSection } from "@/components/layout/LegalPage";
 import { legal } from "@/content/legal";
 import { site } from "@/content/site";
 import { legalRobots, pageUrls } from "@/lib/metadata";
@@ -731,7 +731,7 @@ export default function CgvPage() {
         <>
           Version 1.0 · en vigueur au 1<sup>er</sup> janvier 2027
           <br />
-          Dernière mise à jour&nbsp;: 3 novembre 2026
+          Dernière mise à jour&nbsp;: 4 novembre 2026
         </>
       }
       intro={
@@ -744,7 +744,7 @@ export default function CgvPage() {
             { term: "E-mail", value: mail },
             {
               term: "N° de TVA intracommunautaire",
-              value: legal.vatNumber ?? <Todo>à compléter après l’option pour la TVA</Todo>,
+              value: legal.vatNumber ?? "en cours d’attribution",
             },
           ]}
         />

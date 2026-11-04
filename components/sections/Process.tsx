@@ -146,7 +146,8 @@ export function Process() {
             id="process-titre"
             className="font-mono text-xs tracking-[0.17em] text-muted uppercase"
           >
-            {"// comment on travaille ensemble"}
+            <span aria-hidden="true" className="before:content-['//_']" />
+            comment on travaille ensemble
           </h2>
           <button
             type="button"

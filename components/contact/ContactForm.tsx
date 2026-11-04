@@ -4,7 +4,13 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { sendContact, type ContactField, type ContactState } from "@/app/actions/contact";
 import { ArrowRightIcon, CheckIcon, ChevronDownIcon } from "@/components/ui/icons";
-import { contactMessages, fieldHints, honeypotField, projectTypes } from "@/content/contact";
+import {
+  contactMessages,
+  fieldHints,
+  honeypotField,
+  projectTypes,
+  responseNote,
+} from "@/content/contact";
 import { cx } from "@/lib/cx";
 
 // 16 px sur mobile : en dessous, Safari sur iPhone zoome la page dès qu'on touche un champ.
@@ -37,7 +43,10 @@ export function ContactForm() {
       action={formAction}
       className="@container flex flex-1 flex-col gap-5 rounded-3xl border border-line bg-surface p-8"
     >
-      <p className="text-[1.0625rem] font-semibold">Ou écris-moi</p>
+      <div className="flex flex-col gap-1">
+        <p className="text-[1.0625rem] font-semibold">Ou écris-moi</p>
+        <p className="text-sm text-muted">{responseNote}</p>
+      </div>
 
       {/* Nom et e-mail côte à côte seulement si le formulaire est assez large. */}
       <div className="grid gap-3.5 @[28rem]:grid-cols-2">

@@ -9,6 +9,11 @@ type SectionHeadingProps = {
    * géant, qui reste purement décoratif.
    */
   subtitle?: string;
+  /**
+   * Titre lu par les lecteurs d'écran et les robots quand le titre géant est un clin d'œil
+   * (« Hello World. ») : rien ne change à l'écran.
+   */
+  srTitle?: string;
   className?: string;
   children: ReactNode;
 };
@@ -16,12 +21,33 @@ type SectionHeadingProps = {
 const titleClass = "font-display text-section font-black uppercase";
 
 /** Numéro de section en Geist Mono rose + titre géant en Big Shoulders, alignés en bas. */
-export function SectionHeading({ num, id, subtitle, className, children }: SectionHeadingProps) {
+export function SectionHeading({
+  num,
+  id,
+  subtitle,
+  srTitle,
+  className,
+  children,
+}: SectionHeadingProps) {
   const number = (
     <span className="font-mono text-sm text-pink" aria-hidden="true">
       {num}
     </span>
   );
+
+  if (srTitle) {
+    return (
+      <div className={cx("flex items-baseline gap-[18px]", className)}>
+        {number}
+        <p aria-hidden="true" className={titleClass}>
+          {children}
+        </p>
+        <h2 id={id} className="sr-only">
+          {srTitle}
+        </h2>
+      </div>
+    );
+  }
 
   if (!subtitle) {
     return (

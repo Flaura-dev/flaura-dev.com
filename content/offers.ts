@@ -86,7 +86,7 @@ export function planCardRows(plan: Plan): CardRow[] {
 export const includedEverywhere = [
   "Design sur mesure",
   "Adapté au mobile",
-  "Bases SEO / GEO",
+  "Référencement de base",
   "Mise en ligne",
   "Site à ton nom",
 ];

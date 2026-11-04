@@ -15,7 +15,7 @@ export function About() {
   return (
     <section id="apropos" aria-labelledby="apropos-titre" className="pt-[120px] pb-24">
       <Container className="flex flex-col gap-8">
-        <SectionHeading num="01" id="apropos-titre">
+        <SectionHeading num="01" id="apropos-titre" srTitle="À propos de Laura Fontaine">
           Hello World<span className="text-pink">.</span>
         </SectionHeading>
 
@@ -24,7 +24,7 @@ export function About() {
           <div className="relative min-h-[380px] overflow-hidden rounded-3xl md:row-span-2">
             <Image
               src={photo}
-              alt="Laura concentrée devant son ordinateur"
+              alt="Laura Fontaine concentrée devant son ordinateur"
               fill
               sizes="(min-width: 900px) 300px, 100vw"
               className="object-cover object-[60%_30%] [filter:grayscale(1)_contrast(1.25)_brightness(1.1)]"

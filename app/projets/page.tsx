@@ -5,13 +5,13 @@ import { ProjectsBrowser } from "@/components/projects/ProjectsBrowser";
 import { Container } from "@/components/ui/Container";
 import { ArrowLeftIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { projectsPage } from "@/content/projects";
 import { pageUrls } from "@/lib/metadata";
 import { projectsStructuredData } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "Projets : sites vitrines et créations web",
-  description:
-    "Les projets de Flaura.dev en détail : le point de départ, ce que j’ai fait et ce que ça a changé, avec le témoignage de la cliente.",
+  description: projectsPage.description,
   ...pageUrls("/projets"),
 };
 
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
  */
 export default function ProjectsPage() {
   return (
-    <main id="contenu" className="pt-8 pb-24">
+    <main id="contenu" tabIndex={-1} className="pt-8 pb-24 outline-none">
       <Container className="flex flex-col gap-8">
         <Link
           href="/#projets"
@@ -33,14 +33,11 @@ export default function ProjectsPage() {
 
         <div className="flex flex-wrap items-end justify-between gap-6">
           <h1 className="font-display text-section font-black uppercase">Projets</h1>
-          <p className="max-w-[400px] leading-[1.6] text-muted">
-            Les sites et applications que j’ai conçus et développés. Pour chacun&nbsp;: le point de
-            départ, ce que j’ai fait et ce que ça a changé.
-          </p>
+          <p className="max-w-[400px] leading-[1.6] text-muted">{projectsPage.intro}</p>
         </div>
 
         {/* Titre de la liste pour les lecteurs d'écran : les cartes sont en h3. */}
-        <h2 className="sr-only">Sites vitrines, refontes et créations web</h2>
+        <h2 className="sr-only">{projectsPage.listTitle}</h2>
         <ProjectsBrowser />
         <CtaBanner />
       </Container>

@@ -34,7 +34,7 @@ export function Hero() {
               />
               <Image
                 src={heroPhoto}
-                alt="Laura, développeuse web"
+                alt="Laura Fontaine, développeuse web freelance"
                 sizes="(min-width: 1280px) 540px, (min-width: 640px) 480px, 82vw"
                 loading="eager"
                 fetchPriority="high"

@@ -42,13 +42,21 @@ export function BeforeAfter({ before, after, label }: BeforeAfterProps) {
         className="peer absolute inset-0 z-10 m-0 size-full cursor-ew-resize touch-pan-y opacity-0"
       />
 
-      <span className="pointer-events-none absolute bottom-3 left-3.5 rounded-full bg-bg px-2.5 py-1 font-mono text-[0.6875rem] text-fg">
+      {/* Repères visuels : le curseur porte déjà son nom pour les lecteurs d'écran. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-3 left-3.5 rounded-full bg-bg px-2.5 py-1 font-mono text-[0.6875rem] text-fg"
+      >
         avant
       </span>
-      <span className="pointer-events-none absolute right-3.5 bottom-3 rounded-full bg-[#C2457A] px-2.5 py-1 font-mono text-[0.6875rem] text-white">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute right-3.5 bottom-3 rounded-full bg-[#C2457A] px-2.5 py-1 font-mono text-[0.6875rem] text-white"
+      >
         après
       </span>
       <span
+        aria-hidden="true"
         className={cx(
           "pointer-events-none absolute top-4 right-3.5 flex items-center gap-1.5 rounded-full bg-bg px-2.5 py-1 font-mono text-[0.6875rem] text-fg transition-opacity duration-300",
           used && "opacity-0",

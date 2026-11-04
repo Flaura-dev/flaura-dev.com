@@ -32,7 +32,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: "Combien coûte la refonte d’un site internet existant ?",
-    a: `Une refonte reprend le tarif de l’offre qui correspond à ton futur site (à partir de ${euros(essentiel)}, ${euros(visibilite)} ou ${euros(pro)} HT selon le nombre de pages), auquel s’ajoute un module à partir de ${euros(redesign.price.amount)} HT pour l’audit, la migration et les redirections. Je commence par repérer ce qui coince sur ton site actuel : lenteur, affichage sur mobile, design daté, peu de demandes de contact. Puis je reconstruis en gardant ce qui marche, y compris le référencement que tu as déjà acquis : tes anciennes adresses sont redirigées vers les nouvelles pour que Google ne perde pas ta trace.`,
+    a: `Une refonte reprend le tarif de l’offre qui correspond à ton futur site (à partir de ${euros(essentiel)}, ${euros(visibilite)} ou ${euros(pro)} HT selon le nombre de pages), auquel s’ajoute un module à partir de ${euros(redesign.price.amount)} HT pour l’audit, la migration et les redirections. Je commence par repérer ce qui coince sur ton site actuel : lenteur, affichage sur mobile, design daté, peu de demandes de contact. Puis je reconstruis en gardant ce qui marche, y compris le référencement que tu as déjà acquis : tes anciennes adresses sont redirigées vers les nouvelles pour que Google ne perde pas ta trace. Par exemple, la refonte d’un site jusqu’à 5 pages démarre à ${euros(visibilite + redesign.price.amount)} HT.`,
   },
   {
     q: "Combien de temps faut-il pour créer un site internet ?",
@@ -48,6 +48,6 @@ export const faq: FaqItem[] = [
   },
   {
     q: "Où intervient Flaura.dev ?",
-    a: `Je suis développeuse web freelance dans le ${site.address.region} et je travaille à distance, en visio ou par e-mail. J’accompagne aussi bien les entreprises du Var et de la région PACA (Toulon, Brignoles, Aix-en-Provence, Marseille…) que celles du reste de la France, et plus largement les francophones du monde entier. Je travaille uniquement avec des professionnels : indépendants, artisans, commerçants, TPE et PME.`,
+    a: `Je suis ${site.owner.givenName} ${site.owner.familyName}, développeuse web freelance dans le ${site.address.region}, et je travaille à distance, en visio ou par e-mail. J’accompagne aussi bien les entreprises du Var et de la région PACA (Toulon, Brignoles, Aix-en-Provence, Marseille…) que celles du reste de la France, et plus largement les francophones du monde entier. Je travaille uniquement avec des professionnels : indépendants, artisans, commerçants, TPE et PME.`,
   },
 ];

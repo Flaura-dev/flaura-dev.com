@@ -14,9 +14,16 @@ import { ScrollingShot } from "./ScrollingShot";
  * Sans comparateur, la capture couvre toute la page et défile (ScrollingShot).
  */
 
-type ShotProps = { src: StaticImageData; alt: string; eager: boolean; sizes: string };
+type ShotProps = {
+  src: StaticImageData;
+  alt: string;
+  eager: boolean;
+  sizes: string;
+  /** Priorité réseau haute : seulement pour le plus grand élément affiché (LCP). */
+  priority?: boolean;
+};
 
-function Shot({ src, alt, eager, sizes }: ShotProps) {
+function Shot({ src, alt, eager, sizes, priority = true }: ShotProps) {
   return (
     <Image
       src={src}
@@ -24,7 +31,7 @@ function Shot({ src, alt, eager, sizes }: ShotProps) {
       fill
       sizes={sizes}
       loading={eager ? "eager" : undefined}
-      fetchPriority={eager ? "high" : undefined}
+      fetchPriority={eager && priority ? "high" : undefined}
       className="object-cover object-top"
     />
   );
@@ -55,6 +62,7 @@ export function ProjectVisual({ project, eager, sizes = SIZES }: ProjectVisualPr
               <Shot
                 src={leaAfter}
                 eager={eager}
+                priority={false}
                 sizes={sizes}
                 alt="Nouveau site de Léa Grondin : un menu, son titre de bras droit pédagogique des formateurs et sa photo devant son ordinateur"
               />

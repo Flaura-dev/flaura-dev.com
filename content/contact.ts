@@ -25,6 +25,9 @@ export const fieldHints = {
   message: "Ton message doit faire au moins 10 caractères.",
 };
 
+/** Délai de réponse, annoncé au-dessus du formulaire. */
+export const responseNote = "Je te réponds sous 48 h.";
+
 export const contactMessages = {
   sent: "Merci ! Je reviens vers toi sous 48 h.",
   invalid: "Vérifie les champs signalés, puis renvoie ton message.",

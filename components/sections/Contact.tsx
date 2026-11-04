@@ -8,7 +8,11 @@ export function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-titre" className="py-24">
       <Container className="flex flex-col gap-9">
-        <SectionHeading num="05" id="contact-titre">
+        <SectionHeading
+          num="05"
+          id="contact-titre"
+          srTitle="Contact : réserver un café virtuel ou écrire à Laura Fontaine"
+        >
           <span className="whitespace-nowrap text-pink">
             Parlons<span className="text-fg">‑en.</span>
           </span>

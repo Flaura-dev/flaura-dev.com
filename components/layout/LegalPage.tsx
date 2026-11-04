@@ -28,7 +28,7 @@ type LegalPageProps = {
 /** Gabarit des pages légales : pages et sommaire à gauche (en haut sur mobile), texte à droite. */
 export function LegalPage({ path, title, subtitle, meta, intro, sections }: LegalPageProps) {
   return (
-    <main id="contenu" className="pt-8 pb-24">
+    <main id="contenu" tabIndex={-1} className="pt-8 pb-24 outline-none">
       <Container className="flex flex-col gap-8">
         <Link
           href="/"

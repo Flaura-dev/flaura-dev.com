@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 /** Page 404 de tout le site (adresse inconnue). Next y ajoute lui-même noindex et le statut 404. */
 export default function NotFound() {
   return (
-    <main id="contenu" className="pt-16 pb-28">
+    <main id="contenu" tabIndex={-1} className="pt-16 pb-28 outline-none">
       <Container className="flex flex-col items-start gap-6">
         <p
           aria-hidden="true"

@@ -71,7 +71,9 @@ export const projects: Project[] = [
         },
         {
           title: "Ce que ça a changé",
-          paragraphs: ["Son offre est plus claire, et son site lui ressemble. Elle en parle mieux que moi :"],
+          paragraphs: [
+            "Son offre est plus claire, et son site lui ressemble. Elle en parle mieux que moi :",
+          ],
         },
       ],
     },
@@ -117,6 +119,16 @@ export const projects: Project[] = [
     },
   },
 ];
+
+/** Textes de la page /projets, repris par ses métadonnées et ses données structurées. */
+export const projectsPage = {
+  intro:
+    "Je suis Laura Fontaine, et voici les sites et applications que j’ai conçus et développés sous le nom Flaura.dev. Pour chacun : le point de départ, ce que j’ai fait et ce que ça a changé.",
+  description:
+    "Les projets de Flaura.dev en détail : le point de départ, ce que j’ai fait et ce que ça a changé, avec le témoignage de la cliente.",
+  /** Titre de la liste, lu par les lecteurs d'écran et les robots (les cartes sont en h3). */
+  listTitle: "Sites vitrines, refontes et créations web",
+};
 
 /** Cartes affichées sur l'accueil ; les autres sont sur /projets. */
 export const HOME_PROJECTS_COUNT = 3;

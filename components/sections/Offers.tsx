@@ -252,9 +252,10 @@ function CardTitle({
       id={id}
       className="font-display-auto text-[2.25rem] leading-[1.1] font-black text-balance uppercase"
     >
-      <span aria-hidden="true" className={inverted ? "opacity-60" : "text-pink"}>
-        {"// "}
-      </span>
+      <span
+        aria-hidden="true"
+        className={cx("before:content-['//_']", inverted ? "opacity-60" : "text-pink")}
+      />
       {children}
     </h3>
   );

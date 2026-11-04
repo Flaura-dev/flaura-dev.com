@@ -1,6 +1,7 @@
 import { faq } from "@/content/faq";
+import { legal } from "@/content/legal";
 import { type CardRow, maintenancePlans, planCardRows, plans, redesign } from "@/content/offers";
-import { type Project, projects } from "@/content/projects";
+import { type Project, projects, projectsPage } from "@/content/projects";
 import { site } from "@/content/site";
 import type { Price } from "@/lib/price";
 
@@ -56,6 +57,13 @@ function business(withCatalog: boolean) {
     "@type": "ProfessionalService",
     "@id": ids.business,
     name: site.name,
+    // Entreprise individuelle : la dénomination légale est le nom de l'entrepreneuse.
+    legalName: `${legal.name} EI`,
+    identifier: {
+      "@type": "PropertyValue",
+      propertyID: "SIREN",
+      value: legal.siren.replace(/\s/g, ""),
+    },
     url: url(),
     description: site.description,
     logo: { "@type": "ImageObject", url: logo, width: 192, height: 192 },
@@ -199,6 +207,7 @@ const homePage = {
   name: site.title,
   description: site.description,
   inLanguage: "fr-FR",
+  dateModified: site.updatedAt,
   isPartOf: { "@id": ids.website },
   about: { "@id": ids.business },
 };
@@ -254,7 +263,9 @@ export const projectsStructuredData = {
       "@id": ids.projectsPage,
       url: url("/projets"),
       name: "Projets",
+      description: projectsPage.description,
       inLanguage: "fr-FR",
+      dateModified: site.updatedAt,
       isPartOf: { "@id": ids.website },
       breadcrumb: { "@id": ids.breadcrumb },
       mainEntity: { "@id": ids.projectsList },
@@ -270,6 +281,7 @@ export const projectsStructuredData = {
     {
       "@type": "ItemList",
       "@id": ids.projectsList,
+      name: projectsPage.listTitle,
       numberOfItems: projects.length,
       itemListElement: projects.map((project, index) => ({
         "@type": "ListItem",

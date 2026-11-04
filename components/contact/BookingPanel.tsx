@@ -26,7 +26,7 @@ export function BookingPanel() {
         <div className="flex flex-col gap-4 border-b border-line p-7 @[38rem]:border-r @[38rem]:border-b-0 @[38rem]:pb-0">
           <Image
             src={portrait}
-            alt="Laura"
+            alt="Laura Fontaine"
             width={56}
             height={56}
             className="size-14 self-center rounded-full border-2 border-pink object-cover"

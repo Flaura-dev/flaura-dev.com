@@ -94,6 +94,12 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
         </div>
       </div>
 
+      {/* Annonce le résultat du filtre aux lecteurs d'écran. */}
+      <p role="status" className="sr-only">
+        {active
+          ? `${visible.length} projet${visible.length > 1 ? "s" : ""} affiché${visible.length > 1 ? "s" : ""}`
+          : ""}
+      </p>
       {visible.length > 0 ? (
         <div className="flex flex-col gap-10">
           {visible.map((project, index) => (

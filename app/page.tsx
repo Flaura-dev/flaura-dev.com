@@ -14,7 +14,7 @@ export const metadata: Metadata = pageUrls("/");
 
 export default function Home() {
   return (
-    <main id="contenu">
+    <main id="contenu" tabIndex={-1} className="outline-none">
       <Hero />
       <Process />
       <About />

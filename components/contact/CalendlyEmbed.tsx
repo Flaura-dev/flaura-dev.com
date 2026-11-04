@@ -42,6 +42,38 @@ function buildEmbedSrc(url: string) {
   return src.toString();
 }
 
+/**
+ * Forme grisée de l'étape « choisir un jour » de Calendly (titre, mois, jours, fuseau), aux
+ * mêmes hauteurs que le vrai calendrier, sur téléphone comme sur ordinateur.
+ */
+function CalendarSkeleton() {
+  return (
+    <div role="status" className="absolute inset-0 flex flex-col items-center px-3 pt-[34px]">
+      <span className="sr-only">Chargement des créneaux…</span>
+      <i aria-hidden="true" className="skeleton h-4 w-[180px] max-w-[70%] rounded-full" />
+      <div aria-hidden="true" className="mt-[50px] flex h-7 w-[204px] items-center justify-between">
+        <i className="skeleton size-5 rounded-full" />
+        <i className="skeleton h-3 w-[100px] rounded-full" />
+        <i className="skeleton size-5 rounded-full" />
+      </div>
+      <div aria-hidden="true" className="w-full max-w-[316px]">
+        <div className="mt-[27px] grid grid-cols-7 justify-items-center">
+          {Array.from({ length: 7 }, (_, i) => (
+            <i key={i} className="skeleton h-2 w-6 rounded-full" />
+          ))}
+        </div>
+        <div className="mt-1 grid auto-rows-[3rem] grid-cols-7 place-items-center">
+          {Array.from({ length: 35 }, (_, i) => (
+            <i key={i} className="skeleton aspect-square w-[min(2.5rem,88%)] rounded-full" />
+          ))}
+        </div>
+        <i className="skeleton mt-[53px] block h-3 w-[110px] rounded-full" />
+        <i className="skeleton mt-[15px] block h-3 w-[220px] max-w-full rounded-full" />
+      </div>
+    </div>
+  );
+}
+
 /** Chargé seulement au clic : aucune requête ni cookie tiers avant, donc pas de bandeau cookies. */
 export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
   const [src, setSrc] = useState<string | null>(null);
@@ -76,8 +108,10 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
     return () => window.removeEventListener("message", onMessage);
   }, [src]);
 
-  const visibleHeight =
-    height <= CALENDAR_STEP_REPORTED
+  // Pendant l'attente, la hauteur du calendrier : rien ne bouge quand il apparaît.
+  const visibleHeight = !ready
+    ? CALENDAR_STEP_VISIBLE
+    : height <= CALENDAR_STEP_REPORTED
       ? Math.min(height, CALENDAR_STEP_VISIBLE)
       : height - BOTTOM_CLIP;
 
@@ -89,15 +123,7 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
         style={{ height: visibleHeight }}
         className="relative overflow-hidden rounded-2xl outline-none motion-safe:transition-[height] motion-safe:duration-300 motion-safe:ease-out"
       >
-        {!ready && (
-          <div
-            role="status"
-            className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line text-sm text-muted"
-          >
-            <CalendarIcon size={32} className="text-pink motion-safe:animate-pulse" />
-            Chargement des créneaux…
-          </div>
-        )}
+        {!ready && <CalendarSkeleton />}
         <iframe
           ref={iframeRef}
           src={src}

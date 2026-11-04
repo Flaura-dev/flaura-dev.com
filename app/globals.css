@@ -108,6 +108,42 @@
   }
 }
 
+/*
+ * Forme grisée d'un contenu en cours de chargement, traversée par un reflet (déplacement seul,
+ * rien à repeindre). Mouvement réduit : forme fixe, sans reflet.
+ */
+@utility skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: color-mix(in oklab, var(--line) 85%, transparent);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      100deg,
+      transparent 20%,
+      color-mix(in oklab, var(--fg) 8%, transparent) 50%,
+      transparent 80%
+    );
+    translate: -100% 0;
+    animation: skeleton-shine 1.4s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      content: none;
+    }
+  }
+}
+
+@keyframes skeleton-shine {
+  to {
+    translate: 100% 0;
+  }
+}
+
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);

@@ -11,7 +11,10 @@ import {
 import { site } from "@/content/site";
 import { CalendlyEmbed } from "./CalendlyEmbed";
 
-/* Café virtuel : présentation à gauche, Calendly à droite (requête de conteneur). */
+/*
+ * Café virtuel : présentation à gauche, Calendly à droite (requête de conteneur). Sur une
+ * colonne, le lien LinkedIn passe après le calendrier.
+ */
 export function BookingPanel() {
   return (
     <div
@@ -19,8 +22,8 @@ export function BookingPanel() {
       aria-label="Réserver un café virtuel"
       className="@container overflow-hidden rounded-3xl border border-line bg-surface"
     >
-      <div className="grid h-full @[38rem]:grid-cols-[minmax(250px,1fr)_2fr]">
-        <div className="flex flex-col gap-4 border-b border-line p-7 @[38rem]:border-r @[38rem]:border-b-0">
+      <div className="grid h-full @[38rem]:grid-cols-[minmax(250px,1fr)_2fr] @[38rem]:grid-rows-[1fr_auto]">
+        <div className="flex flex-col gap-4 border-b border-line p-7 @[38rem]:border-r @[38rem]:border-b-0 @[38rem]:pb-0">
           <Image
             src={portrait}
             alt="Laura"
@@ -51,11 +54,18 @@ export function BookingPanel() {
             On parle de ton projet et de tes objectifs, et je te dis franchement si je suis la bonne
             personne pour t’aider.
           </p>
+        </div>
+        {/* Calendrier centré en hauteur dans sa colonne. */}
+        <div className="flex flex-col justify-center p-7 @[38rem]:col-start-2 @[38rem]:row-span-2 @[38rem]:row-start-1">
+          <CalendlyEmbed url={site.calendlyUrl} />
+        </div>
+        {/* Sur deux colonnes, en bas de la présentation. */}
+        <div className="px-7 pb-7 @[38rem]:border-r @[38rem]:border-line @[38rem]:pt-4">
           <a
             href={site.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-auto flex min-h-11 press items-center justify-between gap-3 rounded-2xl border border-line px-4 py-3 text-sm font-semibold text-fg [--press-scale:0.985] hover:border-pink"
+            className="flex min-h-11 press items-center justify-between gap-3 rounded-2xl border border-line px-4 py-3 text-sm font-semibold text-fg [--press-scale:0.985] hover:border-pink"
           >
             <span className="flex items-center gap-2.5">
               <LinkedInIcon className="shrink-0 text-pink" />
@@ -64,10 +74,6 @@ export function BookingPanel() {
             </span>
             <ArrowUpRightIcon size={14} className="shrink-0 text-pink" />
           </a>
-        </div>
-        {/* Calendrier centré en hauteur dans sa colonne. */}
-        <div className="flex flex-col justify-center p-7">
-          <CalendlyEmbed url={site.calendlyUrl} />
         </div>
       </div>
     </div>

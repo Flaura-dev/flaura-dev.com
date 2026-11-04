@@ -85,10 +85,10 @@ export function planCardRows(plan: Plan): CardRow[] {
 /** Inclus dans les trois formules. */
 export const includedEverywhere = [
   "Design sur mesure",
-  "Adapté au mobile",
+  "Adapté à tous les écrans",
   "Référencement de base",
   "Mise en ligne",
-  "Site à ton nom",
+  "Site web à ton nom",
 ];
 
 /** Module refonte : 4e carte, à droite des formules. */

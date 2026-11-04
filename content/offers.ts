@@ -33,7 +33,7 @@ export const plans: Plan[] = [
     id: "essentiel",
     name: "Essentiel",
     pitch:
-      "Un site vitrine d’une page pour présenter ton activité clairement et donner envie de te contacter.",
+      "Création d’un site vitrine d’une page pour présenter ton activité clairement et donner envie de te contacter.",
     price: { amount: 750, from: true },
     rows: {
       pages: "1 page",
@@ -48,7 +48,7 @@ export const plans: Plan[] = [
     id: "visibilite",
     name: "Visibilité",
     pitch:
-      "Un site vitrine avec assez de pages pour que Google comprenne ce que tu fais, et que tes clients aient envie de te choisir.",
+      "Création d’un site vitrine avec assez de pages pour que Google comprenne ce que tu fais, et que tes clients aient envie de te choisir.",
     price: { amount: 1200, from: true },
     recommended: true,
     rows: {
@@ -96,7 +96,7 @@ export const redesign = {
   id: "refonte",
   name: "Refonte",
   pitch:
-    "Tu as déjà un site ? Ajoute ce module à ta formule : je garde ce qui marche, y compris ton référencement.",
+    "Tu as déjà un site ? Ajoute ce module à ta formule : je fais la refonte de ton site, je garde ce qui marche.",
   rows: [
     { label: "Audit", value: "Ce qui coince sur ton site actuel" },
     { label: "Migration", value: "Tes contenus repris sur le nouveau site" },

@@ -54,7 +54,7 @@ const sections: LegalSection[] = [
     content: (
       <ul>
         <li>
-          <strong>Prestataire</strong>&nbsp;: {legal.name}, Entrepreneur individuel (EI),
+          <strong>Prestataire</strong>&nbsp;: {legal.name}, entrepreneur individuel (EI),
           micro-entreprise, Flaura.dev.
         </li>
         <li>
@@ -230,8 +230,8 @@ const sections: LegalSection[] = [
         </p>
         <p>
           En cas de retard de paiement, des pénalités sont dues de plein droit, sans rappel
-          préalable, au taux de la Banque centrale européenne à son opération de refinancement la
-          plus récente majoré de dix points. S’y ajoute une indemnité forfaitaire pour frais de
+          préalable, au taux appliqué par la Banque centrale européenne à son opération de
+          refinancement la plus récente majoré de dix points. S’y ajoute une indemnité forfaitaire pour frais de
           recouvrement de 40&nbsp;€ par facture (articles L.&nbsp;441-10 et D.&nbsp;441-5 du Code de
           commerce).
         </p>

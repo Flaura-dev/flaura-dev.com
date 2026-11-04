@@ -147,6 +147,7 @@
   --animate-sakura-spin: sakura-spin 0.9s cubic-bezier(0.5, 0, 0.3, 1) 1;
   --animate-dispo-pulse: dispo-pulse 2.4s ease-in-out infinite;
   --animate-dispo-ring: dispo-ring 2.4s ease-out infinite;
+  --animate-offers-nudge: offers-nudge 1.4s cubic-bezier(0.45, 0, 0.25, 1) 1;
 
   @keyframes sakura-spin {
     to {
@@ -162,6 +163,21 @@
     }
     50% {
       opacity: 0.45;
+    }
+  }
+
+  /* Carrousel des offres : les cartes glissent un peu à gauche puis à droite, pour montrer
+     qu'il y en a des deux côtés. */
+  @keyframes offers-nudge {
+    0%,
+    100% {
+      translate: 0;
+    }
+    35% {
+      translate: -2.5rem;
+    }
+    70% {
+      translate: 1.5rem;
     }
   }
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { CheckIcon } from "@/components/ui/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { OffersCarousel } from "./OffersCarousel";
 import {
   type CardRow,
   includedEverywhere,
@@ -20,7 +21,8 @@ import { euros, type Price, VAT_RATE, withVat } from "@/lib/price";
  * content/offers.ts, comme les données structurées.
  *
  * À partir de 1280 px, les lignes s'alignent d'une carte à l'autre (subgrid) et la carte
- * recommandée déborde de 16 px. En dessous : deux cartes par ligne, puis une.
+ * recommandée déborde de 16 px. En dessous : deux cartes par ligne. Sous 900 px : carrousel
+ * (OffersCarousel), une carte à la fois, les voisines visibles des deux côtés.
  */
 
 // Rangées partagées par les cartes : en-tête, prix, une par ligne de planRows, bouton.
@@ -39,9 +41,16 @@ export function Offers() {
           Offres
         </SectionHeading>
 
-        <ul
+        {/* Carrousel : déborde du conteneur jusqu'aux bords de l'écran ; la marge intérieure
+            (2 rem de carte voisine visible + 0,75 rem d'écart) centre la carte en cours. */}
+        <OffersCarousel
+          items={[
+            ...plans.map((plan) => ({ id: `offre-${plan.id}`, name: plan.name })),
+            { id: redesign.id, name: redesign.name },
+          ]}
+          startId={`offre-${(plans.find((plan) => plan.recommended) ?? plans[0]).id}`}
           style={gridRows}
-          className="grid gap-x-4 gap-y-6 md:grid-cols-2 xl:grid-cols-4 xl:gap-y-0 xl:py-4"
+          className="-mx-5 flex snap-x snap-mandatory [scrollbar-width:none] gap-3 overflow-x-auto overscroll-x-contain px-11 pt-4 pb-8 md:mx-0 md:grid md:grid-cols-2 md:gap-x-4 md:gap-y-6 md:overflow-visible md:p-0 xl:grid-cols-4 xl:gap-y-0 xl:py-4 [&::-webkit-scrollbar]:hidden"
         >
           {plans.map((plan) => (
             <OfferCard
@@ -64,7 +73,7 @@ export function Offers() {
             addon
             cta="Ajouter la refonte"
           />
-        </ul>
+        </OffersCarousel>
 
         <div className="flex flex-col gap-3">
           <p className="font-mono text-xs leading-5 text-muted">Inclus dans toutes les formules</p>
@@ -124,9 +133,10 @@ function OfferCard({
     <li
       id={id}
       className={cx(
-        "relative flex flex-col rounded-3xl p-7 xl:row-span-(--card-rows) xl:grid xl:grid-rows-subgrid",
+        "relative flex w-full shrink-0 snap-center snap-always flex-col rounded-3xl p-6 motion-safe:in-data-[nudge=true]:animate-offers-nudge md:w-auto md:p-7 xl:row-span-(--card-rows) xl:grid xl:grid-rows-subgrid",
+        // Ombre plus courte dans le carrousel, qui la couperait.
         recommended
-          ? "bg-pink text-bg shadow-[0_24px_60px_-24px_var(--pink)] xl:-my-4 xl:py-11"
+          ? "bg-pink text-bg shadow-[0_12px_32px_-16px_var(--pink)] md:shadow-[0_24px_60px_-24px_var(--pink)] xl:-my-4 xl:py-11"
           : "border border-line bg-surface",
       )}
     >

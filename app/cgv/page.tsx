@@ -3,15 +3,14 @@ import Link from "next/link";
 import { LegalFacts, LegalPage, Todo, type LegalSection } from "@/components/layout/LegalPage";
 import { legal } from "@/content/legal";
 import { site } from "@/content/site";
-import { pageUrls } from "@/lib/metadata";
+import { legalRobots, pageUrls } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Conditions générales de vente",
   description:
     "Conditions générales de vente de Flaura.dev pour la création et la refonte de sites internet, réservées aux clients professionnels : devis, paiement, livraison, garantie et propriété intellectuelle.",
   ...pageUrls("/cgv"),
-  // Des champs restent à compléter : à indexer une fois remplis.
-  robots: { index: false },
+  robots: legalRobots,
 };
 
 const mail = <a href={`mailto:${site.email}`}>{site.email}</a>;

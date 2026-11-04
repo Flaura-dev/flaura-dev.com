@@ -17,6 +17,12 @@ export const openGraphBase = {
 } as const;
 
 /**
+ * Pages légales : lisibles par tous, mais hors des résultats de recherche, car elles affichent
+ * l'adresse de l'éditrice. Les liens restent suivis. Ces pages restent hors du sitemap.
+ */
+export const legalRobots: Metadata["robots"] = { index: false, follow: true };
+
+/**
  * Canonical et og:url propres à une page (chemin relatif à `metadataBase`).
  * À déclarer dans chaque page, jamais dans le layout : toutes les pages en hériteraient.
  */

@@ -8,13 +8,14 @@ import {
 } from "@/components/layout/LegalPage";
 import { legal } from "@/content/legal";
 import { site } from "@/content/site";
-import { pageUrls } from "@/lib/metadata";
+import { legalRobots, pageUrls } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Politique de confidentialité",
   description:
     "Données personnelles collectées par Flaura.dev via le formulaire de contact et la prise de rendez-vous : finalités, destinataires, conservation, cookies et droits.",
   ...pageUrls("/confidentialite"),
+  robots: legalRobots,
 };
 
 const mail = <a href={`mailto:${site.email}`}>{site.email}</a>;

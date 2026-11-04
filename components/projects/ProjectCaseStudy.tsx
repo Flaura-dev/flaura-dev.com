@@ -44,7 +44,7 @@ export function ProjectCaseStudy({ project, eager = false, children }: ProjectCa
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Voir le site en ligne : ${project.title} (nouvel onglet)`}
+                aria-label={`Voir le site en ligne : ${project.title} (nouvel onglet)`}
                 className="-my-1.5 inline-flex size-11 shrink-0 press items-center justify-center rounded-full border border-pink text-pink hover:bg-pink hover:text-bg"
               >
                 <ArrowUpRightIcon size={16} />

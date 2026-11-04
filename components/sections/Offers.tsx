@@ -91,7 +91,7 @@ export function Offers() {
               compris&nbsp;: ils sont à ton nom et à ta charge.
             </p>
             <p>
-              Demandes particulières non comprises, elles sont chiffrées en supplément sur le devis.
+              Demandes particulières non comprises&nbsp;: elles sont chiffrées en supplément sur le devis.
               N’hésite pas à m’en faire part dès le début.
             </p>
           </div>

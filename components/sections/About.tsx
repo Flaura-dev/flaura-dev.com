@@ -39,7 +39,7 @@ export function About() {
 
           <div className="flex flex-col justify-between gap-[18px] rounded-3xl border border-line bg-surface p-8 md:col-span-2">
             <p className="text-[1.875rem] leading-[1.2] font-medium tracking-[-0.017em]">
-              Moi c’est Laura. Sur le web, c’est{" "}
+              Moi, c’est Laura. Sur le web, c’est{" "}
               <span className="whitespace-nowrap">
                 <span className="font-display text-[2.875rem] leading-none font-black uppercase">
                   Flaura

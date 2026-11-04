@@ -55,7 +55,7 @@ export function ProjectVisual({ project, eager, sizes = SIZES }: ProjectVisualPr
                 src={leaBefore}
                 eager={eager}
                 sizes={sizes}
-                alt="Ancien site de Léa Grondin : une seule page, un grand titre centré sur fond blanc, sans photo"
+                alt="Ancien site de Léa Grondin : une seule page, un grand titre centré sur fond blanc, sans photo"
               />
             }
             after={
@@ -64,7 +64,7 @@ export function ProjectVisual({ project, eager, sizes = SIZES }: ProjectVisualPr
                 eager={eager}
                 priority={false}
                 sizes={sizes}
-                alt="Nouveau site de Léa Grondin : un menu, son titre de bras droit pédagogique des formateurs et sa photo devant son ordinateur"
+                alt="Nouveau site de Léa Grondin : un menu, son titre de bras droit pédagogique des formateurs et sa photo devant son ordinateur"
               />
             }
             label="Comparer l’ancien et le nouveau site de Léa Grondin"

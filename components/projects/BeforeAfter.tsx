@@ -38,7 +38,7 @@ export function BeforeAfter({ before, after, label }: BeforeAfterProps) {
           setUsed(true);
         }}
         aria-label={label}
-        aria-valuetext={`${100 - position} % du nouveau site visible`}
+        aria-valuetext={`${100 - position} % du nouveau site visible`}
         className="peer absolute inset-0 z-10 m-0 size-full cursor-ew-resize touch-pan-y opacity-0"
       />
 

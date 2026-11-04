@@ -11,7 +11,7 @@ export function Contact() {
         <SectionHeading
           num="05"
           id="contact-titre"
-          srTitle="Contact : réserver un café virtuel ou écrire à Laura Fontaine"
+          srTitle="Contact : réserver un café virtuel ou écrire à Laura Fontaine"
         >
           <span className="whitespace-nowrap text-pink">
             Parlons<span className="text-fg">‑en.</span>

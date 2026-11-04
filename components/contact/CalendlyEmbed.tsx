@@ -127,7 +127,7 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
         <iframe
           ref={iframeRef}
           src={src}
-          title="Calendly : choisir un créneau pour le café virtuel"
+          title="Calendly : choisir un créneau pour le café virtuel"
           // Chaque étape de Calendly peut recharger le cadre : un seul minuteur à la fois.
           onLoad={() => {
             window.clearTimeout(revealTimer.current);

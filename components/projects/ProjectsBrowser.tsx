@@ -89,7 +89,7 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
           </button>
           <span role="status" className="text-pink">
             {copy === "copied" && "lien copié"}
-            {copy === "failed" && "copie impossible : copie l’adresse à la main"}
+            {copy === "failed" && "copie impossible : copie l’adresse à la main"}
           </span>
         </div>
       </div>

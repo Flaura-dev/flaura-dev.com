@@ -26,7 +26,7 @@ export const fieldHints = {
 };
 
 /** Délai de réponse, annoncé au-dessus du formulaire. */
-export const responseNote = "Je te réponds sous 48 h.";
+export const responseNote = "Je te réponds sous 48 h.";
 
 export const contactMessages = {
   sent: "Merci ! Je reviens vers toi sous 48 h.",

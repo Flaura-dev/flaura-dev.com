@@ -41,7 +41,7 @@ export const projects: Project[] = [
     categories: ["site-vitrine", "refonte"],
     visual: "lea",
     problem:
-      "un one-page créé sur Lovable (IA), trop long pour comprendre vite ce que propose cette consultante business et on ne retrouvait pas la signature de Léa",
+      "un one-page créé sur Lovable (IA), trop long pour comprendre vite ce que propose cette consultante business, et où l’on ne retrouvait pas la signature de Léa",
     solution:
       "un site vitrine de plusieurs pages, rapide et agréable sur téléphone comme sur ordinateur, structuré pour être bien référencé sur Google et les IA",
     result: "une offre plus claire et un site qui lui ressemble",
@@ -63,16 +63,16 @@ export const projects: Project[] = [
         {
           title: "Ce que j’ai fait",
           paragraphs: [
-            "J’ai commencé par relever tout le contenu de son site, mot pour mot, pour ne rien perdre. Tout ce qui est en ligne vient d’elle : ses textes, ses clients, ses témoignages, sa photo. Aucun chiffre ni logo inventé.",
-            "J’ai ensuite conçu et développé un site vitrine de six pages : accueil, offre, à propos, ressources, blog et contact. Il s’affiche aussi bien sur téléphone que sur ordinateur, et chaque page a son titre et sa description pour Google. Deux séries de retours, fin août puis début octobre, ont affiné les contenus.",
-            "Ses pages légales reprennent les textes qu’elle m’a fournis : je ne rédige pas de documents juridiques.",
-            "Léa possède son site : ce sont de simples fichiers, qu’elle peut héberger où elle veut, sans abonnement à une plateforme.",
+            "J’ai commencé par relever tout le contenu de son site, mot pour mot, pour ne rien perdre. Tout ce qui est en ligne vient d’elle : ses textes, ses clients, ses témoignages, sa photo. Aucun chiffre ni logo inventé.",
+            "J’ai ensuite conçu et développé un site vitrine de six pages : accueil, offre, à propos, ressources, blog et contact. Il s’affiche aussi bien sur téléphone que sur ordinateur, et chaque page a son titre et sa description pour Google. Deux séries de retours, fin août puis début octobre, ont affiné les contenus.",
+            "Ses pages légales reprennent les textes qu’elle m’a fournis : je ne rédige pas de documents juridiques.",
+            "Léa possède son site : ce sont de simples fichiers, qu’elle peut héberger où elle veut, sans abonnement à une plateforme.",
           ],
         },
         {
           title: "Ce que ça a changé",
           paragraphs: [
-            "Son offre est plus claire, et son site lui ressemble. Elle en parle mieux que moi :",
+            "Son offre est plus claire, et son site lui ressemble. Elle en parle mieux que moi :",
           ],
         },
       ],
@@ -86,7 +86,7 @@ export const projects: Project[] = [
     visual: "pendu",
     url: "https://darkslateblue-bear-545715.hostingersite.com/",
     description:
-      "Un jeu du pendu en ligne dans l’univers de League of Legends, en solo ou à plusieurs sur le même écran. Les champions et leurs citations arrivent en direct depuis les données officielles de Riot Games ; le jeu gère les accents et tient bon si la connexion coupe. Pensé pour le téléphone, la tablette et l’ordinateur.",
+      "Un jeu du pendu en ligne dans l’univers de League of Legends, en solo ou à plusieurs sur le même écran. Les champions et leurs citations arrivent en direct depuis les données officielles de Riot Games ; le jeu gère les accents et tient bon si la connexion coupe. Pensé pour le téléphone, la tablette et l’ordinateur.",
     year: 2026,
     caseStudy: {
       facts: [
@@ -98,14 +98,14 @@ export const projects: Project[] = [
         {
           title: "Le point de départ",
           paragraphs: [
-            "Un projet perso : un jeu du pendu dans l’univers de League of Legends, à jouer seul ou à plusieurs devant le même écran.",
+            "Un projet perso : un jeu du pendu dans l’univers de League of Legends, à jouer seul ou à plusieurs devant le même écran.",
           ],
         },
         {
           title: "Ce que j’ai fait",
           paragraphs: [
-            "Les mots à deviner ne sont pas écrits dans le code : ce sont les noms des champions, récupérés en direct depuis les données officielles de Riot Games. Quand un nouveau champion sort, il arrive tout seul dans le jeu, avec son portrait et son titre sur l’écran de fin.",
-            "Les accents sont pardonnés : taper « e » trouve aussi « é ». Si la connexion coupe, le jeu le dit et propose de réessayer au lieu de rester bloqué. Le tout est écrit à la main, sans outil tout fait, et s’adapte au téléphone, à la tablette et à l’ordinateur.",
+            "Les mots à deviner ne sont pas écrits dans le code : ce sont les noms des champions, récupérés en direct depuis les données officielles de Riot Games. Quand un nouveau champion sort, il arrive tout seul dans le jeu, avec son portrait et son titre sur l’écran de fin.",
+            "Les accents sont pardonnés : taper « e » trouve aussi « é ». Si la connexion coupe, le jeu le dit et propose de réessayer au lieu de rester bloqué. Le tout est écrit à la main, sans outil tout fait, et s’adapte au téléphone, à la tablette et à l’ordinateur.",
           ],
         },
         {

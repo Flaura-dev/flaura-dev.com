@@ -20,7 +20,7 @@ export function Brand() {
   return (
     <Link
       href="/#accueil"
-      aria-label="Flaura.dev, retour à l'accueil"
+      aria-label="Flaura.dev, retour à l’accueil"
       onPointerEnter={() => setSpinning(true)}
       onFocus={handleFocus}
       className="flex min-h-11 shrink-0 items-center gap-3 rounded-lg text-fg"

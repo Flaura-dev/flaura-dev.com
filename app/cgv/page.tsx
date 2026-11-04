@@ -8,7 +8,7 @@ import { legalRobots, pageUrls } from "@/lib/metadata";
 export const metadata: Metadata = {
   title: "Conditions générales de vente",
   description:
-    "Conditions générales de vente de Flaura.dev pour la création et la refonte de sites internet, réservées aux clients professionnels : devis, paiement, livraison, garantie et propriété intellectuelle.",
+    "Conditions générales de vente de Flaura.dev pour la création et la refonte de sites internet, réservées aux clients professionnels : devis, paiement, livraison, garantie et propriété intellectuelle.",
   ...pageUrls("/cgv"),
   robots: legalRobots,
 };

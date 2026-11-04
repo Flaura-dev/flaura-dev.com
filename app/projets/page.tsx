@@ -10,7 +10,7 @@ import { pageUrls } from "@/lib/metadata";
 import { projectsStructuredData } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Projets : sites vitrines et créations web",
+  title: "Projets : sites vitrines et créations web",
   description: projectsPage.description,
   ...pageUrls("/projets"),
 };

@@ -13,7 +13,7 @@ import { legalRobots, pageUrls } from "@/lib/metadata";
 export const metadata: Metadata = {
   title: "Mentions légales",
   description:
-    "Mentions légales du site Flaura.dev : éditrice, directrice de la publication, hébergeur, propriété intellectuelle et conditions d’utilisation du site.",
+    "Mentions légales du site Flaura.dev : éditrice, directrice de la publication, hébergeur, propriété intellectuelle et conditions d’utilisation du site.",
   ...pageUrls("/mentions-legales"),
   robots: legalRobots,
 };

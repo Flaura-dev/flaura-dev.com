@@ -12,7 +12,7 @@ export const site = {
   /** Titre et description de l'accueil (balises meta, h1 et données structurées). */
   title: "Flaura.dev — Laura Fontaine, développeuse web freelance dans le Var",
   description:
-    "Laura Fontaine, développeuse web freelance dans le Var : création et refonte de sites internet pour TPE et indépendants, dans le Var et à distance.",
+    "Laura Fontaine, développeuse web freelance dans le Var : création et refonte de sites internet pour TPE et indépendants, dans le Var et à distance.",
   /** Nom complet de Laura, tel qu'il apparaît dans les données structurées. */
   owner: { givenName: "Laura", familyName: "Fontaine" },
   url,

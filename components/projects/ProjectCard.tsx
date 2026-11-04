@@ -26,7 +26,7 @@ export function ProjectCard({ project, withAnchor = false, eager = false }: Proj
         <div className="flex items-start justify-between gap-4">
           {/* « Consultante Business » (insécable) fait environ 9 fois la taille de la police :
               sous 400 px de large, la police se réduit pour que le titre tienne dans la carte. */}
-          <h3 className="font-display text-[length:min(2.125rem,calc((100vw_-_5.5rem)/9))] leading-none font-black uppercase">
+          <h3 className="font-display-auto text-[length:min(2.125rem,calc((100vw_-_5.5rem)/9))] leading-none font-black uppercase">
             {project.title}
           </h3>
           {project.url && (

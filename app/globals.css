@@ -123,9 +123,15 @@
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
-  /* Big Shoulders variable : opsz 72 = la coupe « Display ». */
+  /*
+   * Big Shoulders variable. font-display : coupe « Display » figée (opsz 72), celle du logo,
+   * pour les grands titres. font-display-auto : sous 48 px, le dessin s'adapte à la taille
+   * (lettres plus ouvertes, plus lisibles en petit).
+   */
   --font-display: var(--font-big-shoulders), "Arial Narrow", sans-serif;
   --font-display--font-variation-settings: "opsz" 72;
+  --font-display-auto: var(--font-big-shoulders), "Arial Narrow", sans-serif;
+  --font-display-auto--font-variation-settings: normal;
 }
 
 @theme {

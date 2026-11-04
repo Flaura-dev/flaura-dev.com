@@ -48,7 +48,7 @@ export function Hero() {
                 <p className="font-mono text-xs tracking-[0.17em] text-pink uppercase">
                   {"// Développeuse web freelance"}
                 </p>
-                <p className="font-display text-[2.75rem] leading-none font-bold uppercase">
+                <p className="font-display-auto text-[2.75rem] leading-none font-bold uppercase">
                   {/* Les deux bénéfices en rose, chacun gardé d'un bloc sur sa ligne. */}
                   Tes clients doivent pouvoir{" "}
                   <span className="whitespace-nowrap text-pink">te trouver</span>, ton site doit

@@ -117,7 +117,7 @@ export function LegalPage({ path, title, subtitle, meta, intro, sections }: Lega
               >
                 <h2
                   id={`${section.id}-titre`}
-                  className="flex items-baseline gap-4 font-display text-[1.75rem] leading-none font-black uppercase md:text-[2rem]"
+                  className="flex items-baseline gap-4 font-display-auto text-[1.75rem] leading-none font-black uppercase md:text-[2rem]"
                 >
                   <span className="font-mono text-sm font-normal text-pink">{section.num}</span>{" "}
                   {section.title}

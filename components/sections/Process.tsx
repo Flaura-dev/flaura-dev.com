@@ -192,7 +192,7 @@ export function Process() {
                   >
                     {step.num}
                   </span>
-                  <h3 className="font-display text-[2rem] leading-none font-black uppercase">
+                  <h3 className="font-display-auto text-[2rem] leading-none font-black uppercase">
                     {/* Le bouton couvre toute l'étape (pseudo-élément) : clic n'importe où. */}
                     <button
                       type="button"

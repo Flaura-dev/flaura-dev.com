@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
-// L'axe opsz est nécessaire pour obtenir le dessin « Display » (opsz 72).
+// L'axe opsz donne la coupe « Display » (opsz 72) et le dessin adapté aux petites tailles.
 const bigShoulders = Big_Shoulders({
   subsets: ["latin"],
   axes: ["opsz"],

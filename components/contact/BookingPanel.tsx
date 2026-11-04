@@ -29,7 +29,7 @@ export function BookingPanel() {
             className="size-14 self-center rounded-full border-2 border-pink object-cover"
           />
           <p className="text-center font-mono text-xs text-muted">Laura · Flaura.dev</p>
-          <h3 className="flex items-center gap-1.5 font-display text-[2rem] leading-none font-black uppercase">
+          <h3 className="flex items-center gap-1.5 font-display-auto text-[2rem] leading-none font-black uppercase">
             Café virtuel
             <CoffeeIcon size={24} className="shrink-0 text-pink" />
           </h3>

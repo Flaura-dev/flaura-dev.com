@@ -113,7 +113,7 @@ export function MobileMenu() {
                     <span className="font-mono text-xs text-pink" aria-hidden="true">
                       {section.num}
                     </span>
-                    <span className="font-display text-[2.5rem] leading-none font-black uppercase">
+                    <span className="font-display-auto text-[2.5rem] leading-none font-black uppercase">
                       {section.label}
                     </span>
                   </Link>

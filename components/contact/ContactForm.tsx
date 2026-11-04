@@ -4,12 +4,12 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { sendContact, type ContactField, type ContactState } from "@/app/actions/contact";
 import { ArrowRightIcon, CheckIcon, ChevronDownIcon } from "@/components/ui/icons";
-import { contactMessages, honeypotField, projectTypes } from "@/content/contact";
+import { contactMessages, fieldHints, honeypotField, projectTypes } from "@/content/contact";
 import { cx } from "@/lib/cx";
 
 // 16 px sur mobile : en dessous, Safari sur iPhone zoome la page dès qu'on touche un champ.
 const fieldClass =
-  "w-full rounded-xl border border-field-line bg-bg px-4 py-3.5 font-mono text-base text-fg placeholder:text-muted aria-invalid:border-pink md:text-sm";
+  "w-full rounded-xl border border-field-line bg-bg px-4 py-3.5 font-mono text-base text-fg placeholder:text-muted user-invalid:border-pink aria-invalid:border-pink md:text-sm";
 const labelClass = "font-mono text-xs font-medium tracking-[0.125em] text-muted uppercase";
 
 const initialState: ContactState = { status: "idle" };
@@ -52,12 +52,13 @@ export function ContactForm() {
             autoComplete="name"
             placeholder="Prénom Nom"
             required
+            minLength={2}
             maxLength={100}
             defaultValue={state.values?.name}
             {...errorProps("name")}
-            className={fieldClass}
+            className={`peer ${fieldClass}`}
           />
-          <FieldError field="name" message={state.errors?.name} />
+          <FieldError field="name" message={state.errors?.name} hint={fieldHints.name} />
         </div>
         <div className="flex flex-col gap-2.5">
           <label htmlFor="f-email" className={labelClass}>
@@ -73,9 +74,9 @@ export function ContactForm() {
             maxLength={254}
             defaultValue={state.values?.email}
             {...errorProps("email")}
-            className={fieldClass}
+            className={`peer ${fieldClass}`}
           />
-          <FieldError field="email" message={state.errors?.email} />
+          <FieldError field="email" message={state.errors?.email} hint={fieldHints.email} />
         </div>
       </div>
 
@@ -117,9 +118,9 @@ export function ContactForm() {
           maxLength={5000}
           defaultValue={state.values?.message}
           {...errorProps("message")}
-          className={`${fieldClass} flex-1 resize-y`}
+          className={`peer ${fieldClass} flex-1 resize-y`}
         />
-        <FieldError field="message" message={state.errors?.message} />
+        <FieldError field="message" message={state.errors?.message} hint={fieldHints.message} />
       </div>
 
       {/* Champ piège : invisible et hors du parcours clavier, seuls les robots le remplissent. */}
@@ -167,11 +168,26 @@ export function ContactForm() {
   );
 }
 
-function FieldError({ field, message }: { field: ContactField; message?: string }) {
-  if (!message) return null;
-  return (
-    <p id={`f-${field}-erreur`} className="text-xs leading-[1.5] text-pink">
-      {message}
-    </p>
-  );
+/**
+ * Message d'erreur du serveur après l'envoi. Sinon, l'indication `hint` reste masquée et
+ * s'affiche en CSS seul quand le visiteur quitte le champ mal rempli (:user-invalid).
+ */
+function FieldError({
+  field,
+  message,
+  hint,
+}: {
+  field: ContactField;
+  message?: string;
+  hint?: string;
+}) {
+  if (message) {
+    return (
+      <p id={`f-${field}-erreur`} className="text-xs leading-[1.5] text-pink">
+        {message}
+      </p>
+    );
+  }
+  if (!hint) return null;
+  return <p className="hidden text-xs leading-[1.5] text-pink peer-user-invalid:block">{hint}</p>;
 }

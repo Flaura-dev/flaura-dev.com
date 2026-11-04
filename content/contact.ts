@@ -15,6 +15,16 @@ export type ProjectType = (typeof projectTypes)[number]["value"];
 /** Nom du champ piège, invisible pour les visiteurs : un robot qui le remplit est ignoré. */
 export const honeypotField = "champ_cache";
 
+/**
+ * Indications affichées dès qu'on quitte un champ mal rempli, avant l'envoi : mêmes phrases
+ * que la validation du serveur (app/actions/contact.ts).
+ */
+export const fieldHints = {
+  name: "Indique ton nom et prénom.",
+  email: "Indique une adresse e-mail valide.",
+  message: "Ton message doit faire au moins 10 caractères.",
+};
+
 export const contactMessages = {
   sent: "Merci ! Je reviens vers toi sous 48 h.",
   invalid: "Vérifie les champs signalés, puis renvoie ton message.",

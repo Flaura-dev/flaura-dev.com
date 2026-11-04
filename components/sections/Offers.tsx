@@ -240,7 +240,7 @@ function CardTitle({
     // Interligne de 1,1 : sur deux lignes, les « // » ne touchent pas la ligne du dessous.
     <h3
       id={id}
-      className="font-display text-[2.25rem] leading-[1.1] font-black text-balance uppercase"
+      className="font-display-auto text-[2.25rem] leading-[1.1] font-black text-balance uppercase"
     >
       <span aria-hidden="true" className={inverted ? "opacity-60" : "text-pink"}>
         {"// "}

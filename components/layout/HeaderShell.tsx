@@ -55,10 +55,14 @@ export function HeaderShell({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  // Une fois la page défilée, fond en verre (::before) qui déborde de 24 px sous le header
+  // et s'y efface en fondu, à la place d'un trait. Opaque, avec le trait, si la transparence
+  // est réduite ou le contraste élevé. Le flou n'est pas posé sur le header lui-même : il
+  // empêcherait celui du ::before de voir la page.
   return (
     <header
       ref={ref}
-      className="sticky top-0 z-40 border-b border-transparent transition-[translate,background-color,border-color] duration-300 data-[scrolled=true]:border-line data-[scrolled=true]:bg-bg/85 data-[scrolled=true]:backdrop-blur-md motion-safe:data-[hidden=true]:not-focus-within:-translate-y-full motion-reduce:transition-none md:pr-[88px] opaque:data-[scrolled=true]:bg-bg opaque:data-[scrolled=true]:backdrop-blur-none"
+      className="sticky top-0 z-40 border-b border-transparent transition-[translate,border-color] duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-bottom-6 before:-z-10 before:bg-bg/70 before:[mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] before:opacity-0 before:backdrop-blur-md before:backdrop-saturate-160 before:transition-opacity before:duration-300 data-[scrolled=true]:before:opacity-100 motion-safe:data-[hidden=true]:not-focus-within:-translate-y-full motion-reduce:transition-none motion-reduce:before:transition-none md:pr-[88px] opaque:before:bottom-0 opaque:before:bg-bg opaque:before:[mask-image:none] opaque:before:backdrop-filter-none opaque:data-[scrolled=true]:border-line"
     >
       {children}
     </header>

@@ -31,7 +31,7 @@ const gridRows = {
   "--plan-rows": planRows.length,
 } as CSSProperties;
 
-const labelClass = "font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase";
+const labelClass = "font-mono text-xs leading-4 tracking-[0.08em] uppercase";
 
 export function Offers() {
   return (
@@ -144,7 +144,7 @@ function OfferCard({
         <CardTitle inverted={recommended}>{name}</CardTitle>
         {/* À cheval sur le bord haut de la carte : le titre garde toute la largeur. */}
         {recommended && (
-          <p className="absolute -top-3 right-7 self-start rounded-full border border-pink bg-bg px-3 py-1 font-mono text-[0.6875rem] leading-4 tracking-[0.08em] text-pink uppercase">
+          <p className="absolute -top-3 right-7 self-start rounded-full border border-pink bg-bg px-3 py-1 font-mono text-xs leading-4 tracking-[0.08em] text-pink uppercase">
             Recommandée
           </p>
         )}

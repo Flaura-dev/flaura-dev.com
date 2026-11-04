@@ -171,7 +171,7 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
           <ArrowUpRightIcon size={14} className="shrink-0 text-pink" />
         </a>
       </div>
-      <p className="font-mono text-[0.6875rem] text-muted">
+      <p className="font-mono text-xs leading-[1.6] text-muted">
         Créneaux synchronisés via Calendly · fuseau Europe/Paris. Le calendrier ne se charge
         qu’après ton clic&nbsp;; Calendly peut alors déposer{" "}
         {/* Lien d'information, volontairement discret : même couleur, pointillé fin. */}

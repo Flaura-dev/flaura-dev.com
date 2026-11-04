@@ -35,8 +35,10 @@ export function ScrollingShot({ src, alt, sizes, eager = false }: ScrollingShotP
         fetchPriority={eager ? "high" : undefined}
         className="block h-auto min-h-full w-full object-cover object-top motion-safe:transition-[translate] motion-safe:duration-700 motion-safe:ease-in-out motion-safe:group-hover/frame:translate-y-[calc(-100%_+_100cqh)] motion-safe:group-hover/frame:duration-(--shot-duration) motion-safe:group-has-[:focus-visible]:translate-y-[calc(-100%_+_100cqh)] motion-safe:group-has-[:focus-visible]:duration-(--shot-duration)"
       />
-      {/* Indice masqué (hauteur 0) s'il reste moins de 24 px à faire défiler. */}
+      {/* Indice masqué (hauteur 0) s'il reste moins de 24 px à faire défiler. Visuel seul :
+          les lecteurs d'écran ne survolent pas, et il ne doit pas s'ajouter au nom du lien. */}
       <div
+        aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 hidden max-h-full overflow-hidden motion-safe:[@media(hover:hover)]:block"
         style={{ height: `max(0px, (100cqw * ${ratio} - 100cqh - 24px) * 1000)` }}
       >

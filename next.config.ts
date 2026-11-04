@@ -39,6 +39,9 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
+  // AVIF pour les navigateurs qui le lisent, WebP sinon. Next règle la qualité de l'AVIF pour
+  // un rendu équivalent au WebP : environ deux fois plus léger pour la photo du haut.
+  images: { formats: ["image/avif", "image/webp"] },
   // En développement, Next écrit chaque appel de Server Action avec ses arguments : la saisie
   // du formulaire de contact se retrouverait dans le terminal.
   logging: { serverFunctions: false },

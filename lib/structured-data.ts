@@ -237,6 +237,7 @@ function projectItem(project: Project) {
     url: isFinalUrl(project.url) ? project.url : anchor,
     description: describeProject(project),
     keywords: project.label.split(" · "),
+    dateCreated: String(project.year),
     inLanguage: "fr-FR",
     creator: { "@id": ids.person },
   };

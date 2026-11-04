@@ -2,23 +2,12 @@ import { ArrowUpRightIcon } from "@/components/ui/icons";
 import type { Project } from "@/content/projects";
 import { ProjectVisual } from "./ProjectVisual";
 
-type ProjectCardProps = {
-  project: Project;
-  /** Sur /projets, chaque carte porte une ancre (/projets#slug). */
-  withAnchor?: boolean;
-  /** Carte visible dès l'arrivée sur la page : captures chargées tout de suite. */
-  eager?: boolean;
-};
-
-/** Carte projet, avec un lien ↗ quand le site est en ligne. */
-export function ProjectCard({ project, withAnchor = false, eager = false }: ProjectCardProps) {
+/** Carte projet de l'accueil (version courte), avec un lien ↗ quand le site est en ligne. */
+export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article
-      id={withAnchor ? project.slug : undefined}
-      className="group flex scroll-mt-28 flex-col overflow-clip rounded-3xl border border-line bg-surface"
-    >
+    <article className="group flex flex-col overflow-clip rounded-3xl border border-line bg-surface">
       <div className="relative h-[230px] overflow-clip">
-        <ProjectVisual project={project} eager={eager} />
+        <ProjectVisual project={project} eager={false} />
       </div>
       <div className="flex flex-1 flex-col gap-3 p-6">
         <p className="font-mono text-xs text-pink">{project.label}</p>

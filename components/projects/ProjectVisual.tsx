@@ -14,15 +14,15 @@ import { ScrollingShot } from "./ScrollingShot";
  * Sans comparateur, la capture couvre toute la page et défile (ScrollingShot).
  */
 
-type ShotProps = { src: StaticImageData; alt: string; eager: boolean };
+type ShotProps = { src: StaticImageData; alt: string; eager: boolean; sizes: string };
 
-function Shot({ src, alt, eager }: ShotProps) {
+function Shot({ src, alt, eager, sizes }: ShotProps) {
   return (
     <Image
       src={src}
       alt={alt}
       fill
-      sizes={SIZES}
+      sizes={sizes}
       loading={eager ? "eager" : undefined}
       fetchPriority={eager ? "high" : undefined}
       className="object-cover object-top"
@@ -30,7 +30,14 @@ function Shot({ src, alt, eager }: ShotProps) {
   );
 }
 
-export function ProjectVisual({ project, eager }: { project: Project; eager: boolean }) {
+type ProjectVisualProps = {
+  project: Project;
+  eager: boolean;
+  /** Largeur affichée des captures : celle des cartes par défaut. */
+  sizes?: string;
+};
+
+export function ProjectVisual({ project, eager, sizes = SIZES }: ProjectVisualProps) {
   switch (project.visual) {
     case "lea":
       return (
@@ -40,6 +47,7 @@ export function ProjectVisual({ project, eager }: { project: Project; eager: boo
               <Shot
                 src={leaBefore}
                 eager={eager}
+                sizes={sizes}
                 alt="Ancien site de Léa Grondin : une seule page, un grand titre centré sur fond blanc, sans photo"
               />
             }
@@ -47,6 +55,7 @@ export function ProjectVisual({ project, eager }: { project: Project; eager: boo
               <Shot
                 src={leaAfter}
                 eager={eager}
+                sizes={sizes}
                 alt="Nouveau site de Léa Grondin : un menu, son titre de bras droit pédagogique des formateurs et sa photo devant son ordinateur"
               />
             }
@@ -59,7 +68,7 @@ export function ProjectVisual({ project, eager }: { project: Project; eager: boo
         <ScrollingShot
           src={pendu}
           alt="Page d’accueil du jeu Le Pendu de la Faille"
-          sizes={SIZES}
+          sizes={sizes}
           eager={eager}
         />
       );

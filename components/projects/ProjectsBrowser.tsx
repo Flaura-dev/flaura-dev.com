@@ -1,13 +1,13 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Fragment, Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckIcon, CopyIcon } from "@/components/ui/icons";
-import { projectFilters, projects, type ProjectFilter } from "@/content/projects";
+import { projectFilters, projects, testimonial, type ProjectFilter } from "@/content/projects";
 import { site } from "@/content/site";
 import { cx } from "@/lib/cx";
-import { PROJECT_GRID } from "./grid";
-import { ProjectCard } from "./ProjectCard";
+import { ProjectCaseStudy } from "./ProjectCaseStudy";
+import { Testimonial } from "./Testimonial";
 
 type ProjectsViewProps = {
   active: ProjectFilter | null;
@@ -95,9 +95,12 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
       </div>
 
       {visible.length > 0 ? (
-        <div className={cx("grid gap-4", PROJECT_GRID)}>
+        <div className="flex flex-col gap-10">
           {visible.map((project, index) => (
-            <ProjectCard key={project.slug} project={project} withAnchor eager={index === 0} />
+            <Fragment key={project.slug}>
+              <ProjectCaseStudy project={project} eager={index === 0} />
+              {testimonial.projectSlug === project.slug && <Testimonial />}
+            </Fragment>
           ))}
         </div>
       ) : (
@@ -121,7 +124,7 @@ function ProjectsWithUrlState() {
 }
 
 /**
- * Liste filtrable des projets. Le filtre actif est dans l'URL (/projets?type=refonte),
+ * Liste filtrable des projets, en version longue (étude de cas et témoignage). Le filtre actif est dans l'URL (/projets?type=refonte),
  * ce qui permet de partager une sélection. Avant l'hydratation, tous les projets
  * s'affichent.
  */

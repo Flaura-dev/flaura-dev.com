@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckIcon, CopyIcon } from "@/components/ui/icons";
 import { projectFilters, projects, testimonial, type ProjectFilter } from "@/content/projects";
@@ -97,10 +97,11 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
       {visible.length > 0 ? (
         <div className="flex flex-col gap-10">
           {visible.map((project, index) => (
-            <Fragment key={project.slug}>
-              <ProjectCaseStudy project={project} eager={index === 0} />
-              {testimonial.projectSlug === project.slug && <Testimonial />}
-            </Fragment>
+            <ProjectCaseStudy key={project.slug} project={project} eager={index === 0}>
+              {testimonial.projectSlug === project.slug && (
+                <Testimonial className="border-t border-line px-6 py-9 md:px-9 md:py-11" />
+              )}
+            </ProjectCaseStudy>
           ))}
         </div>
       ) : (

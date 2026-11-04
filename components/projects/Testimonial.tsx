@@ -1,9 +1,16 @@
 import { QuoteMarkIcon } from "@/components/ui/icons";
 import { testimonial } from "@/content/projects";
+import { cx } from "@/lib/cx";
 
-export function Testimonial() {
+/** Témoignage de Léa. Par défaut entre deux traits (accueil) ; className remplace ce cadre. */
+export function Testimonial({ className }: { className?: string }) {
   return (
-    <figure className="mt-4 flex flex-wrap items-start gap-9 border-y border-line py-12">
+    <figure
+      className={cx(
+        "flex flex-wrap items-start gap-9",
+        className ?? "mt-4 border-y border-line py-12",
+      )}
+    >
       {/* mt-2 : haut du guillemet au niveau des majuscules de la première ligne. */}
       <QuoteMarkIcon className="mt-2 shrink-0 text-pink" />
       <div className="flex flex-[1_1_420px] flex-col gap-4">

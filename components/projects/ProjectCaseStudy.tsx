@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
 import type { Project } from "@/content/projects";
 import { ProjectVisual } from "./ProjectVisual";
@@ -9,13 +10,15 @@ type ProjectCaseStudyProps = {
   project: Project;
   /** Premier projet de la page : captures chargées tout de suite. */
   eager?: boolean;
+  /** Bas de l'encart, sur toute sa largeur : le témoignage du client. */
+  children?: ReactNode;
 };
 
 /**
  * Version longue d'un projet, sur /projets : le visuel en grand, puis les repères (type,
  * pages, année…) à gauche et le récit à droite. Sur mobile, tout se suit sur une colonne.
  */
-export function ProjectCaseStudy({ project, eager = false }: ProjectCaseStudyProps) {
+export function ProjectCaseStudy({ project, eager = false, children }: ProjectCaseStudyProps) {
   const { caseStudy } = project;
   const facts = [...caseStudy.facts, ["Année", String(project.year)]];
 
@@ -75,6 +78,7 @@ export function ProjectCaseStudy({ project, eager = false }: ProjectCaseStudyPro
           {caseStudy.note && <p className="font-mono text-xs text-muted">{caseStudy.note}</p>}
         </div>
       </div>
+      {children}
     </article>
   );
 }

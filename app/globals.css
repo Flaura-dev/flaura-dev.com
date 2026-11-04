@@ -4,6 +4,52 @@
 @source not "../maquette";
 
 /*
+ * Secours de Big Shoulders réduits à sa largeur, avec sa ligne de base et sa hauteur de ligne
+ * (ascent 0,986 em, descent 0,215 em, divisés par size-adjust) : rien ne bouge quand elle arrive.
+ * Largeurs mesurées sur les titres du site, en graisse 900. Android n'a pas Arial : Roboto.
+ */
+@font-face {
+  font-family: "Big Shoulders Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT");
+  font-weight: 100 900;
+  size-adjust: 67.8%;
+  ascent-override: 145.43%;
+  descent-override: 31.71%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Big Shoulders Android Fallback";
+  src: local("Roboto Black"), local("Roboto-Black"), local("Roboto");
+  font-weight: 100 900;
+  size-adjust: 73.5%;
+  ascent-override: 134.15%;
+  descent-override: 29.25%;
+  line-gap-override: 0%;
+}
+
+/* Sous 48 px (font-display-auto), Big Shoulders s'élargit : secours un peu plus grands. */
+@font-face {
+  font-family: "Big Shoulders Auto Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT");
+  font-weight: 100 900;
+  size-adjust: 70.5%;
+  ascent-override: 139.86%;
+  descent-override: 30.5%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Big Shoulders Auto Android Fallback";
+  src: local("Roboto Black"), local("Roboto-Black"), local("Roboto");
+  font-weight: 100 900;
+  size-adjust: 76.7%;
+  ascent-override: 128.55%;
+  descent-override: 28.03%;
+  line-gap-override: 0%;
+}
+
+/*
  * Palettes sombre et claire. Le serveur rend data-theme="dark" ; le script inline du
  * layout passe en clair avant l’affichage si besoin (lib/theme.ts).
  */
@@ -164,9 +210,13 @@
    * pour les grands titres. font-display-auto : sous 48 px, le dessin s'adapte à la taille
    * (lettres plus ouvertes, plus lisibles en petit).
    */
-  --font-display: var(--font-big-shoulders), "Arial Narrow", sans-serif;
+  --font-display:
+    var(--font-big-shoulders), "Big Shoulders Fallback", "Big Shoulders Android Fallback",
+    sans-serif-condensed, sans-serif;
   --font-display--font-variation-settings: "opsz" 72;
-  --font-display-auto: var(--font-big-shoulders), "Arial Narrow", sans-serif;
+  --font-display-auto:
+    var(--font-big-shoulders), "Big Shoulders Auto Fallback", "Big Shoulders Auto Android Fallback",
+    sans-serif-condensed, sans-serif;
   --font-display-auto--font-variation-settings: normal;
 }
 

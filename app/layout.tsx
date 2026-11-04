@@ -24,9 +24,10 @@ const bigShoulders = Big_Shoulders({
   subsets: ["latin"],
   axes: ["opsz"],
   variable: "--font-big-shoulders",
-  // Next ne connaît pas ses métriques : pas de secours ajusté, on liste des polices étroites.
+  // Texte masqué jusqu'à l'arrivée de la police, mis en page avec les secours ajustés de globals.css.
+  display: "block",
+  // Next ne connaît pas ses métriques : les secours sont déclarés dans globals.css.
   adjustFontFallback: false,
-  fallback: ["Arial Narrow", "sans-serif-condensed", "Impact", "sans-serif"],
 });
 
 export const metadata: Metadata = {

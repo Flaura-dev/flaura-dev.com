@@ -36,6 +36,12 @@ const securityHeaders = [
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
 ];
 
+/*
+ * Une seule adresse publique : l'ancien domaine temporaire et www renvoient vers
+ * https://flaura-dev.com, page pour page (301).
+ */
+const redirectedHosts = ["palegoldenrod-swallow-512762.hostingersite.com", "www.flaura-dev.com"];
+
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
@@ -49,6 +55,14 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  async redirects() {
+    return redirectedHosts.map((host) => ({
+      source: "/:path*",
+      has: [{ type: "host" as const, value: host }],
+      destination: "https://flaura-dev.com/:path*",
+      statusCode: 301 as const,
+    }));
   },
 };
 

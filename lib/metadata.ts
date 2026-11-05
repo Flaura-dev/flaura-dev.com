@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import apercu from "@/assets/partage/apercu.jpg";
+import apercu from "@/assets/partage/apercu-liens.jpg";
 import { site } from "@/content/site";
 
 /** Champs Open Graph communs. Un `openGraph` défini dans une page remplace celui du layout en entier. */

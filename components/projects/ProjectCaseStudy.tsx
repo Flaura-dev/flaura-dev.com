@@ -34,9 +34,10 @@ export function ProjectCaseStudy({ project, eager = false, children }: ProjectCa
         <div className="flex flex-col gap-5">
           <p className="font-mono text-xs text-pink">{project.label}</p>
           {/* Le lien ↗ déborde sans agrandir la ligne, comme sur la carte. */}
-          <div className="flex items-start justify-between gap-4">
-            {/* Même taille que la carte : « Consultante Business » (insécable) doit tenir sous 400 px. */}
-            <h3 className="font-display-auto text-[length:min(2.125rem,calc((100vw_-_5.5rem)/9))] leading-none font-black uppercase">
+          <div className="@container flex items-start justify-between gap-4">
+            {/* Même règle que la carte : « Consultante Business » (insécable) mesure environ 9,3 fois
+                la taille de la police et doit tenir dans la colonne, à côté du lien ↗ (3,75 rem). */}
+            <h3 className="font-display-auto text-[length:min(2.125rem,calc((100cqw_-_3.75rem)/9.5))] leading-none font-black uppercase">
               {project.title}
             </h3>
             {project.url && (

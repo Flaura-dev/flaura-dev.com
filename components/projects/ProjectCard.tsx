@@ -12,10 +12,11 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className="flex flex-1 flex-col gap-3 p-6">
         <p className="font-mono text-xs text-pink">{project.label}</p>
         {/* Le lien ↗ déborde sans agrandir la ligne : les titres restent alignés entre les cartes. */}
-        <div className="flex items-start justify-between gap-4">
-          {/* « Consultante Business » (insécable) fait environ 9 fois la taille de la police :
-              sous 400 px de large, la police se réduit pour que le titre tienne dans la carte. */}
-          <h3 className="font-display-auto text-[length:min(2.125rem,calc((100vw_-_5.5rem)/9))] leading-none font-black uppercase">
+        <div className="@container flex items-start justify-between gap-4">
+          {/* « Consultante Business » (insécable) mesure environ 9,3 fois la taille de la police :
+              quand la carte est étroite, la police se réduit pour que le titre tienne à côté du
+              lien ↗ (3,75 rem), sur toutes les cartes à la fois. */}
+          <h3 className="font-display-auto text-[length:min(2.125rem,calc((100cqw_-_3.75rem)/9.5))] leading-none font-black uppercase">
             {project.title}
           </h3>
           {project.url && (

@@ -2,7 +2,7 @@
  * Indexation par les moteurs de recherche. false tant que le site n'est pas lancé : passe à true
  * le jour du lancement, et l'adresse servie bascule en même temps sur flaura-dev.com.
  */
-const indexable = false;
+const indexable = true;
 const url = "https://flaura-dev.com";
 /** Domaine temporaire Hostinger, où le site est servi avant le lancement. */
 const temporaryUrl = "https://palegoldenrod-swallow-512762.hostingersite.com";
@@ -37,7 +37,7 @@ export const site = {
   petals: true,
   indexable,
   /** Dernière mise à jour du contenu (lastModified du sitemap) : à changer à la main, jamais new Date(). */
-  updatedAt: "2026-11-04",
+  updatedAt: "2026-11-05",
   /** Passe à false pour masquer les mentions « disponible ». */
   available: true,
 };

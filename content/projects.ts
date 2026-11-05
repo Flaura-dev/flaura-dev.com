@@ -45,26 +45,27 @@ export const projects: Project[] = [
     solution:
       "un site vitrine de plusieurs pages, rapide et agréable sur téléphone comme sur ordinateur, structuré pour être bien référencé sur Google et les IA",
     result: "une offre plus claire et un site qui lui ressemble",
+    url: "https://leagrondin.fr/",
     year: 2026,
     caseStudy: {
       facts: [
         ["Cliente", "Léa Grondin, consultante business"],
         ["Projet", "refonte d’un site d’une seule page"],
-        ["Pages", "6 après la refonte"],
+        ["Pages", "5 après la refonte"],
         ["Propriété", "le site appartient à Léa, sans abonnement"],
       ],
       sections: [
         {
           title: "Le point de départ",
           paragraphs: [
-            "Léa Grondin est consultante business, le bras droit pédagogique des formateurs et des experts. Son site tenait sur une seule page, générée avec Lovable, un outil d’IA. Elle était si longue qu’on ne comprenait pas vite ce que Léa propose, et on n’y retrouvait pas sa signature.",
+            "Léa Grondin est consultante business, le bras droit pédagogique des formateurs, écoles et coachs. Son site tenait sur une seule page, générée avec Lovable, un outil d’IA. Elle était si longue qu’on ne comprenait pas vite ce que Léa propose, et on n’y retrouvait pas sa signature.",
           ],
         },
         {
           title: "Ce que j’ai fait",
           paragraphs: [
             "J’ai commencé par relever tout le contenu de son site, mot pour mot, pour ne rien perdre. Tout ce qui est en ligne vient d’elle : ses textes, ses clients, ses témoignages, sa photo. Aucun chiffre ni logo inventé.",
-            "J’ai ensuite conçu et développé un site vitrine de six pages : accueil, offre, à propos, ressources, blog et contact. Il s’affiche aussi bien sur téléphone que sur ordinateur, et chaque page a son titre et sa description pour Google. Deux séries de retours, fin août puis début octobre, ont affiné les contenus.",
+            "J’ai ensuite conçu et développé un site vitrine de cinq pages : accueil, offre, à propos, blog et contact. Il s’affiche aussi bien sur téléphone que sur ordinateur, et chaque page a son titre et sa description pour Google. Deux séries de retours, fin août puis début octobre, ont affiné les contenus.",
             "Ses pages légales reprennent les textes qu’elle m’a fournis : je ne rédige pas de documents juridiques.",
             "Léa possède son site : ce sont de simples fichiers, qu’elle peut héberger où elle veut, sans abonnement à une plateforme.",
           ],

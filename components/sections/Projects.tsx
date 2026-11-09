@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CtaBanner } from "@/components/projects/CtaBanner";
-import { BANNER_BESIDE_PROJECT, PROJECT_GRID } from "@/components/projects/grid";
+import { PROJECT_GRID, SINGLE_PROJECT } from "@/components/projects/grid";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { Testimonial } from "@/components/projects/Testimonial";
 import { Container } from "@/components/ui/Container";
@@ -34,9 +34,9 @@ export function Projects() {
 
         <div className={cx("grid gap-4", PROJECT_GRID)}>
           {projects.slice(0, HOME_PROJECTS_COUNT).map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+            <ProjectCard key={project.slug} project={project} wide={SINGLE_PROJECT} />
           ))}
-          <CtaBanner beside={BANNER_BESIDE_PROJECT} />
+          <CtaBanner />
         </div>
 
         <Testimonial />

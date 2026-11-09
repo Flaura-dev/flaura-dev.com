@@ -6,8 +6,8 @@ import { projects } from "@/content/projects";
  */
 const twoColumns = projects.length < 3;
 
-/** Avec un seul projet, le bandeau « Le tien ? » prend la case d'à côté au lieu d'une ligne entière. */
-export const BANNER_BESIDE_PROJECT = projects.length === 1;
+/** Un seul projet : sa carte prend toute la ligne, capture à gauche et texte à droite. */
+export const SINGLE_PROJECT = projects.length === 1;
 
 // grid-cols-1 : sans colonne définie, la carte s'élargit à son contenu et dépasse sur petit écran.
 export const PROJECT_GRID = twoColumns

@@ -1,15 +1,28 @@
 import { ArrowUpRightIcon } from "@/components/ui/icons";
 import type { Project } from "@/content/projects";
+import { cx } from "@/lib/cx";
 import { ProjectVisual } from "./ProjectVisual";
 
+type ProjectCardProps = {
+  project: Project;
+  /** Toute la ligne : capture à gauche, texte à droite (à partir de md). */
+  wide?: boolean;
+};
+
 /** Carte projet de l'accueil (version courte), avec un lien ↗ quand le site est en ligne. */
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({ project, wide = false }: ProjectCardProps) {
   return (
-    <article className="group flex flex-col overflow-clip rounded-3xl border border-line bg-surface">
-      <div className="relative h-[230px] overflow-clip">
+    <article
+      className={cx(
+        "group flex flex-col overflow-clip rounded-3xl border border-line bg-surface",
+        wide && "md:col-span-full md:grid md:grid-cols-2",
+      )}
+    >
+      {/* En largeur, la capture prend la hauteur du texte d'à côté. */}
+      <div className={cx("relative h-[230px] overflow-clip", wide && "md:h-auto md:min-h-[300px]")}>
         <ProjectVisual project={project} eager={false} />
       </div>
-      <div className="flex flex-1 flex-col gap-3 p-6">
+      <div className={cx("flex flex-1 flex-col gap-3 p-6", wide && "md:justify-center md:p-8")}>
         <p className="font-mono text-xs text-pink">{project.label}</p>
         {/* Le lien ↗ déborde sans agrandir la ligne : les titres restent alignés entre les cartes. */}
         <div className="@container flex items-start justify-between gap-4">

@@ -6,6 +6,9 @@ import { projects } from "@/content/projects";
  */
 const twoColumns = projects.length < 3;
 
+/** Avec un seul projet, le bandeau « Le tien ? » prend la case d'à côté au lieu d'une ligne entière. */
+export const BANNER_BESIDE_PROJECT = projects.length === 1;
+
 // grid-cols-1 : sans colonne définie, la carte s'élargit à son contenu et dépasse sur petit écran.
 export const PROJECT_GRID = twoColumns
   ? "grid-cols-1 md:grid-cols-2"

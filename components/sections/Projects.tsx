@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CtaBanner } from "@/components/projects/CtaBanner";
-import { PROJECT_GRID } from "@/components/projects/grid";
+import { BANNER_BESIDE_PROJECT, PROJECT_GRID } from "@/components/projects/grid";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { Testimonial } from "@/components/projects/Testimonial";
 import { Container } from "@/components/ui/Container";
@@ -36,7 +36,7 @@ export function Projects() {
           {projects.slice(0, HOME_PROJECTS_COUNT).map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
-          <CtaBanner />
+          <CtaBanner beside={BANNER_BESIDE_PROJECT} />
         </div>
 
         <Testimonial />

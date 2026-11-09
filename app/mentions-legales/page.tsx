@@ -123,12 +123,6 @@ const sections: LegalSection[] = [
           avec l’accord des clients concernés. Leurs noms, marques, logos et contenus restent leur
           propriété.
         </p>
-        <p>
-          Le Pendu de la Faille est un projet personnel et non commercial. Il a été créé dans le
-          cadre de la politique «&nbsp;Jargon juridique&nbsp;» de Riot Games, à partir d’éléments
-          appartenant à Riot Games. Riot Games ne soutient ni ne sponsorise ce projet. League of
-          Legends est une marque de Riot Games, Inc.
-        </p>
       </>
     ),
   },
@@ -204,7 +198,7 @@ export default function MentionsLegalesPage() {
       path="/mentions-legales"
       title="Mentions légales"
       subtitle="Site flaura-dev.com"
-      meta="Dernière mise à jour&nbsp;: 4 novembre 2026"
+      meta="Dernière mise à jour&nbsp;: 9 novembre 2026"
       sections={sections}
     />
   );

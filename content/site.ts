@@ -37,7 +37,7 @@ export const site = {
   petals: true,
   indexable,
   /** Dernière mise à jour du contenu (lastModified du sitemap) : à changer à la main, jamais new Date(). */
-  updatedAt: "2026-11-05",
+  updatedAt: "2026-11-09",
   /** Passe à false pour masquer les mentions « disponible ». */
   available: true,
 };

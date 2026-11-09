@@ -1,10 +1,16 @@
 import Link from "next/link";
 import { PhoneIcon } from "@/components/ui/icons";
+import { cx } from "@/lib/cx";
 
-/** Bandeau rose pleine largeur « Le tien ? ». */
-export function CtaBanner() {
+/** Bandeau rose « Le tien ? », pleine largeur ou, à côté d'une carte projet, en colonne. */
+export function CtaBanner({ beside = false }: { beside?: boolean }) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-pink px-7 py-8 text-bg md:col-span-full md:px-10 md:py-9">
+    <div
+      className={cx(
+        "flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-pink px-7 py-8 text-bg md:px-10 md:py-9",
+        beside ? "md:flex-col md:flex-nowrap md:items-start" : "md:col-span-full",
+      )}
+    >
       {/* 72 px max : reste sous les titres de section (110 px). */}
       <p className="font-display text-[clamp(3rem,2rem+3vw,4.5rem)] leading-[0.9] font-black uppercase">
         Le tien&nbsp;?

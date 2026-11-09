@@ -1,6 +1,5 @@
 /** Filtres de la page /projets (en plus de « tous ») : slug pour l'URL, libellé affiché. */
 export const projectFilters = [
-  { slug: "creation", label: "création" },
   { slug: "refonte", label: "refonte" },
   { slug: "site-vitrine", label: "site vitrine" },
 ] as const;
@@ -12,8 +11,8 @@ export type Project = {
   /** Étiquette affichée sur la carte : le type de site, jamais la techno. */
   label: string;
   categories: ProjectFilter[];
-  /** Visuel provisoire dessiné dans la maquette, en attendant les vraies images. */
-  visual: "lea" | "pendu";
+  /** Visuel de la carte (captures choisies dans ProjectVisual). */
+  visual: "lea";
   /** Soit une description libre, soit le trio problème / solution / résultat. */
   description?: string;
   problem?: string;
@@ -79,52 +78,12 @@ export const projects: Project[] = [
       ],
     },
   },
-  {
-    slug: "pendu-de-la-faille",
-    title: "Le Pendu de la Faille",
-    label: "jeu en ligne · projet perso",
-    categories: ["creation"],
-    visual: "pendu",
-    url: "https://darkslateblue-bear-545715.hostingersite.com/",
-    description:
-      "Un jeu du pendu en ligne dans l’univers de League of Legends, en solo ou à plusieurs sur le même écran. Les champions et leurs citations arrivent en direct depuis les données officielles de Riot Games ; le jeu gère les accents et tient bon si la connexion coupe. Pensé pour le téléphone, la tablette et l’ordinateur.",
-    year: 2026,
-    caseStudy: {
-      facts: [
-        ["Projet", "jeu en ligne, projet perso"],
-        ["Données", "en direct depuis Riot Games"],
-        ["Écrans", "téléphone, tablette, ordinateur"],
-      ],
-      sections: [
-        {
-          title: "Le point de départ",
-          paragraphs: [
-            "Un projet perso : un jeu du pendu dans l’univers de League of Legends, à jouer seul ou à plusieurs devant le même écran.",
-          ],
-        },
-        {
-          title: "Ce que j’ai fait",
-          paragraphs: [
-            "Les mots à deviner ne sont pas écrits dans le code : ce sont les noms des champions, récupérés en direct depuis les données officielles de Riot Games. Quand un nouveau champion sort, il arrive tout seul dans le jeu, avec son portrait et son titre sur l’écran de fin.",
-            "Les accents sont pardonnés : taper « e » trouve aussi « é ». Si la connexion coupe, le jeu le dit et propose de réessayer au lieu de rester bloqué. Le tout est écrit à la main, sans outil tout fait, et s’adapte au téléphone, à la tablette et à l’ordinateur.",
-          ],
-        },
-        {
-          title: "Ce que ça montre pour ton site",
-          paragraphs: [
-            "Je sais brancher un site sur un service extérieur pour qu’il se tienne à jour tout seul, prévoir les cas qui coincent, et soigner l’affichage sur tous les écrans.",
-          ],
-        },
-      ],
-      note: "Création de fan, non affiliée à Riot Games.",
-    },
-  },
 ];
 
 /** Textes de la page /projets, repris par ses métadonnées et ses données structurées. */
 export const projectsPage = {
   intro:
-    "Je suis Laura Fontaine, et voici les sites et applications que j’ai conçus et développés sous le nom Flaura.dev. Pour chacun : le point de départ, ce que j’ai fait et ce que ça a changé.",
+    "Je suis Laura Fontaine, et voici les sites que j’ai conçus et développés sous le nom Flaura.dev. Pour chacun : le point de départ, ce que j’ai fait et ce que ça a changé.",
   description:
     "Les projets de Flaura.dev en détail : le point de départ, ce que j’ai fait et ce que ça a changé, avec le témoignage de la cliente.",
   /** Titre de la liste, lu par les lecteurs d'écran et les robots (les cartes sont en h3). */

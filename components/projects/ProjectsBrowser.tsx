@@ -41,58 +41,61 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between gap-4 border-y border-line py-3.5">
-        <div
-          role="group"
-          aria-label="Filtrer les projets"
-          className="flex flex-wrap gap-2 font-mono text-[0.8125rem]"
-        >
-          {options.map((option) => {
-            const pressed = active === option.slug;
-            return (
-              <button
-                key={option.label}
-                type="button"
-                aria-pressed={pressed}
-                onClick={() => onSelect?.(option.slug)}
-                className={cx(
-                  "min-h-11 press cursor-pointer rounded-full border px-4 py-2.5",
-                  pressed
-                    ? "border-pink bg-pink text-bg"
-                    : "border-line text-fg hover:border-pink hover:text-pink",
-                )}
-              >
-                {option.label}
-              </button>
-            );
-          })}
-        </div>
-        <div className="flex items-center gap-2 font-mono text-xs text-muted">
-          <span>
-            {DISPLAY_URL}
-            {active && (
-              <>
-                ?type=<span className="text-pink">{active}</span>
-              </>
-            )}
-          </span>
-          <button
-            type="button"
-            onClick={copyLink}
-            aria-label="Copier le lien de cette sélection"
-            className={cx(
-              "inline-flex size-11 press cursor-pointer items-center justify-center rounded-full border hover:border-pink hover:text-pink",
-              copy === "copied" ? "border-pink text-pink" : "border-line text-fg",
-            )}
+      {/* Rien à filtrer tant qu'il n'y a qu'un projet. */}
+      {projects.length > 1 && (
+        <div className="flex flex-wrap items-center justify-between gap-4 border-y border-line py-3.5">
+          <div
+            role="group"
+            aria-label="Filtrer les projets"
+            className="flex flex-wrap gap-2 font-mono text-[0.8125rem]"
           >
-            {copy === "copied" ? <CheckIcon /> : <CopyIcon />}
-          </button>
-          <span role="status" className="text-pink">
-            {copy === "copied" && "lien copié"}
-            {copy === "failed" && "copie impossible : copie l’adresse à la main"}
-          </span>
+            {options.map((option) => {
+              const pressed = active === option.slug;
+              return (
+                <button
+                  key={option.label}
+                  type="button"
+                  aria-pressed={pressed}
+                  onClick={() => onSelect?.(option.slug)}
+                  className={cx(
+                    "min-h-11 press cursor-pointer rounded-full border px-4 py-2.5",
+                    pressed
+                      ? "border-pink bg-pink text-bg"
+                      : "border-line text-fg hover:border-pink hover:text-pink",
+                  )}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex items-center gap-2 font-mono text-xs text-muted">
+            <span>
+              {DISPLAY_URL}
+              {active && (
+                <>
+                  ?type=<span className="text-pink">{active}</span>
+                </>
+              )}
+            </span>
+            <button
+              type="button"
+              onClick={copyLink}
+              aria-label="Copier le lien de cette sélection"
+              className={cx(
+                "inline-flex size-11 press cursor-pointer items-center justify-center rounded-full border hover:border-pink hover:text-pink",
+                copy === "copied" ? "border-pink text-pink" : "border-line text-fg",
+              )}
+            >
+              {copy === "copied" ? <CheckIcon /> : <CopyIcon />}
+            </button>
+            <span role="status" className="text-pink">
+              {copy === "copied" && "lien copié"}
+              {copy === "failed" && "copie impossible : copie l’adresse à la main"}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Annonce le résultat du filtre aux lecteurs d'écran. */}
       <p role="status" className="sr-only">

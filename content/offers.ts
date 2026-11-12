@@ -1,10 +1,8 @@
 import type { Price } from "@/lib/price";
 
-// Source unique des tarifs : les cartes d'offres, la FAQ et les données structurées en sont tirées.
-// Tous les montants sont en euros hors taxes ; le TTC est calculé à l'affichage (lib/price.ts).
-// Les espaces insécables ( ) évitent qu'un « ? » ou un « € » se retrouve seul en début de ligne.
+// tous les prix du site sont ici, en HT
 
-/** Lignes comparées d'une formule à l'autre, dans l'ordre d'affichage. */
+// ==== FORMULES ====
 export const planRows = [
   { key: "pages", label: "Pages" },
   { key: "content", label: "Contenu" },
@@ -14,17 +12,14 @@ export const planRows = [
   { key: "gift", label: "Cadeau" },
 ] as const;
 
-/** Une ligne d'une carte : null = non inclus. */
-export type CardRow = { label: string; value: string | null };
+export type CardRow = { label: string; value: string | null }; // null = non inclus
 
 export type Plan = {
   id: string;
   name: string;
   pitch: string;
-  /** Prix HT « à partir de ». */
   price: Price;
   recommended?: boolean;
-  /** null : non inclus dans cette formule. */
   rows: Record<(typeof planRows)[number]["key"], string | null>;
 };
 
@@ -77,12 +72,10 @@ export const plans: Plan[] = [
   },
 ];
 
-/** Lignes d'une formule dans l'ordre de planRows, prêtes à afficher. */
 export function planCardRows(plan: Plan): CardRow[] {
   return planRows.map(({ key, label }) => ({ label, value: plan.rows[key] }));
 }
 
-/** Inclus dans les trois formules. */
 export const includedEverywhere = [
   "Design sur mesure",
   "Adapté à tous les écrans",
@@ -91,7 +84,7 @@ export const includedEverywhere = [
   "Site web à ton nom",
 ];
 
-/** Module refonte : 4e carte, à droite des formules. */
+// ==== REFONTE ====
 export const redesign = {
   id: "refonte",
   name: "Refonte",
@@ -108,6 +101,7 @@ export const redesign = {
   price: { amount: 450, from: true } satisfies Price,
 };
 
+// ==== MAINTENANCE ====
 export const maintenancePlans = [
   {
     id: "serenite",
@@ -123,14 +117,10 @@ export const maintenancePlans = [
   },
 ];
 
-/**
- * Domaine et hébergement, à la charge du client (estimation citée dans la FAQ seulement).
- * Tarifs Hostinger HT hors promotions, relevés en octobre 2026 : à revérifier de temps en temps.
- */
+// ==== FRAIS DU CLIENT ====
+// tarifs Hostinger hors promo, à revérifier de temps en temps
 export const clientCosts = {
   provider: "Hostinger",
-  /** Offre Premium : 9,99 € HT par mois au renouvellement (après 48 mois à 2,49 €). */
-  hostingPerYear: 120,
-  /** .fr : 10,99 € par an ; .com : 16,99 € par an. */
-  domainPerYear: { min: 11, max: 17 },
+  hostingPerYear: 120, // Premium, 9,99 €/mois au renouvellement
+  domainPerYear: { min: 11, max: 17 }, // .fr / .com
 };

@@ -10,13 +10,11 @@ export type ContactField = "name" | "email" | "type" | "message";
 
 export type ContactState = {
   status: "idle" | "sent" | "invalid" | "limited" | "failed";
-  /** Message d'erreur par champ, quand la validation échoue. */
   errors?: Partial<Record<ContactField, string>>;
-  /** Saisie du visiteur, renvoyée pour ne rien lui faire retaper en cas d'erreur. */
   values?: Partial<Record<ContactField, string>>;
 };
 
-// Le navigateur vérifie déjà ces règles, mais un robot peut envoyer n'importe quoi au serveur.
+// ==== VALIDATION ====
 const schema = z.object({
   name: z.string().min(2, "Indique ton nom et prénom.").max(100, "100 caractères au maximum."),
   email: z.email("Indique une adresse e-mail valide.").max(254, "Adresse e-mail trop longue."),
@@ -29,10 +27,9 @@ const schema = z.object({
     .max(5000, "5 000 caractères au maximum."),
 });
 
-/** Adresse du visiteur derrière le proxy de Hostinger (premier maillon de X-Forwarded-For). */
+// IP derrière le proxy Hostinger
 async function clientIp() {
   const requestHeaders = await headers();
-  // Falsifiable par un robot : le plafond quotidien de lib/rate-limit.ts reste la vraie protection.
   return (
     requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     requestHeaders.get("x-real-ip") ||
@@ -40,17 +37,17 @@ async function clientIp() {
   );
 }
 
-/** Envoi du formulaire de contact (components/contact/ContactForm.tsx). */
+// ==== ENVOI ====
 export async function sendContact(
   _previous: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
-  // Réponse identique à un vrai envoi : le robot n'apprend pas qu'il a été repéré.
+  // champ piège rempli : on fait comme si c'était envoyé
   if (formData.get(honeypotField)) return { status: "sent" };
 
   const field = (key: ContactField) => String(formData.get(key) ?? "").trim();
   const values = {
-    // Pas de saut de ligne dans le nom : il est repris dans l'objet de l'e-mail.
+    // pas de saut de ligne, le nom va dans l'objet du mail
     name: field("name").replace(/[\r\n\t]+/g, " "),
     email: field("email"),
     type: field("type"),
@@ -72,7 +69,7 @@ export async function sendContact(
     await sendContactEmail(parsed.data);
     return { status: "sent" };
   } catch (error) {
-    // Jamais le contenu du message ni l'adresse du visiteur dans les journaux du serveur.
+    // jamais le message ni l'adresse dans les logs
     const { code, responseCode } = (error ?? {}) as { code?: string; responseCode?: number };
     console.error(
       "Formulaire de contact : envoi impossible",

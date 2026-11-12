@@ -2,7 +2,6 @@ import { QuoteMarkIcon } from "@/components/ui/icons";
 import { testimonial } from "@/content/projects";
 import { cx } from "@/lib/cx";
 
-/** Témoignage de Léa. Par défaut entre deux traits (accueil) ; className remplace ce cadre. */
 export function Testimonial({ className }: { className?: string }) {
   return (
     <figure
@@ -11,7 +10,6 @@ export function Testimonial({ className }: { className?: string }) {
         className ?? "mt-4 border-y border-line py-12",
       )}
     >
-      {/* mt-2 : haut du guillemet au niveau des majuscules de la première ligne. */}
       <QuoteMarkIcon className="mt-2 shrink-0 text-pink" />
       <div className="flex flex-[1_1_420px] flex-col gap-4">
         <blockquote className="flex flex-col gap-[0.6em] text-[clamp(1.25rem,1rem+1vw,1.875rem)] leading-[1.3] font-medium tracking-[-0.017em]">

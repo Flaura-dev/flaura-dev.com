@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { PhoneIcon } from "@/components/ui/icons";
 
-/** Bandeau rose pleine largeur « Le tien ? ». */
 export function CtaBanner() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-pink px-7 py-8 text-bg md:col-span-full md:px-10 md:py-9">
-      {/* 72 px max : reste sous les titres de section (110 px). */}
       <p className="font-display text-[clamp(3rem,2rem+3vw,4.5rem)] leading-[0.9] font-black uppercase">
         Le tien&nbsp;?
       </p>

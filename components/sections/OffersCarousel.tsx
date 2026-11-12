@@ -4,27 +4,17 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 import { cx } from "@/lib/cx";
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
-/** Durée du va-et-vient d'invitation (cf. --animate-offers-nudge), avec une marge. */
-const NUDGE_MS = 1600;
+const NUDGE_MS = 1600; // durée de --animate-offers-nudge + marge
 
 type OffersCarouselProps = {
-  /** Cartes dans l'ordre : id de la carte et nom affiché dans les onglets. */
   items: { id: string; name: string }[];
-  /** Carte centrée au départ. */
   startId: string;
   className?: string;
   style?: CSSProperties;
-  /** Les cartes (<li>). */
   children: ReactNode;
 };
 
-/**
- * Sous 900 px, les cartes d'offres défilent en carrousel (défilement natif aimanté, une carte à
- * la fois) : les voisines dépassent des deux côtés, les noms des quatre cartes restent visibles
- * au-dessus, et un léger va-et-vient à la première apparition montre qu'on peut glisser.
- * Au-dessus, la liste reprend sa grille et les onglets sont masqués. Sans JavaScript, le
- * carrousel défile quand même, en partant de la première carte.
- */
+// carrousel sous 900 px, grille au-dessus
 export function OffersCarousel({
   items,
   startId,
@@ -36,7 +26,6 @@ export function OffersCarousel({
   const [current, setCurrent] = useState(startId);
   const currentRef = useRef(startId);
 
-  /** Carousel actif : la liste déborde en largeur (sinon, c'est la grille). */
   const isCarousel = () => {
     const list = listRef.current;
     return !!list && list.scrollWidth > list.clientWidth + 1;
@@ -62,7 +51,7 @@ export function OffersCarousel({
 
     if (isCarousel()) center(startId, false);
 
-    // Onglet allumé : la carte la plus proche du centre, suivie pendant le défilement.
+    // onglet actif = carte la plus proche du centre
     let frame = 0;
     const onScroll = () => {
       cancelAnimationFrame(frame);
@@ -82,13 +71,11 @@ export function OffersCarousel({
       });
     };
 
-    // Rotation ou redimensionnement : la carte en cours reste au centre.
     const onResize = () => {
       if (isCarousel()) center(currentRef.current, false);
     };
 
-    // Va-et-vient d'invitation, une seule fois, quand le carrousel apparaît à l'écran. Il
-    // s'arrête dès que le visiteur touche les cartes.
+    // petit va-et-vient pour montrer qu'on peut glisser, une seule fois
     let touched = false;
     let nudgeTimer = 0;
     const stopNudge = () => {
@@ -124,7 +111,6 @@ export function OffersCarousel({
       list.removeEventListener("wheel", onTouch);
       window.removeEventListener("resize", onResize);
     };
-    // Une seule mise en place : startId ne change pas.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -15,10 +15,6 @@ export const metadata: Metadata = {
   ...pageUrls("/projets"),
 };
 
-/**
- * Tous les projets en version longue (l'accueil garde les cartes courtes), avec filtres.
- * Page hors menu : on y arrive par l'accueil et le pied de page.
- */
 export default function ProjectsPage() {
   return (
     <main id="contenu" tabIndex={-1} className="pt-8 pb-24 outline-none">
@@ -36,7 +32,6 @@ export default function ProjectsPage() {
           <p className="max-w-[400px] leading-[1.6] text-muted">{projectsPage.intro}</p>
         </div>
 
-        {/* Titre de la liste pour les lecteurs d'écran : les cartes sont en h3. */}
         <h2 className="sr-only">{projectsPage.listTitle}</h2>
         <ProjectsBrowser />
         <CtaBanner />

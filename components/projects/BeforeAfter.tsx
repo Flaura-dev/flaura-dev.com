@@ -10,13 +10,7 @@ type BeforeAfterProps = {
   label: string;
 };
 
-/**
- * Comparateur avant/après glissable. Un curseur natif invisible couvre la zone :
- * souris, doigt et flèches du clavier fonctionnent, et le défilement vertical au doigt
- * reste possible par-dessus. La poignée grossit et se remplit dès qu'on appuie ; elle est
- * centrée en hauteur, comme le bouton du curseur natif (seul saisissable sur iPhone).
- * L'indice « glisse » disparaît dès la première prise en main.
- */
+// un input range invisible couvre la zone : souris, doigt et clavier
 export function BeforeAfter({ before, after, label }: BeforeAfterProps) {
   const [position, setPosition] = useState(50);
   const [used, setUsed] = useState(false);
@@ -42,7 +36,6 @@ export function BeforeAfter({ before, after, label }: BeforeAfterProps) {
         className="peer absolute inset-0 z-10 m-0 size-full cursor-ew-resize touch-pan-y opacity-0"
       />
 
-      {/* Repères visuels : le curseur porte déjà son nom pour les lecteurs d'écran. */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute bottom-3 left-3.5 rounded-full bg-bg px-2.5 py-1 font-mono text-[0.6875rem] text-fg"

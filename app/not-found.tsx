@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   title: "Page introuvable",
 };
 
-/** Page 404 de tout le site (adresse inconnue). Next y ajoute lui-même noindex et le statut 404. */
 export default function NotFound() {
   return (
     <main id="contenu" tabIndex={-1} className="pt-16 pb-28 outline-none">

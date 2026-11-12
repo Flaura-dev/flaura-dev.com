@@ -1,8 +1,6 @@
 import { site } from "@/content/site";
 
-// Formulaire de contact : options proposées et messages affichés au visiteur.
-// La validation côté serveur (app/actions/contact.ts) n'accepte que ces types de projet.
-
+// le serveur n'accepte que ces types de projet
 export const projectTypes = [
   { value: "site-vitrine", label: "Site vitrine" },
   { value: "refonte", label: "Refonte" },
@@ -12,20 +10,15 @@ export const projectTypes = [
 
 export type ProjectType = (typeof projectTypes)[number]["value"];
 
-/** Nom du champ piège, invisible pour les visiteurs : un robot qui le remplit est ignoré. */
-export const honeypotField = "champ_cache";
+export const honeypotField = "champ_cache"; // champ piège
 
-/**
- * Indications affichées dès qu'on quitte un champ mal rempli, avant l'envoi : mêmes phrases
- * que la validation du serveur (app/actions/contact.ts).
- */
+// mêmes phrases que la validation du serveur
 export const fieldHints = {
   name: "Indique ton nom et prénom.",
   email: "Indique une adresse e-mail valide.",
   message: "Ton message doit faire au moins 10 caractères.",
 };
 
-/** Délai de réponse, annoncé au-dessus du formulaire. */
 export const responseNote = "Je te réponds sous 48 h.";
 
 export const contactMessages = {

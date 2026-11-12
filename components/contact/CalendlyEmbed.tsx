@@ -6,29 +6,19 @@ import { ArrowUpRightIcon, CalendarIcon } from "@/components/ui/icons";
 import { cx } from "@/lib/cx";
 
 type CalendlyEmbedProps = {
-  /** Lien de l'événement Calendly (https://calendly.com/…). */
   url: string;
 };
 
-/** Hauteur du cadre avant que Calendly n'annonce celle de son contenu (px). */
+// ==== REGLAGES ====
 const DEFAULT_HEIGHT = 700;
-/** Hauteurs transitoires envoyées au chargement, ignorées. */
-const MIN_REPORTED_HEIGHT = 200;
-/** Rogne 2 px en bas : évite un liseré blanc sous le calendrier. */
-const BOTTOM_CLIP = 2;
-/**
- * Étape « choisir un jour » : Calendly annonce toujours 602 px, mais le calendrier n'en
- * occupe que 474 à 506 (mois de 5 ou 6 semaines). 536 px suffisent sans rien couper.
- */
+const MIN_REPORTED_HEIGHT = 200; // en dessous : hauteurs du chargement, ignorées
+const BOTTOM_CLIP = 2; // cache un liseré blanc en bas
+// Calendly annonce 602 px pour le choix du jour, 536 suffisent
 const CALENDAR_STEP_REPORTED = 602;
 const CALENDAR_STEP_VISIBLE = 536;
-/**
- * Calendly reste vide quelques secondes après le chargement : le message d'attente reste
- * affiché jusqu'à ce qu'il annonce sa hauteur. Passé ce délai, on affiche quand même.
- */
-const REVEAL_FALLBACK_MS = 30_000;
+const REVEAL_FALLBACK_MS = 30_000; // on affiche quand même si Calendly ne répond pas
 
-/** Lien Calendly aux couleurs du thème, sans les détails de l'événement (déjà à gauche). */
+// ==== LIEN CALENDLY ====
 function buildEmbedSrc(url: string) {
   const light = document.documentElement.getAttribute("data-theme") === "light";
   const src = new URL(url);
@@ -42,10 +32,7 @@ function buildEmbedSrc(url: string) {
   return src.toString();
 }
 
-/**
- * Forme grisée de l'étape « choisir un jour » de Calendly (titre, mois, jours, fuseau), aux
- * mêmes hauteurs que le vrai calendrier, sur téléphone comme sur ordinateur.
- */
+// ==== CHARGEMENT ====
 function CalendarSkeleton() {
   return (
     <div role="status" className="absolute inset-0 flex flex-col items-center px-3 pt-[34px]">
@@ -74,7 +61,8 @@ function CalendarSkeleton() {
   );
 }
 
-/** Chargé seulement au clic : aucune requête ni cookie tiers avant, donc pas de bandeau cookies. */
+// ==== CALENDLY ====
+// chargé au clic seulement : pas de cookie avant, donc pas de bandeau
 export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
   const [src, setSrc] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -85,13 +73,11 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
 
   useEffect(() => () => window.clearTimeout(revealTimer.current), []);
 
-  // Le bouton disparaît au clic : le focus passe au calendrier au lieu de se perdre.
   useEffect(() => {
     if (src) frameRef.current?.focus();
   }, [src]);
 
-  // Calendly annonce la hauteur de son contenu (choix du jour, des horaires, formulaire) :
-  // le cadre la suit, sans barre de défilement intérieure.
+  // le cadre suit la hauteur annoncée par Calendly
   useEffect(() => {
     if (!src) return;
     const onMessage = (event: MessageEvent) => {
@@ -108,7 +94,6 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
     return () => window.removeEventListener("message", onMessage);
   }, [src]);
 
-  // Pendant l'attente, la hauteur du calendrier : rien ne bouge quand il apparaît.
   const visibleHeight = !ready
     ? CALENDAR_STEP_VISIBLE
     : height <= CALENDAR_STEP_REPORTED
@@ -128,12 +113,11 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
           ref={iframeRef}
           src={src}
           title="Calendly : choisir un créneau pour le café virtuel"
-          // Chaque étape de Calendly peut recharger le cadre : un seul minuteur à la fois.
           onLoad={() => {
             window.clearTimeout(revealTimer.current);
             revealTimer.current = window.setTimeout(() => setReady(true), REVEAL_FALLBACK_MS);
           }}
-          // Même color-scheme que Calendly, sinon le cadre est peint en blanc en thème sombre.
+          // sinon le cadre devient blanc en thème sombre
           style={{ height, colorScheme: "light" }}
           className={cx(
             "relative block w-full border-0 motion-safe:transition-opacity motion-safe:duration-300",
@@ -159,7 +143,6 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
         >
           Voir les créneaux disponibles
         </button>
-        {/* Secours sans JavaScript ni cadre : un simple lien ne charge rien avant le clic. */}
         <a
           href={url}
           target="_blank"
@@ -174,7 +157,6 @@ export function CalendlyEmbed({ url }: CalendlyEmbedProps) {
       <p className="font-mono text-xs leading-[1.6] text-muted">
         Créneaux synchronisés via Calendly · fuseau Europe/Paris. Le calendrier ne se charge
         qu’après ton clic&nbsp;; Calendly peut alors déposer{" "}
-        {/* Lien d'information, volontairement discret : même couleur, pointillé fin. */}
         <Link
           href="/confidentialite#cookies"
           className="py-3 underline decoration-dotted underline-offset-2 press-text hover:text-pink"

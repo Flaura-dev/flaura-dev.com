@@ -1,4 +1,3 @@
-/** Point vert « disponible » qui clignote lentement (opacité et échelle seulement). */
 export function AvailabilityDot() {
   return (
     <span

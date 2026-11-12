@@ -9,12 +9,6 @@ import { NavPill } from "./NavPill";
 import { PetalsToggle } from "./PetalsToggle";
 import { ThemeToggle } from "./ThemeToggle";
 
-/*
- * Logo, pilule et boutons font environ 1 160 px de large : la pilule n'apparaît qu'à
- * partir du breakpoint « nav » (78rem). En dessous, un bouton ouvre le menu mobile.
- * Le bouton des pétales ne tient qu'à partir de xl (80rem) ; en dessous, il est dans le
- * menu mobile, et toujours dans le footer.
- */
 export function Header() {
   return (
     <HeaderShell>

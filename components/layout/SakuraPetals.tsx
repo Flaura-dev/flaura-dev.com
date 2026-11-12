@@ -2,8 +2,7 @@ import type { CSSProperties } from "react";
 
 const PETAL_COUNT = 16;
 
-// Suite pseudo-aléatoire toujours identique, pour que les pétales soient les mêmes à chaque
-// rendu : chaque appel donne un nombre entre 0 et 1.
+// aléatoire mais toujours pareil d'un rendu à l'autre
 let seed = 2026;
 function random() {
   seed = (seed * 16807) % 2147483647;
@@ -20,7 +19,7 @@ const petals = Array.from({ length: PETAL_COUNT }, (_, index) => {
     "--size": `${round(between(12, 22))}px`,
     "--opacity": round(between(0.3, 0.6)),
     "--fall": `${round(fall)}s`,
-    // Délais négatifs : au chargement, les pétales sont déjà répartis sur la hauteur.
+    // délai négatif : déjà répartis au chargement
     "--delay": `${round(-between(0, fall))}s`,
     "--sway": `${round(between(3.5, 6.5))}s`,
     "--sway-x": `${round(between(20, 60))}px`,
@@ -28,7 +27,6 @@ const petals = Array.from({ length: PETAL_COUNT }, (_, index) => {
   } as CSSProperties;
 });
 
-/** Pétales décoratifs en arrière-plan, masqués des lecteurs d'écran (voir .petals dans globals.css). */
 export function SakuraPetals() {
   return (
     <div aria-hidden="true" className="petals">

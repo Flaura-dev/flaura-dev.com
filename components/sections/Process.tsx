@@ -13,11 +13,12 @@ import { PauseIcon, PlayIcon } from "@/components/ui/icons";
 import { processSteps } from "@/content/process";
 import { cx } from "@/lib/cx";
 
+// ==== REGLAGES ====
 const COUNT = processSteps.length;
-const CYCLE_MS = 8000; // durée d'un tour complet de la frise en lecture automatique
+const CYCLE_MS = 8000; // un tour complet de la frise
 const STEP_MS = CYCLE_MS / COUNT;
-const REWIND_MS = 450; // retour de la ligne au début de la frise
-const SELECT_MS = 500; // glissement de la ligne vers l'étape cliquée
+const REWIND_MS = 450; // retour de la ligne au début
+const SELECT_MS = 500; // glissement vers l'étape cliquée
 const EASE_OUT = "cubic-bezier(0.2, 0, 0, 1)";
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
@@ -28,22 +29,20 @@ function subscribeReducedMotion(onChange: () => void) {
   return () => query.removeEventListener("change", onChange);
 }
 
-/** Part de la frise couverte par la ligne en ce moment (de 0 à 1), même en pleine animation. */
+// ==== LIGNE ====
+// part de la frise couverte (0 à 1), même en pleine animation
 function lineProgress(line: HTMLElement) {
   return parseFloat(getComputedStyle(line).getPropertyValue("--line-p")) || 0;
 }
 
-/** Anime la ligne ; une fois l'animation finie, elle reste sur la dernière valeur. */
+// à la fin, la ligne garde la dernière valeur
 function animateLine(line: HTMLElement, keyframes: Keyframe[], duration: number) {
   line.style.setProperty("--line-p", String(keyframes[keyframes.length - 1]["--line-p"]));
   return line.animate(keyframes, { duration });
 }
 
-/*
- * Frise qui avance seule (8 s pour toutes les étapes) jusqu'à un clic ou une pause, et attend hors
- * de l'écran. Pas de lecture automatique si l'animation est réduite.
- * La ligne (--line-p) repart toujours de sa valeur affichée : jamais de saut.
- */
+// ==== FRISE ====
+// la ligne repart toujours de sa valeur affichée : jamais de saut
 export function Process() {
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLSpanElement>(null);
@@ -71,8 +70,7 @@ export function Process() {
     };
   }, []);
 
-  // Lecture automatique : la ligne se remplit jusqu'au bout de l'étape, puis on passe à la
-  // suivante. Hors de l'écran, elle attend ; elle repart ensuite de là où elle s'était arrêtée.
+  // lecture auto : la ligne se remplit puis on passe à l'étape suivante
   useLayoutEffect(() => {
     const line = lineRef.current;
     if (!autoplay || !line) return;
@@ -88,14 +86,14 @@ export function Process() {
 
     animationRef.current?.cancel();
     if (from >= start - 0.001 && from <= end + 0.001) {
-      // La ligne est déjà sur cette étape : on finit de la remplir.
+      // déjà sur cette étape : on finit de la remplir
       animationRef.current = animateLine(
         line,
         [{ "--line-p": from }, { "--line-p": end }],
         fillMs(from),
       );
     } else {
-      // Retour au début de la frise : la ligne revient vite en arrière, puis se remplit.
+      // retour au début, puis remplissage
       const total = REWIND_MS + fillMs(start);
       animationRef.current = animateLine(
         line,
@@ -108,10 +106,9 @@ export function Process() {
       );
     }
     animationRef.current.onfinish = () => setActive((index) => (index + 1) % COUNT);
-    // Pas d'annulation au nettoyage : la pause doit figer la ligne là où elle est.
+    // pas de cancel ici : la pause doit figer la ligne
   }, [active, autoplay, inView]);
 
-  // Animation réduite : la ligne se place directement sur l'étape choisie.
   useLayoutEffect(() => {
     if (!reducedMotion) return;
     animationRef.current?.cancel();
@@ -161,7 +158,6 @@ export function Process() {
         </div>
 
         <div className="relative">
-          {/* Ligne de progression : verticale sur mobile, horizontale sur desktop. */}
           <span
             ref={lineRef}
             aria-hidden="true"
@@ -194,7 +190,7 @@ export function Process() {
                     {step.num}
                   </span>
                   <h3 className="font-display-auto text-[2rem] leading-none font-black uppercase">
-                    {/* Le bouton couvre toute l'étape (pseudo-élément) : clic n'importe où. */}
+                    {/* le bouton couvre toute l'étape */}
                     <button
                       type="button"
                       onClick={() => select(index)}

@@ -10,10 +10,10 @@ type ContactMessage = {
   message: string;
 };
 
-/** Expéditeur déclaré et authentifié dans Brevo (alias de hello@ chez Hostinger). */
+// expéditeur authentifié dans Brevo
 const SENDER = { name: "Formulaire Flaura.dev", address: "formulaire@flaura-dev.com" };
 
-// Heure de Paris, quel que soit le fuseau du serveur.
+// heure de Paris, quel que soit le serveur
 const day = new Intl.DateTimeFormat("fr-FR", {
   timeZone: "Europe/Paris",
   day: "2-digit",
@@ -25,17 +25,16 @@ const time = new Intl.DateTimeFormat("fr-FR", {
   minute: "2-digit",
 });
 
-/** « Nouveau message de Léa · Refonte · 22/10 à 13:03 » : la date évite que Gmail les regroupe. */
+// la date évite que Gmail regroupe les messages
 function subjectFor(name: string, typeLabel: string, sentAt = new Date()) {
   return `Nouveau message de ${name} · ${typeLabel} · ${day.format(sentAt)} à ${time.format(sentAt)}`;
 }
 
-/** Envoie le message à hello@ par le relais SMTP de Brevo, en texte seul, réponse au visiteur. */
 export async function sendContactEmail({ name, email, type, message }: ContactMessage) {
   const user = process.env.BREVO_SMTP_LOGIN;
   const pass = process.env.BREVO_SMTP_KEY;
   if (!user || !pass) {
-    // Même forme que les erreurs de nodemailer (code EAUTH, ETIMEDOUT…), reprise dans le journal.
+    // même forme que les erreurs de nodemailer
     throw Object.assign(new Error("Identifiants SMTP Brevo manquants"), { code: "ECONFIG" });
   }
 
@@ -44,7 +43,7 @@ export async function sendContactEmail({ name, email, type, message }: ContactMe
     port: 587,
     requireTLS: true,
     auth: { user, pass },
-    // Le visiteur attend la réponse : on abandonne vite si Brevo ne répond pas.
+    // on abandonne vite si Brevo ne répond pas
     connectionTimeout: 10_000,
     greetingTimeout: 10_000,
     socketTimeout: 15_000,

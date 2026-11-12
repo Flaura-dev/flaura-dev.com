@@ -4,23 +4,14 @@ import { cx } from "@/lib/cx";
 type SectionHeadingProps = {
   num: string;
   id?: string;
-  /**
-   * Titre descriptif de la section (Offres, FAQ) : il devient le h2, à droite du titre
-   * géant, qui reste purement décoratif.
-   */
-  subtitle?: string;
-  /**
-   * Titre lu par les lecteurs d'écran et les robots quand le titre géant est un clin d'œil
-   * (« Hello World. ») : rien ne change à l'écran.
-   */
-  srTitle?: string;
+  subtitle?: string; // devient le h2, le grand titre reste décoratif
+  srTitle?: string; // h2 caché quand le grand titre est un clin d'oeil
   className?: string;
   children: ReactNode;
 };
 
 const titleClass = "font-display text-section font-black uppercase";
 
-/** Numéro de section en Geist Mono rose + titre géant en Big Shoulders, alignés en bas. */
 export function SectionHeading({
   num,
   id,
@@ -60,7 +51,6 @@ export function SectionHeading({
     );
   }
 
-  // Le h2 passe sous le titre géant dès qu'il ne tient plus sur une ligne à sa droite.
   return (
     <div className={cx("flex flex-wrap items-baseline gap-x-6 gap-y-4", className)}>
       <div aria-hidden="true" className="flex items-baseline gap-[18px] whitespace-nowrap">

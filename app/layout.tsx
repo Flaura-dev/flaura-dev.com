@@ -19,15 +19,12 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
-// L'axe opsz donne la coupe « Display » (opsz 72) et le dessin adapté aux petites tailles.
 const bigShoulders = Big_Shoulders({
   subsets: ["latin"],
   axes: ["opsz"],
   variable: "--font-big-shoulders",
-  // Texte masqué jusqu'à l'arrivée de la police, mis en page avec les secours ajustés de globals.css.
   display: "block",
-  // Next ne connaît pas ses métriques : les secours sont déclarés dans globals.css.
-  adjustFontFallback: false,
+  adjustFontFallback: false, // secours faits main dans globals.css
 });
 
 export const metadata: Metadata = {
@@ -67,7 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Aller au contenu
         </a>
         <Header />
-        {/* Sur desktop, la colonne de droite (88 px) est réservée au fil conducteur (ScrollRail). */}
+        {/* 88 px à droite pour le fil conducteur */}
         <div className="overflow-x-clip md:pr-[88px]">
           {children}
           <Footer />

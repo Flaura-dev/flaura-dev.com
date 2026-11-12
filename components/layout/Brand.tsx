@@ -6,10 +6,6 @@ import Link from "next/link";
 import sakura from "@/assets/logos/sakura-accueil.webp";
 import { cx } from "@/lib/cx";
 
-/**
- * Fleur + « FLAURA.dev_ ». Au survol (ou au focus clavier), la fleur fait un tour
- * complet, une seule fois, même si le pointeur repart avant la fin.
- */
 export function Brand() {
   const [spinning, setSpinning] = useState(false);
 
@@ -33,8 +29,6 @@ export function Brand() {
         loading="eager"
         onAnimationEnd={() => setSpinning(false)}
         className={cx(
-          // En clair, un fin liseré rose redonne du relief à la fleur, très pâle sur le crème.
-          // Sous 360 px, logo un peu plus petit : l'en-tête tient avec ses marges.
           "block size-[38px] max-[360px]:size-8 light:[filter:drop-shadow(0_0_0.75px_rgb(194_56_107/0.75))_saturate(1.3)]",
           spinning && "motion-safe:animate-sakura-spin",
         )}

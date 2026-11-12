@@ -1,21 +1,14 @@
 import "server-only";
 
-/*
- * Limites d'envoi du formulaire, en mémoire : remises à zéro au redémarrage, ce qui suffit
- * pour un petit site. Les IP ne sont jamais écrites sur disque.
- */
-
-/** Messages acceptés par adresse IP sur la fenêtre glissante. */
+// en mémoire : remis à zéro au redémarrage
 const MAX_PER_IP = 3;
 const WINDOW_MS = 10 * 60 * 1000;
-/** Plafond global par jour, sous les 300 e-mails quotidiens de l'offre gratuite de Brevo. */
-const MAX_PER_DAY = 50;
+const MAX_PER_DAY = 50; // Brevo gratuit : 300 par jour
 
 const recentByIp = new Map<string, number[]>();
 let day = "";
 let sentToday = 0;
 
-/** Réserve un envoi pour cette adresse IP ; false si une limite est atteinte. */
 export function reserveSubmission(ip: string, now = Date.now()): boolean {
   const today = new Date(now).toISOString().slice(0, 10);
   if (today !== day) {
@@ -24,7 +17,7 @@ export function reserveSubmission(ip: string, now = Date.now()): boolean {
   }
   if (sentToday >= MAX_PER_DAY) return false;
 
-  // Oublie les envois sortis de la fenêtre, pour toutes les adresses (la table reste petite).
+  // on oublie les envois trop vieux
   for (const [key, times] of recentByIp) {
     const recent = times.filter((time) => now - time < WINDOW_MS);
     if (recent.length > 0) recentByIp.set(key, recent);

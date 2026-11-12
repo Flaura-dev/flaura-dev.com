@@ -3,7 +3,6 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-/* Réservation (7/11) et formulaire (4/11) côte à côte sur grand écran, empilés en dessous. */
 export function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-titre" className="py-24">

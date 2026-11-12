@@ -13,7 +13,7 @@ import {
   type Theme,
 } from "@/lib/theme";
 
-/** Change de thème en un seul fondu (View Transitions), ou d'un coup si non pris en charge. */
+// un seul fondu pour toute la page (View Transitions)
 function switchTheme(next: Theme) {
   const root = document.documentElement;
   if (root.getAttribute("data-theme") === next) return;
@@ -21,7 +21,6 @@ function switchTheme(next: Theme) {
     root.dataset.themeSwitching = "";
     applyTheme(next);
   };
-  // Thème affiché : les transitions peuvent revenir, sans attendre la fin du fondu.
   const done = () =>
     requestAnimationFrame(() => requestAnimationFrame(() => delete root.dataset.themeSwitching));
 
@@ -36,25 +35,19 @@ function switchTheme(next: Theme) {
   }
 }
 
-/**
- * Bascule sombre/clair. Sans choix du visiteur, le site suit son système. Icône et
- * libellé dépendent de data-theme en CSS : pas de flash à l'hydratation.
- */
+// icône et libellé gérés en CSS : pas de flash
 export function ThemeToggle() {
-  // En développement, React remonte <html> et efface l'attribut posé par le script :
-  // on le réapplique avant l'affichage. Sans effet en production.
+  // en dev, React efface data-theme : on le remet
   useLayoutEffect(() => {
     applyTheme(resolveTheme());
   }, []);
 
   useEffect(() => {
-    // Le système passe en clair ou en sombre (souvent selon l'heure) : on suit, sauf
-    // si le visiteur a choisi lui-même.
     const system = window.matchMedia(SYSTEM_LIGHT_QUERY);
     const onSystemChange = () => {
       if (!readStoredTheme()) switchTheme(systemTheme());
     };
-    // Choix fait dans un autre onglet du site : on s'aligne.
+    // choix fait dans un autre onglet
     const onStorage = (event: StorageEvent) => {
       if (event.key === THEME_STORAGE_KEY || event.key === null) switchTheme(resolveTheme());
     };

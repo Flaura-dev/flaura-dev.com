@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 
 const mail = <a href={`mailto:${site.email}`}>{site.email}</a>;
 
-/** Renvoi vers un autre article de la page. */
 function Art({ n }: { n: number }) {
   return <a href={`#article-${n}`}>article {n}</a>;
 }
@@ -231,9 +230,9 @@ const sections: LegalSection[] = [
         <p>
           En cas de retard de paiement, des pénalités sont dues de plein droit, sans rappel
           préalable, au taux appliqué par la Banque centrale européenne à son opération de
-          refinancement la plus récente majoré de dix points. S’y ajoute une indemnité forfaitaire pour frais de
-          recouvrement de 40&nbsp;€ par facture (articles L.&nbsp;441-10 et D.&nbsp;441-5 du Code de
-          commerce).
+          refinancement la plus récente majoré de dix points. S’y ajoute une indemnité forfaitaire
+          pour frais de recouvrement de 40&nbsp;€ par facture (articles L.&nbsp;441-10 et
+          D.&nbsp;441-5 du Code de commerce).
         </p>
         <p>
           Si une facture reste impayée quinze jours après une relance écrite, la Prestataire peut

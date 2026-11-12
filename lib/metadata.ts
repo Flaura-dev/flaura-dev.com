@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import apercu from "@/assets/partage/apercu-liens.jpg";
 import { site } from "@/content/site";
 
-/** Champs Open Graph communs. Un `openGraph` défini dans une page remplace celui du layout en entier. */
+// un openGraph de page remplace celui du layout en entier
 export const openGraphBase = {
   type: "website",
   locale: "fr_FR",
@@ -16,16 +16,10 @@ export const openGraphBase = {
   },
 } as const;
 
-/**
- * Pages légales : lisibles par tous, mais hors des résultats de recherche, car elles affichent
- * l'adresse de l'éditrice. Les liens restent suivis. Ces pages restent hors du sitemap.
- */
+// pages légales hors Google (elles affichent l'adresse)
 export const legalRobots: Metadata["robots"] = { index: false, follow: true };
 
-/**
- * Canonical et og:url propres à une page (chemin relatif à `metadataBase`).
- * À déclarer dans chaque page, jamais dans le layout : toutes les pages en hériteraient.
- */
+// dans chaque page, jamais dans le layout
 export function pageUrls(path: string): Pick<Metadata, "alternates" | "openGraph"> {
   return { alternates: { canonical: path }, openGraph: { ...openGraphBase, url: path } };
 }

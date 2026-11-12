@@ -1,30 +1,26 @@
+// ==== REGLAGES ====
 export type Theme = "dark" | "light";
 
 export const THEME_STORAGE_KEY = "theme";
 export const PETALS_STORAGE_KEY = "petals";
 
-/** Réglage clair/sombre du système du visiteur. */
 export const SYSTEM_LIGHT_QUERY = "(prefers-color-scheme: light)";
 
-/** Couleur de la barre du navigateur mobile, alignée sur le fond de chaque thème. */
+// barre du navigateur mobile
 export const THEME_COLORS: Record<Theme, string> = {
   dark: "#0D0817",
   light: "#F7F2EE",
 };
 
-/**
- * Exécuté dans <head> avant l'affichage : applique le thème du visiteur (son choix
- * mémorisé, sinon le réglage clair/sombre de son système) et les pétales coupés.
- * Sans JavaScript, le site reste sombre, avec les pétales.
- */
+// ==== AVANT L'AFFICHAGE ====
+// lancé dans <head> : pas de flash au chargement
 export const preferencesInitScript = `(function(){var d=document.documentElement,t=null;try{if(localStorage.getItem("${PETALS_STORAGE_KEY}")==="off")d.setAttribute("data-petals","off");t=localStorage.getItem("${THEME_STORAGE_KEY}")}catch(e){}if(t!=="light"&&t!=="dark")t=window.matchMedia&&matchMedia("${SYSTEM_LIGHT_QUERY}").matches?"light":"dark";if(t==="light"){d.setAttribute("data-theme","light");var m=document.querySelector('meta[name="color-scheme"]');if(m)m.content="light";var c=document.querySelector('meta[name="theme-color"]');if(c)c.content="${THEME_COLORS.light}"}})()`;
 
-/** Thème du système du visiteur. */
+// ==== THEME ====
 export function systemTheme(): Theme {
   return window.matchMedia(SYSTEM_LIGHT_QUERY).matches ? "light" : "dark";
 }
 
-/** Choix explicite du visiteur, s'il en a fait un (sinon le site suit son système). */
 export function readStoredTheme(): Theme | null {
   try {
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
@@ -34,18 +30,17 @@ export function readStoredTheme(): Theme | null {
   }
 }
 
-/** Thème à afficher : le choix du visiteur, sinon celui de son système. */
 export function resolveTheme(): Theme {
   return readStoredTheme() ?? systemTheme();
 }
 
-/** Mémorise le choix du visiteur ; s'il revient au thème du système, on l'oublie. */
+// retour au thème du système : on oublie le choix
 export function storeTheme(theme: Theme) {
   try {
     if (theme === systemTheme()) localStorage.removeItem(THEME_STORAGE_KEY);
     else localStorage.setItem(THEME_STORAGE_KEY, theme);
   } catch {
-    // Stockage indisponible (navigation privée stricte) : le choix vaut pour cette page.
+    // stockage indisponible
   }
 }
 

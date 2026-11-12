@@ -2,10 +2,8 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 
-/*
- * CSP. Pages statiques, donc pas de nonce : 'unsafe-inline' pour les scripts de Next et du
- * thème. Rien d'autre ne vient de l'extérieur, à part le cadre Calendly.
- */
+// ==== SECURITE ====
+// pages statiques : pas de nonce, d'où 'unsafe-inline'
 const contentSecurityPolicy = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
@@ -23,10 +21,8 @@ const contentSecurityPolicy = [
 
 const securityHeaders = [
   { key: "Content-Security-Policy", value: contentSecurityPolicy },
-  // HTTPS obligatoire pendant un an, sans les sous-domaines.
   { key: "Strict-Transport-Security", value: "max-age=31536000" },
   { key: "X-Content-Type-Options", value: "nosniff" },
-  // Doublon de frame-ancestors pour les navigateurs anciens : le site ne s'affiche dans aucun cadre.
   { key: "X-Frame-Options", value: "DENY" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   {
@@ -36,22 +32,16 @@ const securityHeaders = [
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
 ];
 
-/*
- * Une seule adresse publique : l'ancien domaine temporaire et www renvoient vers
- * https://flaura-dev.com, page pour page (301).
- */
+// ==== REDIRECTIONS ====
+// domaine temporaire et www vers flaura-dev.com
 const redirectedHosts = ["palegoldenrod-swallow-512762.hostingersite.com", "www.flaura-dev.com"];
 
+// ==== CONFIG ====
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
-  // AVIF pour les navigateurs qui le lisent, WebP sinon. Next règle la qualité de l'AVIF pour
-  // un rendu équivalent au WebP : environ deux fois plus léger pour la photo du haut.
   images: { formats: ["image/avif", "image/webp"] },
-  // En développement, Next écrit chaque appel de Server Action avec ses arguments : la saisie
-  // du formulaire de contact se retrouverait dans le terminal.
-  logging: { serverFunctions: false },
-  // Ne pas annoncer « X-Powered-By: Next.js » à chaque réponse.
+  logging: { serverFunctions: false }, // pas de saisie du formulaire dans le terminal
   poweredByHeader: false,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];

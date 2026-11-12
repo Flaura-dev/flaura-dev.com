@@ -3,14 +3,10 @@ import { cx } from "@/lib/cx";
 
 type BrowserFrameProps = {
   children: ReactNode;
-  /** link : se soulève au survol et s'enfonce à l'appui. drag : immobile (la poignée réagit). */
   interactive?: "link" | "drag";
 };
 
-/**
- * Fenêtre de navigateur stylisée sur fond rose, commune à toutes les captures.
- * overflow-clip (pas hidden) : sinon ScrollingShot suivrait ce cadre au lieu de la page.
- */
+// overflow-clip et pas hidden : sinon ScrollingShot suit ce cadre
 export function BrowserFrame({ children, interactive }: BrowserFrameProps) {
   return (
     <div className="group/frame relative size-full overflow-clip bg-[color-mix(in_oklab,var(--pink)_7%,var(--bg))]">

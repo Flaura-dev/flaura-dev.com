@@ -2,7 +2,6 @@ import type { ComponentProps } from "react";
 import Link from "next/link";
 import { cx } from "@/lib/cx";
 
-/** Bouton rose plein (« Réserver un appel ») : le texte prend la couleur du fond. */
 export function ButtonLink({ className, ...props }: ComponentProps<typeof Link>) {
   return (
     <Link

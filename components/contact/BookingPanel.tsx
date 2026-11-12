@@ -11,10 +11,6 @@ import {
 import { site } from "@/content/site";
 import { CalendlyEmbed } from "./CalendlyEmbed";
 
-/*
- * Café virtuel : présentation à gauche, Calendly à droite (requête de conteneur). Sur une
- * colonne, le lien LinkedIn passe après le calendrier.
- */
 export function BookingPanel() {
   return (
     <div
@@ -55,11 +51,9 @@ export function BookingPanel() {
             personne pour t’aider.
           </p>
         </div>
-        {/* Calendrier centré en hauteur dans sa colonne. */}
         <div className="flex flex-col justify-center p-7 @[38rem]:col-start-2 @[38rem]:row-span-2 @[38rem]:row-start-1">
           <CalendlyEmbed url={site.calendlyUrl} />
         </div>
-        {/* Sur deux colonnes, en bas de la présentation. */}
         <div className="px-7 pb-7 @[38rem]:border-r @[38rem]:border-line @[38rem]:pt-4">
           <a
             href={site.linkedin}

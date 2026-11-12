@@ -10,7 +10,6 @@ import { site } from "@/content/site";
 import { PetalsToggle } from "./PetalsToggle";
 
 const columnTitle = "mb-1 font-mono text-xs text-pink";
-// Au doigt, chaque lien fait au moins 44 px de haut (la colonne se resserre d'autant).
 const linkClass =
   "press-text inline-flex items-center text-fg hover:text-pink pointer-coarse:min-h-11";
 const columnClass = "flex flex-col gap-3 text-[0.9375rem] pointer-coarse:gap-1";

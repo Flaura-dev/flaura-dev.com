@@ -24,22 +24,18 @@ function toggle() {
   try {
     localStorage.setItem(PETALS_STORAGE_KEY, off ? "off" : "on");
   } catch {
-    // Stockage indisponible : le choix vaut pour cette page.
+    // stockage indisponible
   }
 }
 
 type PetalsToggleProps = {
-  /** text : lien du footer · icon : bouton rond du header, à côté du thème · menu : ligne du menu mobile. */
-  variant?: "text" | "icon" | "menu";
+  variant?: "text" | "icon" | "menu"; // footer, header, menu mobile
   className?: string;
 };
 
-/**
- * Interrupteur des pétales : toute animation permanente doit pouvoir être coupée. Libellés
- * et icônes dépendent de data-petals en CSS : les exemplaires de la page restent d'accord.
- */
+// libellés et icônes gérés en CSS (data-petals)
 export function PetalsToggle({ variant = "text", className }: PetalsToggleProps) {
-  // En développement, React remonte <html> et efface l'attribut : on le réapplique.
+  // en dev, React efface l'attribut : on le remet
   useLayoutEffect(() => {
     apply(readStored());
   }, []);

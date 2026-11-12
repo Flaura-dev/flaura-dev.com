@@ -13,21 +13,17 @@ import {
 } from "@/content/contact";
 import { cx } from "@/lib/cx";
 
-// 16 px sur mobile : en dessous, Safari sur iPhone zoome la page dès qu'on touche un champ.
+// 16 px mini sur mobile, sinon l'iPhone zoome
 const fieldClass =
   "w-full rounded-xl border border-field-line bg-bg px-4 py-3.5 font-mono text-base text-fg placeholder:text-muted user-invalid:border-pink aria-invalid:border-pink md:text-sm";
 const labelClass = "font-mono text-xs font-medium tracking-[0.125em] text-muted uppercase";
 
 const initialState: ContactState = { status: "idle" };
 
-/**
- * Formulaire de contact, envoyé par une Server Action (app/actions/contact.ts) : il fonctionne
- * aussi sans JavaScript. En cas d'erreur, la saisie est conservée et le champ fautif signalé.
- */
+// ==== FORMULAIRE ====
 export function ContactForm() {
   const [state, formAction, pending] = useActionState(sendContact, initialState);
 
-  /** Liaison d'un champ à son éventuel message d'erreur (lecteurs d'écran compris). */
   function errorProps(field: ContactField) {
     const invalid = Boolean(state.errors?.[field]);
     return {
@@ -48,7 +44,6 @@ export function ContactForm() {
         <p className="text-sm text-muted">{responseNote}</p>
       </div>
 
-      {/* Nom et e-mail côte à côte seulement si le formulaire est assez large. */}
       <div className="grid gap-3.5 @[28rem]:grid-cols-2">
         <div className="flex flex-col gap-2.5">
           <label htmlFor="f-name" className={labelClass}>
@@ -93,7 +88,6 @@ export function ContactForm() {
         <label htmlFor="f-type" className={labelClass}>
           Type de projet
         </label>
-        {/* Liste aux couleurs du site : voir .select-themed dans globals.css. */}
         <div className="relative">
           <select
             id="f-type"
@@ -132,7 +126,7 @@ export function ContactForm() {
         <FieldError field="message" message={state.errors?.message} hint={fieldHints.message} />
       </div>
 
-      {/* Champ piège : invisible et hors du parcours clavier, seuls les robots le remplissent. */}
+      {/* champ piège pour les robots */}
       <div aria-hidden="true" className="sr-only">
         <label htmlFor="f-cache">Ne remplis pas ce champ</label>
         <input id="f-cache" name={honeypotField} type="text" tabIndex={-1} autoComplete="off" />
@@ -155,7 +149,6 @@ export function ContactForm() {
         )}
       >
         {notice}
-        {/* Coche verte (vert « disponible »), foncée pour rester lisible dans les deux thèmes. */}
         {state.status === "sent" && (
           <span className="inline-flex size-6 shrink-0 items-center justify-center rounded-md bg-avail text-[#0D0817]">
             <CheckIcon size={14} strokeWidth={3} />
@@ -165,7 +158,6 @@ export function ContactForm() {
 
       <p className="text-xs leading-[1.6] text-muted">
         Tes informations servent uniquement à te répondre.{" "}
-        {/* Marges verticales invisibles : 44 px de zone tactile sans décaler le texte. */}
         <Link
           href="/confidentialite"
           className="py-3.5 underline underline-offset-2 press-text hover:text-pink"
@@ -177,10 +169,8 @@ export function ContactForm() {
   );
 }
 
-/**
- * Message d'erreur du serveur après l'envoi. Sinon, l'indication `hint` reste masquée et
- * s'affiche en CSS seul quand le visiteur quitte le champ mal rempli (:user-invalid).
- */
+// ==== ERREURS ====
+// erreur du serveur, sinon le hint s'affiche en CSS (:user-invalid)
 function FieldError({
   field,
   message,

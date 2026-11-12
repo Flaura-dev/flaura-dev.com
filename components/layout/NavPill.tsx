@@ -4,7 +4,6 @@ import Link from "next/link";
 import { sections } from "@/content/site";
 import { useActiveSection } from "@/lib/use-active-section";
 
-/** Menu en pilule (desktop). Section en cours en rose, bulle de survol (cf. .nav-bubble). */
 export function NavPill() {
   const active = useActiveSection();
 

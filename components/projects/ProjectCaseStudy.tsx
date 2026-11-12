@@ -3,21 +3,14 @@ import { ArrowUpRightIcon } from "@/components/ui/icons";
 import type { Project } from "@/content/projects";
 import { ProjectVisual } from "./ProjectVisual";
 
-/** Le visuel occupe toute la largeur de la colonne de contenu (1 200 px au plus). */
 const CASE_SHOT_SIZES = "(min-width: 1280px) 1200px, 100vw";
 
 type ProjectCaseStudyProps = {
   project: Project;
-  /** Premier projet de la page : captures chargées tout de suite. */
   eager?: boolean;
-  /** Bas de l'encart, sur toute sa largeur : le témoignage du client. */
   children?: ReactNode;
 };
 
-/**
- * Version longue d'un projet, sur /projets : le visuel en grand, puis les repères (type,
- * pages, année…) à gauche et le récit à droite. Sur mobile, tout se suit sur une colonne.
- */
 export function ProjectCaseStudy({ project, eager = false, children }: ProjectCaseStudyProps) {
   const { caseStudy } = project;
   const facts = [...caseStudy.facts, ["Année", String(project.year)]];
@@ -33,10 +26,8 @@ export function ProjectCaseStudy({ project, eager = false, children }: ProjectCa
       <div className="grid gap-x-12 gap-y-8 p-6 md:p-9 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
         <div className="flex flex-col gap-5">
           <p className="font-mono text-xs text-pink">{project.label}</p>
-          {/* Le lien ↗ déborde sans agrandir la ligne, comme sur la carte. */}
           <div className="@container flex items-start justify-between gap-4">
-            {/* Même règle que la carte : « Consultante Business » (insécable) mesure environ 9,3 fois
-                la taille de la police et doit tenir dans la colonne, à côté du lien ↗ (3,75 rem). */}
+            {/* titre réduit pour tenir à côté du lien */}
             <h3 className="font-display-auto text-[length:min(2.125rem,calc((100cqw_-_3.75rem)/9.5))] leading-none font-black uppercase">
               {project.title}
             </h3>

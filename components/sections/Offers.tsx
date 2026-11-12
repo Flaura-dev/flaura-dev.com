@@ -16,16 +16,8 @@ import {
 import { cx } from "@/lib/cx";
 import { euros, type Price, VAT_RATE, withVat } from "@/lib/price";
 
-/*
- * Quatre cartes (trois formules + Refonte), puis la maintenance. Prix tirés de
- * content/offers.ts, comme les données structurées.
- *
- * À partir de 1280 px, les lignes s'alignent d'une carte à l'autre (subgrid) et la carte
- * recommandée déborde de 16 px. En dessous : deux cartes par ligne. Sous 900 px : carrousel
- * (OffersCarousel), une carte à la fois, les voisines visibles des deux côtés.
- */
-
-// Rangées partagées par les cartes : en-tête, prix, une par ligne de planRows, bouton.
+// ==== OFFRES ====
+// en-tête + prix + lignes + bouton
 const gridRows = {
   "--card-rows": planRows.length + 3,
   "--plan-rows": planRows.length,
@@ -41,8 +33,6 @@ export function Offers() {
           Offres
         </SectionHeading>
 
-        {/* Carrousel : déborde du conteneur jusqu'aux bords de l'écran ; la marge intérieure
-            (2 rem de carte voisine visible + 0,75 rem d'écart) centre la carte en cours. */}
         <OffersCarousel
           items={[
             ...plans.map((plan) => ({ id: `offre-${plan.id}`, name: plan.name })),
@@ -91,8 +81,8 @@ export function Offers() {
               compris&nbsp;: ils sont à ton nom et à ta charge.
             </p>
             <p>
-              Demandes particulières non comprises&nbsp;: elles sont chiffrées en supplément sur le devis.
-              N’hésite pas à m’en faire part dès le début.
+              Demandes particulières non comprises&nbsp;: elles sont chiffrées en supplément sur le
+              devis. N’hésite pas à m’en faire part dès le début.
             </p>
           </div>
         </div>
@@ -103,6 +93,7 @@ export function Offers() {
   );
 }
 
+// ==== CARTE ====
 type OfferCardProps = {
   id: string;
   name: string;
@@ -110,13 +101,8 @@ type OfferCardProps = {
   price: Price;
   rows: CardRow[];
   cta: string;
-  /** Formule mise en avant : carte rose et badge « Recommandée ». */
   recommended?: boolean;
-  /**
-   * Module Refonte, en plus d'une formule : prix « + … », et lignes empilées librement (elles
-   * ne sont pas les mêmes que celles des formules, et leurs textes plus longs les agrandiraient).
-   */
-  addon?: boolean;
+  addon?: boolean; // module refonte
 };
 
 function OfferCard({
@@ -134,7 +120,6 @@ function OfferCard({
       id={id}
       className={cx(
         "relative flex w-full shrink-0 snap-center snap-always flex-col rounded-3xl p-6 motion-safe:in-data-[nudge=true]:animate-offers-nudge md:w-auto md:p-7 xl:row-span-(--card-rows) xl:grid xl:grid-rows-subgrid",
-        // Ombre plus courte dans le carrousel, qui la couperait.
         recommended
           ? "bg-pink text-bg shadow-[0_12px_32px_-16px_var(--pink)] md:shadow-[0_24px_60px_-24px_var(--pink)] xl:-my-4 xl:py-11"
           : "border border-line bg-surface",
@@ -142,7 +127,6 @@ function OfferCard({
     >
       <div className="flex flex-col gap-3 pb-6">
         <CardTitle inverted={recommended}>{name}</CardTitle>
-        {/* À cheval sur le bord haut de la carte : le titre garde toute la largeur. */}
         {recommended && (
           <p className="absolute -top-3 right-7 self-start rounded-full border border-pink bg-bg px-3 py-1 font-mono text-xs leading-4 tracking-[0.08em] text-pink uppercase">
             Recommandée
@@ -161,7 +145,6 @@ function OfferCard({
 
       <dl className={cx("xl:row-span-(--plan-rows)", !addon && "xl:grid xl:grid-rows-subgrid")}>
         {rows.map(({ label, value }) => {
-          // Le cadeau inclus est mis en valeur, en rose et en gras.
           const gift = value && label === "Cadeau";
           return (
             <div
@@ -208,7 +191,7 @@ function OfferCard({
   );
 }
 
-/** Maintenance en longueur : présentation à gauche, formules à droite à partir de 1280 px. */
+// ==== MAINTENANCE ====
 function MaintenanceCard() {
   return (
     <article
@@ -236,7 +219,7 @@ function MaintenanceCard() {
   );
 }
 
-/** Titre de carte : « // » rose puis le nom, dans la police des titres. */
+// ==== TITRE ET PRIX ====
 function CardTitle({
   id,
   inverted = false,
@@ -247,7 +230,6 @@ function CardTitle({
   children: ReactNode;
 }) {
   return (
-    // Interligne de 1,1 : sur deux lignes, les « // » ne touchent pas la ligne du dessous.
     <h3
       id={id}
       className="font-display-auto text-[2.25rem] leading-[1.1] font-black text-balance uppercase"
@@ -261,7 +243,6 @@ function CardTitle({
   );
 }
 
-/** Prix HT en grand, avec « à partir de » au-dessus et le TTC en italique dessous. */
 function PriceTag({
   price,
   prefix,
@@ -273,9 +254,7 @@ function PriceTag({
   price: Price;
   prefix?: string;
   note?: string;
-  /** Prix plus petit et rose (formules de maintenance). */
   small?: boolean;
-  /** Sur la carte rose. */
   inverted?: boolean;
   className?: string;
 }) {

@@ -14,9 +14,7 @@ type ProjectsViewProps = {
   onSelect?: (filter: ProjectFilter | null) => void;
 };
 
-/** Durée d'affichage de la confirmation « lien copié ». */
 const COPY_FEEDBACK_MS = 2000;
-/** Adresse de la page, affichée sans protocole à côté du bouton de copie. */
 const DISPLAY_URL = `${new URL(site.url).host}/projets`;
 
 function ProjectsView({ active, onSelect }: ProjectsViewProps) {
@@ -27,7 +25,6 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
 
   useEffect(() => () => window.clearTimeout(resetTimer.current), []);
 
-  // Confirmation brève (icône ✓ et message), puis retour à l'état initial.
   async function copyLink() {
     window.clearTimeout(resetTimer.current);
     try {
@@ -41,7 +38,6 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
 
   return (
     <>
-      {/* Rien à filtrer tant qu'il n'y a qu'un projet. */}
       {projects.length > 1 && (
         <div className="flex flex-wrap items-center justify-between gap-4 border-y border-line py-3.5">
           <div
@@ -97,7 +93,6 @@ function ProjectsView({ active, onSelect }: ProjectsViewProps) {
         </div>
       )}
 
-      {/* Annonce le résultat du filtre aux lecteurs d'écran. */}
       <p role="status" className="sr-only">
         {active
           ? `${visible.length} projet${visible.length > 1 ? "s" : ""} affiché${visible.length > 1 ? "s" : ""}`
@@ -126,18 +121,14 @@ function ProjectsWithUrlState() {
   const active = projectFilters.find((filter) => filter.slug === requested)?.slug ?? null;
 
   function select(filter: ProjectFilter | null) {
-    // Next.js synchronise useSearchParams avec l'historique natif : pas de rechargement.
+    // Next suit l'historique natif : pas de rechargement
     window.history.replaceState(null, "", filter ? `/projets?type=${filter}` : "/projets");
   }
 
   return <ProjectsView active={active} onSelect={select} />;
 }
 
-/**
- * Liste filtrable des projets, en version longue (étude de cas et témoignage). Le filtre actif est dans l'URL (/projets?type=refonte),
- * ce qui permet de partager une sélection. Avant l'hydratation, tous les projets
- * s'affichent.
- */
+// filtre dans l'URL : /projets?type=refonte
 export function ProjectsBrowser() {
   return (
     <Suspense fallback={<ProjectsView active={null} />}>

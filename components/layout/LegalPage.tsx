@@ -6,10 +6,8 @@ import { legalPages, type LegalPath } from "@/content/legal";
 import { cx } from "@/lib/cx";
 
 export type LegalSection = {
-  /** Ancre de la section : on peut y renvoyer depuis un devis (/cgv#article-4). */
   id: string;
   num: string;
-  /** Numéro affiché dans le sommaire, si `num` est trop long pour sa colonne (« A » pour « annexe »). */
   tocNum?: string;
   title: string;
   content: ReactNode;
@@ -19,13 +17,12 @@ type LegalPageProps = {
   path: LegalPath;
   title: string;
   subtitle?: string;
-  /** Date de mise à jour ou version, sous le titre. */
   meta: ReactNode;
   intro?: ReactNode;
   sections: LegalSection[];
 };
 
-/** Gabarit des pages légales : pages et sommaire à gauche (en haut sur mobile), texte à droite. */
+// ==== PAGE LEGALE ====
 export function LegalPage({ path, title, subtitle, meta, intro, sections }: LegalPageProps) {
   return (
     <main id="contenu" tabIndex={-1} className="pt-8 pb-24 outline-none">
@@ -105,7 +102,7 @@ export function LegalPage({ path, title, subtitle, meta, intro, sections }: Lega
 
             {intro && <div className="legal-prose">{intro}</div>}
 
-            {/* data-rail-* : repères du fil conducteur (ScrollRail). */}
+            {/* data-rail-* : repères du fil conducteur */}
             {sections.map((section) => (
               <section
                 key={section.id}
@@ -132,7 +129,7 @@ export function LegalPage({ path, title, subtitle, meta, intro, sections }: Lega
   );
 }
 
-/** Fiche d'identité (éditrice, hébergeur, prestataire) : intitulé à gauche, valeur à droite. */
+// ==== BLOCS ====
 export function LegalFacts({ items }: { items: { term: string; value: ReactNode }[] }) {
   return (
     <dl className="flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 sm:grid sm:grid-cols-[12rem_minmax(0,1fr)] sm:items-baseline sm:gap-x-8 sm:gap-y-3 md:p-6">
@@ -146,7 +143,6 @@ export function LegalFacts({ items }: { items: { term: string; value: ReactNode 
   );
 }
 
-/** Lien vers un autre site, ouvert dans un nouvel onglet. */
 export function ExternalLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer">

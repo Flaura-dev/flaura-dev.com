@@ -7,10 +7,6 @@ import { career } from "@/content/about";
 import { site } from "@/content/site";
 import { cx } from "@/lib/cx";
 
-/*
- * Bento sur 4 colonnes (desktop) : photo sur deux rangées, présentation, « Var, France »,
- * puis le parcours. Une seule colonne sur mobile.
- */
 export function About() {
   return (
     <section id="apropos" aria-labelledby="apropos-titre" className="pt-[120px] pb-24">
@@ -20,7 +16,7 @@ export function About() {
         </SectionHeading>
 
         <div className="grid auto-rows-[minmax(180px,auto)] gap-4 md:grid-cols-4">
-          {/* Bichromie rose / nuit, avec le rose du thème sombre (le foncé assombrirait la photo). */}
+          {/* bichromie rose / nuit */}
           <div className="relative min-h-[380px] overflow-hidden rounded-3xl md:row-span-2">
             <Image
               src={photo}

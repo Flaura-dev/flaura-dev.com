@@ -1,4 +1,3 @@
-/** Les 4 étapes de « Comment on travaille ensemble ». */
 export const processSteps = [
   {
     num: "01",

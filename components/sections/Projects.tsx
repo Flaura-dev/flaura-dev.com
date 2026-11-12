@@ -18,7 +18,6 @@ export function Projects() {
             <SectionHeading num="02" id="projets-titre" className="whitespace-nowrap">
               Projets
             </SectionHeading>
-            {/* Petit bouton vers /projets : 34 px de haut à l'œil, 44 px de zone cliquable. */}
             <Link
               href="/projets"
               className="relative mb-2 inline-flex h-[34px] press items-center gap-2 rounded-full border border-pink/60 px-3.5 font-mono text-xs text-fg after:absolute after:inset-x-0 after:-inset-y-1.5 hover:border-pink hover:bg-pink hover:text-bg"

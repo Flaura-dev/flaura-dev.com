@@ -3,23 +3,16 @@ import type { CSSProperties } from "react";
 import { ArrowDownIcon } from "@/components/ui/icons";
 
 type ScrollingShotProps = {
-  /** Capture pleine page, 1600 px de large comme les autres. */
   src: StaticImageData;
   alt: string;
   sizes: string;
   eager?: boolean;
 };
 
-/**
- * Capture pleine page qui défile au survol (ou au focus) jusqu'en bas du site, puis
- * remonte. Sur écran tactile, elle suit le défilement de la page (globals.css).
- *
- * Conteneur de taille : « -100% + 100cqh » amène le bas de la capture en bas du cadre.
- * overflow-clip plutôt que hidden : le cadre ne peut pas défiler, même par script.
- */
+// capture qui défile au survol ; -100% + 100cqh = bas de la capture en bas du cadre
 export function ScrollingShot({ src, alt, sizes, eager = false }: ScrollingShotProps) {
   const ratio = src.height / src.width;
-  // Plus la page est longue, plus la descente dure : la vitesse reste à peu près la même.
+  // vitesse à peu près constante
   const duration = Math.max(2, ratio * 1.5);
 
   return (
@@ -35,8 +28,7 @@ export function ScrollingShot({ src, alt, sizes, eager = false }: ScrollingShotP
         fetchPriority={eager ? "high" : undefined}
         className="block h-auto min-h-full w-full object-cover object-top motion-safe:transition-[translate] motion-safe:duration-700 motion-safe:ease-in-out motion-safe:group-hover/frame:translate-y-[calc(-100%_+_100cqh)] motion-safe:group-hover/frame:duration-(--shot-duration) motion-safe:group-has-[:focus-visible]:translate-y-[calc(-100%_+_100cqh)] motion-safe:group-has-[:focus-visible]:duration-(--shot-duration)"
       />
-      {/* Indice masqué (hauteur 0) s'il reste moins de 24 px à faire défiler. Visuel seul :
-          les lecteurs d'écran ne survolent pas, et il ne doit pas s'ajouter au nom du lien. */}
+      {/* masqué s'il reste moins de 24 px à faire défiler */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 hidden max-h-full overflow-hidden motion-safe:[@media(hover:hover)]:block"

@@ -10,27 +10,22 @@ type RailSection = { id: string; num: string; label: string; element: HTMLElemen
 type Mark = RailSection & { position: number; showNum: boolean };
 type Drag = { offset: number; startY: number; tracking: boolean };
 
-/** Déplacement (px) à partir duquel un appui sur la piste devient un glisser. */
-const DRAG_THRESHOLD = 4;
-/** Écart minimal (px) entre deux numéros sur le rail ; en dessous, seul le trait reste. */
-const MIN_NUM_GAP = 18;
-/** Hauteur (px) sur le rail sous laquelle l'étiquette du point passe en dessous de lui. */
-const LABEL_FLIP = 96;
+// ==== REGLAGES ====
+const DRAG_THRESHOLD = 4; // px avant qu'un appui devienne un glisser
+const MIN_NUM_GAP = 18; // px mini entre deux numéros
+const LABEL_FLIP = 96; // en dessous, l'étiquette passe sous le point
 
-/** Hauteur de défilement disponible (0 si la page tient dans l'écran). */
+// ==== FONCTIONS UTILES ====
 function maxScroll() {
   return Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 }
 
-/** Les pages déjà visitées restent dans le document, masquées (cacheComponents) : on les ignore. */
+// les pages gardées en cache sont masquées : on les ignore
 function isShown(element: HTMLElement | null): element is HTMLElement {
   return element !== null && element.getClientRects().length > 0;
 }
 
-/**
- * Sections suivies : celles que la page affichée signale (data-rail-num et data-rail-label,
- * pages légales), sinon celles de l'accueil.
- */
+// sections signalées par la page (data-rail-*), sinon celles de l'accueil
 function railSections(): { fromPage: boolean; list: RailSection[] } {
   const marked = Array.from(document.querySelectorAll<HTMLElement>("[data-rail-label]")).filter(
     isShown,
@@ -51,11 +46,7 @@ function railSections(): { fromPage: boolean; list: RailSection[] } {
   return { fromPage: false, list };
 }
 
-/**
- * Fil conducteur (desktop), qui sert de barre de défilement : point déplaçable, clic sur
- * le rail ou sur le repère d'une section. Masqué des lecteurs d'écran, le défilement natif
- * reste intact.
- */
+// ==== FIL CONDUCTEUR ====
 export function ScrollRail() {
   const railRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -77,8 +68,7 @@ export function ScrollRail() {
 
     let pageMarks: Mark[] = [];
 
-    // Sections signalées par la page : la section en cours est la dernière dont le repère
-    // est atteint par le point. Tout en bas, c'est donc la dernière, même courte.
+    // section en cours = dernier repère atteint par le point
     const updatePageActive = () => {
       if (pageMarks.length === 0) return;
       const progress = window.scrollY / maxScroll();
@@ -87,15 +77,13 @@ export function ScrollRail() {
       setPageActive(id);
     };
 
-    // L'étiquette se place au-dessus du point, sauf tout en haut du rail où elle sortirait de l'écran.
     const updateLabelSide = () => {
       const progress = Math.min(1, window.scrollY / maxScroll());
       const thumbY = progress * (trackRef.current?.clientHeight ?? 0);
       rail.dataset.labelBelow = String(thumbY < LABEL_FLIP);
     };
 
-    // Un repère par section, placé là où se trouvera le point quand la section devient
-    // la section en cours (son haut passe à 40 % de l'écran). Recalculé si la page change de taille.
+    // un repère par section, là où son haut passe à 40 % de l'écran
     const measure = () => {
       const max = maxScroll();
       const railHeight = trackRef.current?.clientHeight ?? 0;
@@ -119,14 +107,13 @@ export function ScrollRail() {
     resizeObserver.observe(document.body);
     window.addEventListener("resize", measure);
 
-    // Firefox n'a pas les animations liées au défilement : on met --rail-p à jour nous-mêmes.
+    // Firefox : pas d'animation liée au défilement, on met --rail-p à jour ici
     const supportsTimeline = CSS.supports("animation-timeline", "scroll()");
     const updateProgress = () => {
       rail.style.setProperty("--rail-p", String(Math.min(1, window.scrollY / maxScroll())));
     };
     if (!supportsTimeline) updateProgress();
 
-    // Pendant le défilement, l'étiquette de la section s'affiche près du point.
     let hideTimer = 0;
     const onScroll = () => {
       rail.dataset.scrolling = "true";
@@ -148,29 +135,27 @@ export function ScrollRail() {
     };
   }, [pathname]);
 
-  /** Position de défilement correspondant à une hauteur sur le rail. */
+  // == GLISSER ==
   function scrollTopAt(clientY: number) {
     const rect = trackRef.current!.getBoundingClientRect();
     const ratio = Math.min(1, Math.max(0, (clientY - rect.top) / rect.height));
     return ratio * maxScroll();
   }
 
-  /** Le pointeur est capturé par la piste : le glisser continue même hors du rail. */
+  // pointeur capturé : le glisser continue hors du rail
   function startDrag(event: ReactPointerEvent<HTMLElement>, offset: number, tracking: boolean) {
     drag.current = { offset, startY: event.clientY, tracking };
     trackRef.current!.setPointerCapture(event.pointerId);
     if (tracking) railRef.current!.dataset.dragging = "true";
   }
 
-  // Appui sur la piste : saut fluide à cet endroit ; si l'on glisse dans la foulée,
-  // le point suit le pointeur, sans avoir à relâcher pour l'attraper.
+  // clic sur le rail : saut, puis glisser sans relâcher
   function onTrackPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (event.button !== 0) return;
     window.scrollTo({ top: scrollTopAt(event.clientY) });
     startDrag(event, 0, false);
   }
 
-  // Appui sur le point : il reste sous le pointeur à l'endroit où on l'a saisi.
   function onThumbPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (event.button !== 0) return;
     event.preventDefault();
@@ -183,7 +168,6 @@ export function ScrollRail() {
     const state = drag.current;
     if (!state) return;
     if (!state.tracking) {
-      // Petit seuil : un simple clic garde son saut fluide.
       if (Math.abs(event.clientY - state.startY) < DRAG_THRESHOLD) return;
       state.tracking = true;
       railRef.current!.dataset.dragging = "true";
@@ -203,6 +187,7 @@ export function ScrollRail() {
     mark.element.scrollIntoView({ block: "start" });
   }
 
+  // == AFFICHAGE ==
   return (
     <div
       ref={railRef}
@@ -264,11 +249,7 @@ export function ScrollRail() {
             className="pointer-events-auto absolute bottom-0 left-[44px] flex size-11 -translate-x-1/2 translate-y-1/2 cursor-grab touch-none items-center justify-center group-data-[dragging=true]/rail:cursor-grabbing"
           >
             <span className="size-4 rounded-full bg-pink shadow-[0_0_0_4px_var(--bg),0_0_20px_var(--pink)] transition-transform group-hover/rail:scale-125 group-data-[dragging=true]/rail:scale-150 motion-reduce:transition-none" />
-            {/*
-             * Étiquette centrée sur le fil, dans la marge droite : elle ne recouvre jamais le
-             * contenu. Sur les pages légales, le numéro seul : leurs titres ne tiennent pas
-             * dans la marge, et leur sommaire les affiche déjà.
-             */}
+            {/* pages légales : le numéro seul */}
             {current && (
               <span className="pointer-events-none absolute bottom-full left-1/2 mb-0.5 flex w-max max-w-20 -translate-x-1/2 flex-col items-center gap-0.5 rounded-xl border border-line bg-bg/85 px-2 py-1.5 text-center font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase opacity-0 backdrop-blur-md transition-opacity group-hover/rail:opacity-100 group-data-[dragging=true]/rail:opacity-100 group-data-[label-below=true]/rail:top-full group-data-[label-below=true]/rail:bottom-auto group-data-[label-below=true]/rail:mt-0.5 group-data-[label-below=true]/rail:mb-0 group-data-[scrolling=true]/rail:opacity-100 motion-reduce:transition-none opaque:bg-bg opaque:backdrop-blur-none">
                 <span className="text-pink">{current.num}</span>

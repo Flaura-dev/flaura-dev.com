@@ -8,13 +8,8 @@ import { sections, site } from "@/content/site";
 import { useActiveSection } from "@/lib/use-active-section";
 import { PetalsToggle } from "./PetalsToggle";
 
-/** Même valeur que --breakpoint-nav dans globals.css : au-delà, la pilule prend le relais. */
-const NAV_BREAKPOINT = "(width >= 78rem)";
+const NAV_BREAKPOINT = "(width >= 78rem)"; // = --breakpoint-nav
 
-/**
- * Menu des petits écrans, dans un <dialog> modal : focus piégé, fermeture avec Échap,
- * le geste retour (Android) ou un clic à côté, et retour du focus sur le bouton.
- */
 export function MobileMenu() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);
@@ -24,14 +19,13 @@ export function MobileMenu() {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    // Le menu n'a plus lieu d'être si l'écran s'élargit (rotation d'une tablette).
     const wide = window.matchMedia(NAV_BREAKPOINT);
     const closeIfWide = () => {
       if (wide.matches) dialog.close();
     };
     wide.addEventListener("change", closeIfWide);
 
-    // Safari ne gère pas encore closedby="any" : clic sur le fond = fermeture.
+    // Safari ne gère pas encore closedby="any"
     const closeOnBackdrop = (event: MouseEvent) => {
       if (event.target !== dialog) return;
       const rect = dialog.getBoundingClientRect();

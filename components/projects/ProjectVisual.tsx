@@ -6,19 +6,13 @@ import { BeforeAfter } from "./BeforeAfter";
 import { BrowserFrame } from "./BrowserFrame";
 import { PROJECT_SHOT_SIZES as SIZES } from "./grid";
 
-/*
- * Captures faites en 1440 × 900 (double résolution), toutes au même format pour que
- * l'avant et l'après se superposent au pixel près. Seul le haut de page est visible.
- * Sans comparateur, la capture couvre toute la page et défile (ScrollingShot).
- */
-
+// captures en 1440x900 : l'avant et l'après se superposent
 type ShotProps = {
   src: StaticImageData;
   alt: string;
   eager: boolean;
   sizes: string;
-  /** Priorité réseau haute : seulement pour le plus grand élément affiché (LCP). */
-  priority?: boolean;
+  priority?: boolean; // LCP seulement
 };
 
 function Shot({ src, alt, eager, sizes, priority = true }: ShotProps) {
@@ -38,7 +32,6 @@ function Shot({ src, alt, eager, sizes, priority = true }: ShotProps) {
 type ProjectVisualProps = {
   project: Project;
   eager: boolean;
-  /** Largeur affichée des captures : celle des cartes par défaut. */
   sizes?: string;
 };
 

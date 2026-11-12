@@ -1,4 +1,3 @@
-/** Identité de l'éditrice (attestation d'immatriculation au RNE), reprise par les pages légales et le pied de page. */
 export const legal = {
   name: "Laura Fontaine",
   status: "entrepreneur individuel (EI)",
@@ -10,11 +9,10 @@ export const legal = {
   siret: "132 093 071 00018",
   registeredOn: "27 octobre 2026",
   ape: "6201Z, programmation informatique",
-  /** null tant que l'option pour la TVA n'a pas donné de numéro : les pages affichent « en cours d’attribution ». */
+  // null = en cours d'attribution
   vatNumber: null as string | null,
 };
 
-/** Pages légales, dans l'ordre du menu de gauche. */
 export const legalPages = [
   { href: "/mentions-legales", label: "Mentions légales" },
   { href: "/confidentialite", label: "Politique de confidentialité" },

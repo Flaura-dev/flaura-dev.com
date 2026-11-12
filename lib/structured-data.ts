@@ -5,12 +5,7 @@ import { type Project, projects, projectsPage } from "@/content/projects";
 import { site } from "@/content/site";
 import type { Price } from "@/lib/price";
 
-/*
- * Données structurées : un graphe schema.org par page, tiré des mêmes sources que le texte
- * affiché (content/). Les adresses partent de site.url, le domaine final, pour que les
- * identifiants ne changent pas au lancement.
- */
-
+// ==== IDENTIFIANTS ====
 const url = (path = "/") => `${site.url}${path}`;
 
 const ids = {
@@ -25,9 +20,9 @@ const ids = {
   breadcrumb: url("/projets#fil-ariane"),
 };
 
-/** Logo carré servi par app/icon.png. */
 const logo = url("/icon.png");
 
+// ==== SITE ET ENTREPRISE ====
 const website = {
   "@type": "WebSite",
   "@id": ids.website,
@@ -57,7 +52,6 @@ function business(withCatalog: boolean) {
     "@type": "ProfessionalService",
     "@id": ids.business,
     name: site.name,
-    // Entreprise individuelle : la dénomination légale est le nom de l'entrepreneuse.
     legalName: `${legal.name} EI`,
     identifier: {
       "@type": "PropertyValue",
@@ -70,21 +64,17 @@ function business(withCatalog: boolean) {
     image: logo,
     email: site.email,
     founder: { "@id": ids.person },
-    // Département seulement : travail à distance, pas de local ouvert au public.
     address: {
       "@type": "PostalAddress",
       addressRegion: site.address.region,
       addressCountry: "FR",
     },
-    // Clients francophones du monde entier, à distance : pas de zone servie à délimiter.
     knowsLanguage: "fr",
     ...(withCatalog && { hasOfferCatalog: { "@id": ids.catalog } }),
   };
 }
 
-/* --- Accueil --- */
-
-/** Prix HT : « à partir de » (minPrice) ou fixe (price), par mois pour la maintenance. */
+// ==== ACCUEIL ====
 function priceSpecification(price: Price, note?: string) {
   const specification: Record<string, unknown> = {
     "@type": price.unit ? "UnitPriceSpecification" : "PriceSpecification",
@@ -103,12 +93,10 @@ function priceSpecification(price: Price, note?: string) {
 
 type OfferData = {
   id: string;
-  /** Ancre de la page où l'offre est affichée (par défaut : id). */
   anchor?: string;
   name: string;
   description: string;
   price: Price;
-  /** Précision sur le prix, comme sur la carte. */
   priceNote?: string;
   serviceType: string;
 };
@@ -129,7 +117,7 @@ function offer({ id, anchor = id, name, description, price, priceNote, serviceTy
       provider: { "@id": ids.business },
     },
   };
-  // Prix fixe : Google le veut aussi directement sur l'offre.
+  // prix fixe : Google le veut aussi sur l'offre
   if (!price.from) {
     result.price = price.amount;
     result.priceCurrency = "EUR";
@@ -137,7 +125,7 @@ function offer({ id, anchor = id, name, description, price, priceNote, serviceTy
   return result;
 }
 
-/** « Pages : 1 page. Contenu : … » : les lignes remplies d'une carte, en phrases. */
+// "Pages : 1 page. Contenu : ..."
 function describeRows(rows: CardRow[]) {
   return rows
     .filter(({ value }) => value)
@@ -181,7 +169,6 @@ const offerCatalog = {
   ],
 };
 
-/** Texte d'une réponse de la FAQ (schema.org autorise les balises <p>, <ul> et <li>). */
 function answerText({ a, list, after }: (typeof faq)[number]) {
   if (!list) return a;
   const items = list.map((item) => `<li>${item}</li>`).join("");
@@ -217,14 +204,12 @@ export const homeStructuredData = {
   "@graph": [website, person, business(true), homePage, offerCatalog, faqPage],
 };
 
-/* --- /projets --- */
-
-/** Les sites encore sur un domaine temporaire n'apparaissent pas dans le balisage. */
+// ==== PROJETS ====
+// pas de domaine temporaire dans le balisage
 function isFinalUrl(href?: string): href is string {
   return !!href && !new URL(href).hostname.endsWith(".hostingersite.com");
 }
 
-/** « Problème : … Solution : … Résultat : … », comme sur la carte. */
 function describeProject({ description, problem, solution, result }: Project) {
   if (description) return description;
   return [

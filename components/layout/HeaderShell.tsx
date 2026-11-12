@@ -2,14 +2,9 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 
-/** Durée maximale du maintien après un clic de navigation (si scrollend n'arrive pas). */
-const NAV_HOLD_MS = 2000;
+const NAV_HOLD_MS = 2000; // si scrollend n'arrive pas
 
-/**
- * Header collant : se cache quand on descend, revient quand on remonte ou au focus.
- * Reste affiché pendant le saut qui suit un clic dans le menu. Jamais caché si
- * l'animation est réduite.
- */
+// se cache quand on descend, revient quand on remonte
 export function HeaderShell({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLElement>(null);
 
@@ -28,7 +23,6 @@ export function HeaderShell({ children }: { children: ReactNode }) {
         return;
       }
       if (Math.abs(y - lastY) < 6) return;
-      // Caché quand on descend (passé le haut de page), affiché dès qu'on remonte.
       header.dataset.hidden = String(y > lastY && y > 160);
       lastY = y;
     };
@@ -37,7 +31,7 @@ export function HeaderShell({ children }: { children: ReactNode }) {
       holdUntil = performance.now() + NAV_HOLD_MS;
       header.dataset.hidden = "false";
     };
-    // Fin du saut : la position d'arrivée devient la référence (pas de « descente »).
+    // fin du saut après un clic dans le menu
     const endHold = () => {
       if (!holdUntil) return;
       holdUntil = 0;
@@ -55,10 +49,7 @@ export function HeaderShell({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  // Une fois la page défilée, fond en verre (::before) qui déborde de 24 px sous le header
-  // et s'y efface en fondu, à la place d'un trait. Opaque, avec le trait, si la transparence
-  // est réduite ou le contraste élevé. Le flou n'est pas posé sur le header lui-même : il
-  // empêcherait celui du ::before de voir la page.
+  // flou sur ::before et pas sur le header, sinon il ne voit pas la page
   return (
     <header
       ref={ref}

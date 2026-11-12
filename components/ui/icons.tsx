@@ -154,7 +154,6 @@ export function VideoIcon(props: IconProps) {
   );
 }
 
-/** Tasse fumante : le « café virtuel » (appel découverte). */
 export function CoffeeIcon(props: IconProps) {
   return (
     <Svg {...props}>
@@ -191,7 +190,6 @@ export function CopyIcon(props: IconProps) {
   );
 }
 
-/** Pétale de sakura, même dessin que les pétales qui tombent. */
 const PETAL_PATH =
   "M12 22.2C6.05 17.1 3.5 11.15 5.63 6.48C6.9 3.5 9.03 2.23 10.73 3.08L12 5.2L13.28 3.08C14.98 2.23 17.1 3.5 18.38 6.48C20.5 11.15 17.95 17.1 12 22.2Z";
 
@@ -203,7 +201,6 @@ export function PetalIcon(props: IconProps) {
   );
 }
 
-/** Pétale barré : pétales coupés. */
 export function PetalOffIcon(props: IconProps) {
   return (
     <Svg {...props}>
@@ -222,7 +219,7 @@ export function LinkedInIcon(props: IconProps) {
   );
 }
 
-/** Guillemet ouvrant d'Abril Fatface, vectorisé : évite de charger la police pour un seul signe. */
+// guillemet d'Abril Fatface en SVG : pas de police à charger
 export function QuoteMarkIcon({ size = 43, ...props }: IconProps) {
   return (
     <svg

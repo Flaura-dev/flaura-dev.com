@@ -1,7 +1,3 @@
-// Source unique de la FAQ : la section et les données structurées FAQPage en sont tirées.
-// Les prix viennent de content/offers.ts.
-// Typographie : apostrophes ’ et espaces insécables devant « ? », « : », « % » et « HT ».
-
 import { clientCosts, maintenancePlans, plans, redesign } from "@/content/offers";
 import { site } from "@/content/site";
 import { euros } from "@/lib/price";
@@ -10,7 +6,7 @@ const [essentiel, visibilite, pro] = plans.map((plan) => plan.price.amount);
 const [essentielName, visibiliteName, proName] = plans.map((plan) => plan.name);
 const [serenite, evolution] = maintenancePlans.map((formula) => formula.price.amount);
 
-// a : texte de la réponse. list (optionnel) : liste à puces affichée après a. after (optionnel) : texte affiché après la liste.
+// list : liste à puces, after : texte après la liste
 type FaqItem = { q: string; a: string; list?: string[]; after?: string };
 
 export const faq: FaqItem[] = [

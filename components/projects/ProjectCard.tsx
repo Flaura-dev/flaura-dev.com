@@ -5,11 +5,9 @@ import { ProjectVisual } from "./ProjectVisual";
 
 type ProjectCardProps = {
   project: Project;
-  /** Toute la ligne : capture à gauche, texte à droite (à partir de md). */
   wide?: boolean;
 };
 
-/** Carte projet de l'accueil (version courte), avec un lien ↗ quand le site est en ligne. */
 export function ProjectCard({ project, wide = false }: ProjectCardProps) {
   return (
     <article
@@ -18,17 +16,13 @@ export function ProjectCard({ project, wide = false }: ProjectCardProps) {
         wide && "md:col-span-full md:grid md:grid-cols-2",
       )}
     >
-      {/* En largeur, la capture prend la hauteur du texte d'à côté. */}
       <div className={cx("relative h-[230px] overflow-clip", wide && "md:h-auto md:min-h-[300px]")}>
         <ProjectVisual project={project} eager={false} />
       </div>
       <div className={cx("flex flex-1 flex-col gap-3 p-6", wide && "md:justify-center md:p-8")}>
         <p className="font-mono text-xs text-pink">{project.label}</p>
-        {/* Le lien ↗ déborde sans agrandir la ligne : les titres restent alignés entre les cartes. */}
         <div className="@container flex items-start justify-between gap-4">
-          {/* « Consultante Business » (insécable) mesure environ 9,3 fois la taille de la police :
-              quand la carte est étroite, la police se réduit pour que le titre tienne à côté du
-              lien ↗ (3,75 rem), sur toutes les cartes à la fois. */}
+          {/* titre réduit pour tenir à côté du lien */}
           <h3 className="font-display-auto text-[length:min(2.125rem,calc((100cqw_-_3.75rem)/9.5))] leading-none font-black uppercase">
             {project.title}
           </h3>

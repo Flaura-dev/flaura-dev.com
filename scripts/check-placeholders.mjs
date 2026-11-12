@@ -1,6 +1,4 @@
-// Fait échouer la compilation si une page contient encore un texte provisoire entre crochets
-// ([SIRET], [à compléter]…), dans le texte visible ou dans un attribut lu (alt, title, meta).
-// Usage : node scripts/check-placeholders.mjs [dossier des pages, .next/server/app par défaut]
+// bloque le build s'il reste un texte entre crochets ([SIRET]...)
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
@@ -15,13 +13,13 @@ function* htmlFiles(dir) {
   }
 }
 
-/** Texte lu par les visiteurs et les moteurs. Les classes (Tailwind écrit text-[11px]) sont ignorées. */
 function readableText(html) {
   const page = html
     .replace(/<(script|style|template)\b[\s\S]*?<\/\1>/gi, " ")
     .replace(/<!--[\s\S]*?-->/g, " ");
-  const attributes = [...page.matchAll(/\s(?:alt|title|content|aria-label|placeholder)="([^"]*)"/g)]
-    .map((match) => match[1]);
+  const attributes = [
+    ...page.matchAll(/\s(?:alt|title|content|aria-label|placeholder)="([^"]*)"/g),
+  ].map((match) => match[1]);
   return [page.replace(/<[^>]*>/g, " "), ...attributes].join(" ");
 }
 

@@ -6,10 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { PhoneIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
 
-/*
- * xl : positions absolues en cqi (% de la largeur de la colonne), calées sur 1 200 px,
- * qui se réduisent proportionnellement. En dessous : tout empilé.
- */
+// xl : positions en cqi, calées sur 1200 px
 export function Hero() {
   return (
     <section id="accueil" className="pt-6 pb-16">
@@ -23,7 +20,7 @@ export function Hero() {
                   .dev_
                 </span>
               </span>
-              {/* Espace de tête : sans lui, le texte lu par les robots colle au logo. */}
+              {/* espace : sinon le texte colle au logo */}
               <span className="sr-only"> {site.title}</span>
             </h1>
 
@@ -49,7 +46,6 @@ export function Hero() {
                   {"// Développeuse web freelance"}
                 </p>
                 <p className="font-display-auto text-[2.75rem] leading-none font-bold uppercase">
-                  {/* Les deux bénéfices en rose, chacun gardé d'un bloc sur sa ligne. */}
                   Tes clients doivent pouvoir{" "}
                   <span className="whitespace-nowrap text-pink">te trouver</span>, ton site doit
                   leur donner envie de{" "}
@@ -63,7 +59,6 @@ export function Hero() {
                 </ButtonLink>
               </div>
 
-              {/* Offre, cible et zone visibles dès le haut de page, même sans « disponible ». */}
               <div className="flex flex-col gap-3.5 rounded-[20px] border border-line bg-surface p-[22px] sm:w-[260px] xl:absolute xl:right-0 xl:bottom-0">
                 {site.available && (
                   <p className="flex items-center gap-2 font-mono text-xs text-muted uppercase">

@@ -8,7 +8,6 @@ export const planRows = [
   { key: "content", label: "Contenu" },
   { key: "design", label: "Maquette" },
   { key: "corrections", label: "Correction" },
-  { key: "blog", label: "Blog" },
   { key: "gift", label: "Cadeau" },
 ] as const;
 
@@ -35,7 +34,6 @@ export const plans: Plan[] = [
       content: "Accueil, prestations, contact",
       design: "1 maquette",
       corrections: "1 aller-retour",
-      blog: null,
       gift: null,
     },
   },
@@ -51,7 +49,6 @@ export const plans: Plan[] = [
       content: "Ex. : accueil, prestations, équipe, réalisations, contact",
       design: "2 maquettes",
       corrections: "2 allers-retours",
-      blog: null,
       gift: "1 mois de maintenance Sérénité",
     },
   },
@@ -59,14 +56,13 @@ export const plans: Plan[] = [
     id: "pro",
     name: "Pro",
     pitch:
-      "Une page par prestation pour être trouvé sur chacune, et un blog pour publier toi-même.",
+      "Création d’un site vitrine complet, avec une page par prestation pour être trouvé sur chacune.",
     price: { amount: 2500, from: true },
     rows: {
       pages: "Jusqu’à 10 pages",
       content: "Une page par prestation",
       design: "2 maquettes",
       corrections: "2 allers-retours",
-      blog: "Blog que tu gères toi-même",
       gift: "3 mois de maintenance Sérénité",
     },
   },

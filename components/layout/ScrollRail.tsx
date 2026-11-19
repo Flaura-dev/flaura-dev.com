@@ -215,7 +215,8 @@ export function ScrollRail() {
               style={{ top: `${mark.position * 100}%` }}
               className="group/mark absolute right-0 left-0 flex h-6 -translate-y-1/2 items-center"
             >
-              {mark.showNum && (
+              {/* numéros : pages légales seulement */}
+              {fromPage && mark.showNum && (
                 <span
                   className={cx(
                     "absolute right-[60px] font-mono text-[0.6875rem] transition-colors motion-reduce:transition-none",
@@ -249,11 +250,17 @@ export function ScrollRail() {
             className="pointer-events-auto absolute bottom-0 left-[44px] flex size-11 -translate-x-1/2 translate-y-1/2 cursor-grab touch-none items-center justify-center group-data-[dragging=true]/rail:cursor-grabbing"
           >
             <span className="size-4 rounded-full bg-pink shadow-[0_0_0_4px_var(--bg),0_0_20px_var(--pink)] transition-transform group-hover/rail:scale-125 group-data-[dragging=true]/rail:scale-150 motion-reduce:transition-none" />
-            {/* pages légales : le numéro seul */}
+            {/* accueil : le nom seul, pages légales : le numéro seul */}
             {current && (
-              <span className="pointer-events-none absolute bottom-full left-1/2 mb-0.5 flex w-max max-w-20 -translate-x-1/2 flex-col items-center gap-0.5 rounded-xl border border-line bg-bg/85 px-2 py-1.5 text-center font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase opacity-0 backdrop-blur-md transition-opacity group-hover/rail:opacity-100 group-data-[dragging=true]/rail:opacity-100 group-data-[label-below=true]/rail:top-full group-data-[label-below=true]/rail:bottom-auto group-data-[label-below=true]/rail:mt-0.5 group-data-[label-below=true]/rail:mb-0 group-data-[scrolling=true]/rail:opacity-100 motion-reduce:transition-none opaque:bg-bg opaque:backdrop-blur-none">
-                <span className="text-pink">{current.num}</span>
-                {!fromPage && <span className="text-fg">{current.label}</span>}
+              <span
+                className={cx(
+                  "pointer-events-none absolute bottom-full left-1/2 mb-0.5 w-max -translate-x-1/2 border border-line bg-bg/85 text-center font-mono text-[0.6875rem] leading-4 tracking-[0.08em] uppercase opacity-0 backdrop-blur-md transition-opacity group-hover/rail:opacity-100 group-data-[dragging=true]/rail:opacity-100 group-data-[label-below=true]/rail:top-full group-data-[label-below=true]/rail:bottom-auto group-data-[label-below=true]/rail:mt-0.5 group-data-[label-below=true]/rail:mb-0 group-data-[scrolling=true]/rail:opacity-100 motion-reduce:transition-none opaque:bg-bg opaque:backdrop-blur-none",
+                  fromPage
+                    ? "max-w-20 rounded-xl px-2 py-1.5 text-pink"
+                    : "rounded-full px-2.5 py-1 text-fg",
+                )}
+              >
+                {fromPage ? current.num : current.label}
               </span>
             )}
           </div>

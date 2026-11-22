@@ -20,7 +20,7 @@ export function About() {
           <div className="relative min-h-[380px] overflow-hidden rounded-3xl md:row-span-2">
             <Image
               src={photo}
-              alt="Laura Fontaine concentrée devant son ordinateur"
+              alt="Laura Fontaine souriante devant son ordinateur"
               fill
               sizes="(min-width: 900px) 300px, 100vw"
               className="object-cover object-[60%_30%] [filter:grayscale(1)_contrast(1.25)_brightness(1.1)]"

@@ -730,7 +730,7 @@ export default function CgvPage() {
         <>
           Version 1.0 · en vigueur au 1<sup>er</sup> janvier 2027
           <br />
-          Dernière mise à jour&nbsp;: 4 novembre 2026
+          Dernière mise à jour&nbsp;: 23 novembre 2026
         </>
       }
       intro={
@@ -741,10 +741,7 @@ export default function CgvPage() {
             { term: "Adresse", value: legal.address },
             { term: "SIREN", value: legal.siren },
             { term: "E-mail", value: mail },
-            {
-              term: "N° de TVA intracommunautaire",
-              value: legal.vatNumber ?? "en cours d’attribution",
-            },
+            { term: "N° de TVA intracommunautaire", value: legal.vatNumber },
           ]}
         />
       }

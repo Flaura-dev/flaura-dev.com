@@ -41,10 +41,7 @@ const sections: LegalSection[] = [
               value: `Registre national des entreprises (RNE), le ${legal.registeredOn}`,
             },
             { term: "Code APE", value: legal.ape },
-            {
-              term: "N° de TVA intracommunautaire",
-              value: legal.vatNumber ?? "en cours d’attribution",
-            },
+            { term: "N° de TVA intracommunautaire", value: legal.vatNumber },
           ]}
         />
       </>
@@ -198,7 +195,7 @@ export default function MentionsLegalesPage() {
       path="/mentions-legales"
       title="Mentions légales"
       subtitle="Site flaura-dev.com"
-      meta="Dernière mise à jour&nbsp;: 9 novembre 2026"
+      meta="Dernière mise à jour&nbsp;: 23 novembre 2026"
       sections={sections}
     />
   );

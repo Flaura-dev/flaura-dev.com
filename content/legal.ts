@@ -9,8 +9,7 @@ export const legal = {
   siret: "132 093 071 00018",
   registeredOn: "27 octobre 2026",
   ape: "6201Z, programmation informatique",
-  // null = en cours d'attribution
-  vatNumber: null as string | null,
+  vatNumber: "FR81 132 093 071",
 };
 
 export const legalPages = [

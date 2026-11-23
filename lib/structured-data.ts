@@ -58,6 +58,7 @@ function business(withCatalog: boolean) {
       propertyID: "SIREN",
       value: legal.siren.replace(/\s/g, ""),
     },
+    vatID: legal.vatNumber.replace(/\s/g, ""),
     url: url(),
     description: site.description,
     logo: { "@type": "ImageObject", url: logo, width: 192, height: 192 },

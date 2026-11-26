@@ -6,7 +6,6 @@ import type { Price } from "@/lib/price";
 export const planRows = [
   { key: "pages", label: "Pages" },
   { key: "content", label: "Contenu" },
-  { key: "design", label: "Maquette" },
   { key: "corrections", label: "Correction" },
   { key: "gift", label: "Cadeau" },
 ] as const;
@@ -32,7 +31,6 @@ export const plans: Plan[] = [
     rows: {
       pages: "1 page",
       content: "Accueil, prestations, contact",
-      design: "1 maquette",
       corrections: "1 aller-retour",
       gift: null,
     },
@@ -47,7 +45,6 @@ export const plans: Plan[] = [
     rows: {
       pages: "Jusqu’à 5 pages",
       content: "Ex. : accueil, prestations, équipe, réalisations, contact",
-      design: "2 maquettes",
       corrections: "2 allers-retours",
       gift: "1 mois de maintenance Sérénité",
     },
@@ -61,7 +58,6 @@ export const plans: Plan[] = [
     rows: {
       pages: "Jusqu’à 10 pages",
       content: "Une page par prestation",
-      design: "2 maquettes",
       corrections: "2 allers-retours",
       gift: "3 mois de maintenance Sérénité",
     },

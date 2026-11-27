@@ -38,10 +38,11 @@ const sections: LegalSection[] = [
         </p>
         <p>
           Le contrat se compose, par ordre de priorité décroissant&nbsp;: du devis signé et de ses
-          éventuelles annexes, des présentes CGV, puis, le cas échéant, du contrat de maintenance et
-          de l’accord de sous-traitance des données. En cas de contradiction, le document de rang
-          supérieur prévaut. Les conditions d’achat du Client ne s’appliquent pas, sauf accord écrit
-          de la Prestataire.
+          éventuelles annexes, le cas échéant du contrat de prestation création-refonte, des
+          présentes CGV, puis, le cas échéant, du contrat de maintenance. En cas de contradiction,
+          le document de rang supérieur prévaut. Le contrat de maintenance prévaut toutefois sur les
+          présentes CGV pour son objet. Les conditions générales d’achat du Client, s’il en a, ne
+          s’appliquent pas, sauf accord écrit de la Prestataire.
         </p>
       </>
     ),
@@ -224,8 +225,9 @@ const sections: LegalSection[] = [
         </ul>
         <p>
           L’acompte est payable à réception de la facture, sous réserve de l’
-          <Art n={4} />. Les autres factures sont payables sous quinze jours à compter de leur
-          émission, par virement bancaire. Aucun escompte n’est accordé pour paiement anticipé.
+          <Art n={4} />. Les autres factures sont également payables à réception, sauf autre délai
+          convenu avec le Client et indiqué au devis ou sur la facture. Les paiements se font par
+          virement bancaire. Aucun escompte n’est accordé pour paiement anticipé.
         </p>
         <p>
           En cas de retard de paiement, des pénalités sont dues de plein droit, sans rappel
@@ -314,6 +316,12 @@ const sections: LegalSection[] = [
           suspendre le projet. Elle facture alors le travail réalisé à cette date. La reprise du
           projet est planifiée selon ses disponibilités.
         </p>
+        <p>
+          La Prestataire peut s’absenter, notamment pour des congés. Pour toute absence de plus
+          d’une semaine pendant un projet, elle prévient le Client au moins quinze jours à l’avance,
+          ou dès que possible en cas d’imprévu (maladie, urgence familiale). Une absence qui n’était
+          pas prévue à la signature du devis décale les délais d’autant.
+        </p>
       </>
     ),
   },
@@ -340,9 +348,9 @@ const sections: LegalSection[] = [
           un lien de téléchargement sécurisé ou par transfert du dépôt de code sur un compte du
           Client. Elle y joint une fiche récapitulative indiquant les services utilisés, les comptes
           concernés et leurs dates de renouvellement. Les identifiants d’accès sont transmis
-          séparément. La remise comprend une prise en main du site, à distance. La Prestataire
-          conserve une copie des livrables pendant un an après la remise. Au-delà, elle n’est plus
-          tenue de les conserver.
+          séparément. La remise comprend une séance de prise en main du site, à distance, d’une
+          heure au plus. La Prestataire conserve une copie des livrables pendant un an après la
+          remise. Au-delà, elle n’est plus tenue de les conserver.
         </p>
       </>
     ),
@@ -380,9 +388,9 @@ const sections: LegalSection[] = [
         </p>
         <p>
           À compter du paiement complet, la Prestataire cède au Client, à titre exclusif, les droits
-          patrimoniaux d’auteur dont elle est titulaire sur les livrables spécifiques décrits au
-          devis (maquettes validées, éléments graphiques créés pour le Client, code source du site).
-          Cette cession porte sur&nbsp;:
+          patrimoniaux d’auteur dont elle est titulaire sur le site tel qu’il est mis en ligne, et
+          rien d’autre&nbsp;: son code source et les éléments graphiques créés pour le Client qui y
+          sont intégrés. Cette cession porte sur&nbsp;:
         </p>
         <ul>
           <li>le droit de reproduction, sur tout support, notamment numérique&nbsp;;</li>
@@ -413,11 +421,12 @@ const sections: LegalSection[] = [
           </li>
           <li>
             les composants tiers (bibliothèques open source, polices, images, modules), qui restent
-            soumis à leurs propres licences&nbsp;;
+            soumis à leurs propres licences, que la Prestataire respecte pour ceux qu’elle
+            choisit&nbsp;;
           </li>
           <li>
-            les maquettes et pistes graphiques non retenues, qui restent la propriété de la
-            Prestataire.
+            les maquettes, retenues ou non, les pistes graphiques et leurs fichiers de travail, qui
+            restent la propriété de la Prestataire.
           </li>
         </ul>
         <p>
@@ -437,7 +446,10 @@ const sections: LegalSection[] = [
           Sauf refus exprimé par le Client en cochant la case prévue au devis, la Prestataire peut
           présenter la réalisation dans son portfolio, sur ses réseaux professionnels et dans ses
           supports de communication, à partir de la mise en ligne du site. Elle peut y citer le nom
-          et le logo du Client, et montrer des captures d’écran du site.
+          et le logo du Client, et montrer des captures d’écran du site. Pour une refonte, elle peut
+          aussi montrer des captures d’écran de l’ancien site, prises avant la mise en ligne, pour
+          comparer l’avant et l’après. Elle les présente de façon factuelle, sans nommer l’ancien
+          prestataire, et masque les données personnelles qui y figurent.
         </p>
         <p>
           Le Client peut demander par la suite le retrait de ces éléments pour un motif légitime.
@@ -461,11 +473,12 @@ const sections: LegalSection[] = [
         Chaque partie garde confidentielles les informations non publiques reçues de l’autre partie
         pendant le projet (données commerciales, accès, documents internes). Cette obligation dure
         pendant le contrat et trois ans après sa fin. Les accès et mots de passe confiés par le
-        Client ne sont utilisés que pour les besoins de la prestation. Les accès, mots de passe,
-        données personnelles et documents internes du Client ne sont jamais saisis dans un outil
-        tiers sans son accord. Le code et les contenus du projet peuvent en revanche être traités
-        par les outils de développement mentionnés à l’
-        <Art n={13} />.
+        Client ne sont utilisés que pour les besoins de la prestation. Les accès et mots de passe du
+        Client ne sont jamais saisis dans un outil tiers. Le code, les contenus et les documents du
+        projet peuvent être traités par les outils de développement mentionnés à l’
+        <Art n={13} />, y compris des outils d’intelligence artificielle&nbsp;; les données
+        personnelles le sont dans les conditions de l’
+        <Art n={16} />.
       </p>
     ),
   },
@@ -482,11 +495,48 @@ const sections: LegalSection[] = [
         </p>
         <p>
           Lorsque, pour réaliser ou maintenir le site, la Prestataire accède à des données
-          personnelles dont le Client est responsable (formulaires, comptes, fichiers clients), elle
-          agit en qualité de sous-traitante au sens de l’article 28 du RGPD. Les parties signent
-          alors l’accord de sous-traitance des données annexé au devis. La Prestataire informe
-          notamment le Client de toute violation de ces données dans les vingt-quatre heures après
-          en avoir pris connaissance.
+          personnelles dont le Client est responsable, elle agit en qualité de sous-traitante au
+          sens de l’article 28 du RGPD. Il s’agit des données des visiteurs, prospects et clients du
+          Client&nbsp;: messages reçus par un formulaire, comptes, commandes, fichiers de clients,
+          sauvegardes du site. Le présent article tient lieu d’accord de sous-traitance des données,
+          sans autre document à signer. Il s’applique pendant toute la mission, puis jusqu’à la
+          suppression des données.
+        </p>
+        <p>
+          La Prestataire traite ces données uniquement pour réaliser et maintenir le site, sur les
+          instructions du Client données par le contrat ou par e-mail. Elle ne les utilise jamais
+          pour son propre compte et les garde confidentielles. Si une instruction lui paraît
+          contraire au RGPD, elle le signale au Client. Le Client reste responsable du
+          traitement&nbsp;: il signale à la Prestataire toute donnée sensible (santé, opinions…)
+          avant qu’elle n’y ait accès, et lui fournit des données de test plutôt que des données
+          réelles chaque fois que c’est possible.
+        </p>
+        <p>
+          La Prestataire protège ces données&nbsp;: accès par des comptes délégués au nom du Client,
+          double authentification, mots de passe uniques conservés dans un gestionnaire, poste de
+          travail chiffré, connexions chiffrées, sauvegardes chiffrées limitées aux trois dernières.
+          Elle ne copie sur son poste que les données strictement nécessaires.
+        </p>
+        <p>
+          En acceptant les présentes CGV, le Client autorise la Prestataire à utiliser des outils et
+          services tiers pour traiter ces données, y compris des outils d’intelligence artificielle,
+          à condition que chacun soit lié par un accord de traitement des données conforme au RGPD,
+          qui encadre tout transfert hors de l’Union européenne et interdit l’utilisation des
+          données pour entraîner des modèles. La Prestataire communique la liste de ces services au
+          Client sur simple demande et l’informe par e-mail de tout ajout, au moins quinze jours à
+          l’avance&nbsp;; le Client peut s’y opposer pour un motif légitime. Elle ne saisit jamais
+          les accès, mots de passe ou données sensibles du Client dans un outil d’intelligence
+          artificielle.
+        </p>
+        <p>
+          La Prestataire informe le Client de toute violation de ces données dans les vingt-quatre
+          heures après en avoir pris connaissance. Elle l’aide à répondre aux personnes qui exercent
+          leurs droits et, si besoin, à notifier une violation à la CNIL ou à réaliser une analyse
+          d’impact. À la fin de sa mission, elle supprime ces données, y compris dans ses
+          sauvegardes, au plus tard un mois après, et le confirme par e-mail&nbsp;; elle les
+          restitue d’abord si le Client le demande. Elle fournit au Client les informations utiles
+          pour vérifier le respect du présent article et accepte un contrôle sur pièces, une fois
+          par an et après toute violation de données, à la charge du Client.
         </p>
       </>
     ),
@@ -728,9 +778,9 @@ export default function CgvPage() {
       subtitle="Prestations de création et de refonte de sites, clients professionnels"
       meta={
         <>
-          Version 1.0 · en vigueur au 1<sup>er</sup> janvier 2027
+          Version 1.0 · en vigueur au 1<sup>er</sup> novembre 2026
           <br />
-          Dernière mise à jour&nbsp;: 23 novembre 2026
+          Dernière mise à jour&nbsp;: 26 novembre 2026
         </>
       }
       intro={
